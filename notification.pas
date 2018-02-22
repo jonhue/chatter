@@ -42,11 +42,11 @@ function findNotification(i: integer): TNotificationArray;
 var c: integer; a: TNotificationArray;
 begin
   for c := 0 to length(notifications) - 1 do
-      if notifications[c].getId() = i then
-         begin
-           setLength(a, length(a) + 1);
-           a[length(a) - 1] := notifications[c];
-         end;
+    if notifications[c].getId() = i then
+    begin
+      setLength(a, length(a) + 1);
+      a[length(a) - 1] := notifications[c];
+    end;
   result := a;
 end;
 
@@ -54,11 +54,11 @@ function findNotificationByUser(u: TUser): TNotificationArray;
 var i: integer; a: TNotificationArray;
 begin
   for i := 0 to length(notifications) - 1 do
-      if notifications[i].getUserId() = u.getId() then
-         begin
-           setLength(a, length(a) + 1);
-           a[length(a) - 1] := notifications[i];
-         end;
+    if notifications[i].getUserId() = u.getId() then
+    begin
+      setLength(a, length(a) + 1);
+      a[length(a) - 1] := notifications[i];
+    end;
   result := a;
 end;
 
@@ -96,4 +96,3 @@ begin
 end;
 
 end.
-

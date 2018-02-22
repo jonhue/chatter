@@ -49,11 +49,11 @@ function findMessage(i: integer): TMessageArray;
 var c: integer; a: TMessageArray;
 begin
   for c := 0 to length(messages) - 1 do
-      if messages[c].getId() = i then
-         begin
-           setLength(a, length(a) + 1);
-           a[length(a) - 1] := messages[c];
-         end;
+    if messages[c].getId() = i then
+    begin
+      setLength(a, length(a) + 1);
+      a[length(a) - 1] := messages[c];
+    end;
   result := a;
 end;
 
@@ -61,11 +61,11 @@ function findMessageByChat(c: TChat): TMessageArray;
 var i: integer; a: TMessageArray;
 begin
   for i := 0 to length(messages) - 1 do
-      if messages[i].getChatId() = c.getId() then
-         begin
-           setLength(a, length(a) + 1);
-           a[length(a) - 1] := messages[i];
-         end;
+    if messages[i].getChatId() = c.getId() then
+    begin
+      setLength(a, length(a) + 1);
+      a[length(a) - 1] := messages[i];
+    end;
   result := a;
 end;
 
@@ -73,11 +73,11 @@ function findMessageByUser(u: TUser): TMessageArray;
 var i: integer; a: TMessageArray;
 begin
   for i := 0 to length(messages) - 1 do
-      if messages[i].getUserId() = u.getId() then
-         begin
-           setLength(a, length(a) + 1);
-           a[length(a) - 1] := messages[i];
-         end;
+    if messages[i].getUserId() = u.getId() then
+    begin
+      setLength(a, length(a) + 1);
+      a[length(a) - 1] := messages[i];
+    end;
   result := a;
 end;
 
@@ -139,4 +139,3 @@ begin
 end;
 
 end.
-

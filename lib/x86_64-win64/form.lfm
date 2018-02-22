@@ -1,13 +1,14 @@
 object Form1: TForm1
-  Left = 1004
-  Height = 973
-  Top = 24
-  Width = 674
+  Left = 1905
+  Height = 1982
+  Top = 0
+  Width = 1914
   Caption = 'Chatter'
-  ClientHeight = 973
-  ClientWidth = 674
+  ClientHeight = 1982
+  ClientWidth = 1914
+  DesignTimePPI = 288
   OnCreate = FormCreate
-  LCLVersion = '1.4.4.0'
+  LCLVersion = '1.8.0.6'
   object loginButton: TButton
     Left = 512
     Height = 25
@@ -19,9 +20,9 @@ object Form1: TForm1
   end
   object userLabel: TLabel
     Left = 96
-    Height = 17
+    Height = 48
     Top = 12
-    Width = 130
+    Width = 306
     Caption = 'Not signed in yet ...'
     ParentColor = False
   end
@@ -424,13 +425,13 @@ object Form1: TForm1
     end
     object TabSheet6: TTabSheet
       Caption = 'Chat'
-      ClientHeight = 902
-      ClientWidth = 670
+      ClientHeight = 846
+      ClientWidth = 650
       object Label24: TLabel
         Left = 40
         Height = 22
         Top = 128
-        Width = 105
+        Width = 95
         Caption = 'Messages'
         Font.Height = -19
         Font.Name = 'Sans'
@@ -442,7 +443,7 @@ object Form1: TForm1
         Left = 350
         Height = 22
         Top = 128
-        Width = 99
+        Width = 87
         Caption = 'Members'
         Font.Height = -19
         Font.Name = 'Sans'

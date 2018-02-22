@@ -36,12 +36,12 @@ type
 
   TGroupArray = array of TGroup;
 
-var
-  groups: TGroupArray;
-
 function findGroup(i: integer): TGroupArray;
 function findGroupByUser(u: TUser): TGroupArray;
 function findGroupByName(n: string): TGroupArray;
+
+var
+  groups: TGroupArray;
 
 implementation
 
@@ -51,11 +51,11 @@ function findGroup(i: integer): TGroupArray;
 var c: integer; a: TGroupArray;
 begin
   for c := 0 to length(groups) - 1 do
-      if groups[c].getId() = i then
-         begin
-           setLength(a, length(a) + 1);
-           a[length(a) - 1] := groups[c];
-         end;
+    if groups[c].getId() = i then
+    begin
+      setLength(a, length(a) + 1);
+      a[length(a) - 1] := groups[c];
+    end;
   result := a;
 end;
 
@@ -63,11 +63,11 @@ function findGroupByUser(u: TUser): TGroupArray;
 var i: integer; a: TGroupArray;
 begin
   for i := 0 to length(groups) - 1 do
-      if groups[i].getUserId() = u.getId() then
-         begin
-           setLength(a, length(a) + 1);
-           a[length(a) - 1] := groups[i];
-         end;
+    if groups[i].getUserId() = u.getId() then
+    begin
+      setLength(a, length(a) + 1);
+      a[length(a) - 1] := groups[i];
+    end;
   result := a;
 end;
 
@@ -75,11 +75,11 @@ function findGroupByName(n: string): TGroupArray;
 var i: integer; a: TGroupArray;
 begin
   for i := 0 to length(groups) - 1 do
-      if groups[i].getName() = n then
-         begin
-           setLength(a, length(a) + 1);
-           a[length(a) - 1] := groups[i];
-         end;
+    if groups[i].getName() = n then
+    begin
+      setLength(a, length(a) + 1);
+      a[length(a) - 1] := groups[i];
+    end;
   result := a;
 end;
 
@@ -148,4 +148,3 @@ begin
 end;
 
 end.
-

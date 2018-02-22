@@ -47,11 +47,11 @@ function findUserGroup(i: integer): TUserGroupArray;
 var c: integer; a: TUserGroupArray;
 begin
   for c := 0 to length(userGroups) - 1 do
-      if userGroups[c].getId() = i then
-         begin
-           setLength(a, length(a) + 1);
-           a[length(a) - 1] := userGroups[c];
-         end;
+    if userGroups[c].getId() = i then
+    begin
+      setLength(a, length(a) + 1);
+      a[length(a) - 1] := userGroups[c];
+    end;
   result := a;
 end;
 
@@ -59,11 +59,11 @@ function findUserGroupByUser(u: TUser): TUserGroupArray;
 var i: integer; a: TUserGroupArray;
 begin
   for i := 0 to length(userGroups) - 1 do
-      if userGroups[i].getUserId() = u.getId() then
-         begin
-           setLength(a, length(a) + 1);
-           a[length(a) - 1] := userGroups[i];
-         end;
+    if userGroups[i].getUserId() = u.getId() then
+    begin
+      setLength(a, length(a) + 1);
+      a[length(a) - 1] := userGroups[i];
+    end;
   result := a;
 end;
 
@@ -71,11 +71,11 @@ function findUserGroupByGroup(g: TGroup): TUserGroupArray;
 var i: integer; a: TUserGroupArray;
 begin
   for i := 0 to length(userGroups) - 1 do
-      if userGroups[i].getGroupId() = g.getId() then
-         begin
-           setLength(a, length(a) + 1);
-           a[length(a) - 1] := userGroups[i];
-         end;
+  if userGroups[i].getGroupId() = g.getId() then
+  begin
+    setLength(a, length(a) + 1);
+    a[length(a) - 1] := userGroups[i];
+  end;
   result := a;
 end;
 
@@ -125,4 +125,3 @@ begin
 end;
 
 end.
-

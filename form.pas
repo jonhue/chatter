@@ -158,21 +158,21 @@ procedure TForm1.updateTitlebar();
 begin
   if currentUser = nil then
   begin
-     userLabel.Caption := 'Not signed in yet ...';
-     usernameLabel.Caption := '';
-     loginButton.Visible := true;
-     signupButton.Visible := true;
-     accountButton.Visible := false;
-     signoutButton.Visible := false;
+    userLabel.Caption := 'Not signed in yet ...';
+    usernameLabel.Caption := '';
+    loginButton.Visible := true;
+    signupButton.Visible := true;
+    accountButton.Visible := false;
+    signoutButton.Visible := false;
   end
   else
   begin
-     userLabel.Caption := 'Logged in as:';
-     usernameLabel.Caption := '@' + currentUser.getUsername();
-     loginButton.Visible := false;
-     signupButton.Visible := false;
-     accountButton.Visible := true;
-     signoutButton.Visible := true;
+    userLabel.Caption := 'Logged in as:';
+    usernameLabel.Caption := '@' + currentUser.getUsername();
+    loginButton.Visible := false;
+    signupButton.Visible := false;
+    accountButton.Visible := true;
+    signoutButton.Visible := true;
   end;
 end;
 
@@ -191,13 +191,13 @@ procedure TForm1.loginLoginButtonClick(Sender: TObject);
 begin
   currentUser := TUser.login(loginUsernameEdit.Text, loginPasswordEdit.Text);
   if currentUser = nil then
-     showMessage('Invalid username or password')
+    showMessage('Invalid username or password')
   else
   begin
-     loginUsernameEdit.Text := '';
-     loginPasswordEdit.Text := '';
-     updateTitlebar();
-     currentView.switch('Home', 0);
+    loginUsernameEdit.Text := '';
+    loginPasswordEdit.Text := '';
+    updateTitlebar();
+    currentView.switch('Home', 0);
   end;
 end;
 
@@ -210,15 +210,15 @@ procedure TForm1.signupSignupButtonClick(Sender: TObject);
 begin
   currentUser := TUser.signup(signupUsernameEdit.Text, signupFirstNameEdit.Text, signupLastNameEdit.Text, signupPasswordEdit.Text);
   if currentUser = nil then
-     showMessage('User with this username already exists')
+    showMessage('User with this username already exists')
   else
   begin
-     signupFirstNameEdit.Text := '';
-     signupLastNameEdit.Text := '';
-     signupUsernameEdit.Text := '';
-     signupPasswordEdit.Text := '';
-     updateTitlebar();
-     currentView.switch('Home', 0);
+    signupFirstNameEdit.Text := '';
+    signupLastNameEdit.Text := '';
+    signupUsernameEdit.Text := '';
+    signupPasswordEdit.Text := '';
+    updateTitlebar();
+    currentView.switch('Home', 0);
   end;
 end;
 
@@ -239,17 +239,17 @@ var newPassword: string;
 begin
   newPassword := accountNewPasswordEdit.Text;
   if accountNewPasswordEdit.Text = '' then
-     newPassword := currentUser.getPassword();
+    newPassword := currentUser.getPassword();
   if currentUser.update(accountPasswordEdit.Text, accountUsernameEdit.Text, accountFirstNameEdit.Text, accountLastNameEdit.Text, newPassword) = nil then
-     showMessage('Wrong password')
+    showMessage('Wrong password')
   else
   begin
-     accountFirstNameEdit.Text := '';
-     accountLastNameEdit.Text := '';
-     accountUsernameEdit.Text := '';
-     accountNewPasswordEdit.Text := '';
-     accountPasswordEdit.Text := '';
-     currentView.switch('Home', 0);
+    accountFirstNameEdit.Text := '';
+    accountLastNameEdit.Text := '';
+    accountUsernameEdit.Text := '';
+    accountNewPasswordEdit.Text := '';
+    accountPasswordEdit.Text := '';
+    currentView.switch('Home', 0);
   end;
 end;
 
@@ -275,21 +275,21 @@ procedure TForm1.createChatCreateButtonClick(Sender: TObject);
 var chat: TChat; group: TGroup;
 begin
   if length(findGroupByName(createChatGroupEdit.Text)) > 0 then
-     if findGroupByName(createChatGroupEdit.Text)[0].getUserId = currentUser.getId() then
-        group := findGroupByName(createChatGroupEdit.Text)[0]
-     else
-        showMessage('You do not own this group')
+    if findGroupByName(createChatGroupEdit.Text)[0].getUserId = currentUser.getId() then
+      group := findGroupByName(createChatGroupEdit.Text)[0]
+    else
+      showMessage('You do not own this group')
   else
-     group := nil;
+    group := nil;
   if ( length(createChatGroupEdit.Text) > 0 ) and ( group = nil ) then
-     showMessage('Group does not exist')
+    showMessage('Group does not exist')
   else
   begin
-     chat := TChat.create(currentUser, group, createChatNameEdit.Text);
-     TUserChat.create(currentUser, chat);
-     createChatNameEdit.Text := '';
-     createChatGroupEdit.Text := '';
-     currentView.switch('Chat', chat.getId());
+    chat := TChat.create(currentUser, group, createChatNameEdit.Text);
+    TUserChat.create(currentUser, chat);
+    createChatNameEdit.Text := '';
+    createChatGroupEdit.Text := '';
+    currentView.switch('Chat', chat.getId());
   end;
 end;
 
@@ -307,20 +307,20 @@ procedure TForm1.editChatUpdateButtonClick(Sender: TObject);
 var chat: TChat; group: TGroup;
 begin
   if length(findGroupByName(editChatGroupEdit.Text)) > 0 then
-     if findGroupByName(editChatGroupEdit.Text)[0].getUserId = currentUser.getId() then
-        group := findGroupByName(editChatGroupEdit.Text)[0]
-     else
-        showMessage('You do not own this group')
+    if findGroupByName(editChatGroupEdit.Text)[0].getUserId = currentUser.getId() then
+      group := findGroupByName(editChatGroupEdit.Text)[0]
+    else
+      showMessage('You do not own this group')
   else
-     group := nil;
+    group := nil;
   if ( length(editChatGroupEdit.Text) > 0 ) and ( group <> nil ) then
-     showMessage('Group does not exist')
+    showMessage('Group does not exist')
   else
   begin
-     chat := findChat(currentView.getParameter())[0].update(group, editChatNameEdit.Text);
-     editChatNameEdit.Text := '';
-     editChatGroupEdit.Text := '';
-     currentView.switch('Chat', chat.getId());
+    chat := findChat(currentView.getParameter())[0].update(group, editChatNameEdit.Text);
+    editChatNameEdit.Text := '';
+    editChatGroupEdit.Text := '';
+    currentView.switch('Chat', chat.getId());
   end;
 end;
 
@@ -367,7 +367,7 @@ function TView.switch(c: string; p: integer): boolean;
 begin
   currentView := TView.create(c, currentView, p);
   if currentView.getReferrer() <> nil then
-     Form1.backButton.Enabled := true;
+    Form1.backButton.Enabled := true;
   result := currentView.initialize();
 end;
 
@@ -375,9 +375,9 @@ function TView.back(): boolean;
 begin
   currentView := self.getReferrer();
   if currentView.getReferrer() <> nil then
-     Form1.backButton.Enabled := true
+    Form1.backButton.Enabled := true
   else
-     Form1.backButton.Enabled := false;
+    Form1.backButton.Enabled := false;
   result := currentView.initialize();
 end;
 
@@ -404,221 +404,221 @@ var userGroups: TGroupArray; userChats: TChatArray; groupChats: TChatArray; chat
 begin
   if (currentUser = nil) and ( (self.getCurrent() = 'Home') or (self.getCurrent() = 'Account') or (self.getCurrent() = 'Group') or (self.getCurrent() = 'Chat') or (self.getCurrent() = 'Create chat') or (self.getCurrent() = 'Create group') or (self.getCurrent() = 'Edit chat') or (self.getCurrent() = 'Edit group') or (self.getCurrent() = 'Invitations') or (self.getCurrent() = 'New invitation') ) then
   begin
-     currentView.switch('Login', 0);
-     result := false;
-     exit;
+    currentView.switch('Login', 0);
+    result := false;
+    exit;
   end;
   if (currentUser <> nil) and ( (self.getCurrent() = 'Login') or (self.getCurrent() = 'Signup') ) then
   begin
-     currentView.switch('Home', 0);
-     result := false;
-     exit;
+    currentView.switch('Home', 0);
+    result := false;
+    exit;
   end;
   if self.getCurrent() = 'Home' then
   begin
-     userGroups := findGroupByUser(currentUser);
-     for i:=0 to length(userGroups) - 1 do
-     begin
-        panel := TPanel.create(Form1);
-        panel.parent := Form1.TabSheet1;
-        panel.left := 40;
-        panel.top := 125 + (i * 100);
-        panel.height := 100;
-        panel.width := 275;
-        panel.caption := '';
-        text := TLabel.create(Form1);
-        text.parent := panel;
-        text.left := 15;
-        text.top := 15;
-        text.font.size := 16;
-        text.font.style := text.font.style + [fsBold];
-        text.caption := userGroups[i].getName();
+    userGroups := findGroupByUser(currentUser);
+    for i:=0 to length(userGroups) - 1 do
+    begin
+      panel := TPanel.create(Form1);
+      panel.parent := Form1.TabSheet1;
+      panel.left := 40;
+      panel.top := 125 + (i * 100);
+      panel.height := 100;
+      panel.width := 275;
+      panel.caption := '';
+      text := TLabel.create(Form1);
+      text.parent := panel;
+      text.left := 15;
+      text.top := 15;
+      text.font.size := 16;
+      text.font.style := text.font.style + [fsBold];
+      text.caption := userGroups[i].getName();
+      text := TLabel.create(Form1);
+      text.parent := panel;
+      text.left := 15;
+      text.top := 37;
+      text.caption := userGroups[i].getDescription();
+      button := TButton.create(Form1);
+      button.parent := panel;
+      button.left := 15;
+      button.top := 60;
+      button.caption := 'Open';
+      button.HelpContext := userGroups[i].getId();
+      button.OnClick := @openGroupButtonClick;
+    end;
+    userChats := findChatByUser(currentUser);
+    for i:=0 to length(userChats) - 1 do
+    begin
+      panel := TPanel.create(Form1);
+      panel.parent := Form1.TabSheet1;
+      panel.left := 350;
+      panel.top := 125 + (i * 100);
+      panel.height := 100;
+      panel.width := 275;
+      panel.caption := '';
+      text := TLabel.create(Form1);
+      text.parent := panel;
+      text.left := 15;
+      text.top := 15;
+      text.font.size := 16;
+      text.font.style := text.font.style + [fsBold];
+      text.caption := userChats[i].getName();
+      if ( userChats[i].getGroupId() <> 0) and ( length(findGroup(userChats[i].getGroupId())) > 0 ) then
+      begin
         text := TLabel.create(Form1);
         text.parent := panel;
         text.left := 15;
         text.top := 37;
-        text.caption := userGroups[i].getDescription();
-        button := TButton.create(Form1);
-        button.parent := panel;
-        button.left := 15;
-        button.top := 60;
-        button.caption := 'Open';
-        button.HelpContext := userGroups[i].getId();
-        button.OnClick := @openGroupButtonClick;
-     end;
-     userChats := findChatByUser(currentUser);
-     for i:=0 to length(userChats) - 1 do
-     begin
-        panel := TPanel.create(Form1);
-        panel.parent := Form1.TabSheet1;
-        panel.left := 350;
-        panel.top := 125 + (i * 100);
-        panel.height := 100;
-        panel.width := 275;
-        panel.caption := '';
-        text := TLabel.create(Form1);
-        text.parent := panel;
-        text.left := 15;
-        text.top := 15;
-        text.font.size := 16;
-        text.font.style := text.font.style + [fsBold];
-        text.caption := userChats[i].getName();
-        if ( userChats[i].getGroupId() <> 0) and ( length(findGroup(userChats[i].getGroupId())) > 0 ) then
-        begin
-           text := TLabel.create(Form1);
-           text.parent := panel;
-           text.left := 15;
-           text.top := 37;
-           text.caption := findGroup(userChats[i].getGroupId())[0].getName();
-        end;
-        button := TButton.create(Form1);
-        button.parent := panel;
-        button.left := 15;
-        button.top := 60;
-        button.caption := 'Open';
-        button.HelpContext := userChats[i].getId();
-        button.OnClick := @openChatButtonClick;
-     end;
+        text.caption := findGroup(userChats[i].getGroupId())[0].getName();
+      end;
+      button := TButton.create(Form1);
+      button.parent := panel;
+      button.left := 15;
+      button.top := 60;
+      button.caption := 'Open';
+      button.HelpContext := userChats[i].getId();
+      button.OnClick := @openChatButtonClick;
+    end;
   end;
   if self.getCurrent() = 'Group' then
   begin
-     group := findGroup(self.getParameter())[0];
-     Form1.groupNameLabel.caption := group.getName();
-     Form1.groupDescriptionLabel.caption := group.getDescription();
-     groupChats := findChatByGroup(group);
-     for i:=0 to length(groupChats) - 1 do
-     begin
-        panel := TPanel.create(Form1);
-        panel.parent := Form1.TabSheet5;
-        panel.left := 40;
-        panel.top := 215 + (i * 100);
-        panel.height := 100;
-        panel.width := 275;
-        panel.caption := '';
+    group := findGroup(self.getParameter())[0];
+    Form1.groupNameLabel.caption := group.getName();
+    Form1.groupDescriptionLabel.caption := group.getDescription();
+    groupChats := findChatByGroup(group);
+    for i:=0 to length(groupChats) - 1 do
+    begin
+      panel := TPanel.create(Form1);
+      panel.parent := Form1.TabSheet5;
+      panel.left := 40;
+      panel.top := 215 + (i * 100);
+      panel.height := 100;
+      panel.width := 275;
+      panel.caption := '';
+      text := TLabel.create(Form1);
+      text.parent := panel;
+      text.left := 15;
+      text.top := 15;
+      text.font.size := 16;
+      text.font.style := text.font.style + [fsBold];
+      text.caption := groupChats[i].getName();
+      text := TLabel.create(Form1);
+      text.parent := panel;
+      text.left := 15;
+      text.top := 37;
+      text.caption := group.getName();
+      button := TButton.create(Form1);
+      button.parent := panel;
+      button.left := 15;
+      button.top := 60;
+      button.caption := 'Open';
+      button.HelpContext := groupChats[i].getId();
+      button.OnClick := @openChatButtonClick;
+    end;
+    groupUserGroups := findUserGroupByGroup(group);
+    for i:=0 to length(groupUserGroups) - 1 do
+    begin
+      panel := TPanel.create(Form1);
+      panel.parent := Form1.TabSheet5;
+      panel.left := 350;
+      panel.top := 215 + (i * 100);
+      panel.height := 100;
+      panel.width := 275;
+      panel.caption := '';
+      text := TLabel.create(Form1);
+      text.parent := panel;
+      text.left := 15;
+      text.top := 15;
+      text.font.size := 16;
+      text.font.style := text.font.style + [fsBold];
+      text.caption := findUser(groupUserGroups[i].getUserId())[0].getFirstName() + ' ' + findUser(groupUserGroups[i].getUserId())[0].getLastName();
+      text := TLabel.create(Form1);
+      text.parent := panel;
+      text.left := 15;
+      text.top := 37;
+      text.caption := '@' + findUser(groupUserGroups[i].getUserId())[0].getUsername();
+      if findUser(groupUserGroups[i].getUserId())[0].getId() = group.getUserId() then
+      begin
         text := TLabel.create(Form1);
         text.parent := panel;
         text.left := 15;
-        text.top := 15;
-        text.font.size := 16;
-        text.font.style := text.font.style + [fsBold];
-        text.caption := groupChats[i].getName();
-        text := TLabel.create(Form1);
-        text.parent := panel;
-        text.left := 15;
-        text.top := 37;
-        text.caption := group.getName();
-        button := TButton.create(Form1);
-        button.parent := panel;
-        button.left := 15;
-        button.top := 60;
-        button.caption := 'Open';
-        button.HelpContext := groupChats[i].getId();
-        button.OnClick := @openChatButtonClick;
-     end;
-     groupUserGroups := findUserGroupByGroup(group);
-     for i:=0 to length(groupUserGroups) - 1 do
-     begin
-        panel := TPanel.create(Form1);
-        panel.parent := Form1.TabSheet5;
-        panel.left := 350;
-        panel.top := 215 + (i * 100);
-        panel.height := 100;
-        panel.width := 275;
-        panel.caption := '';
-        text := TLabel.create(Form1);
-        text.parent := panel;
-        text.left := 15;
-        text.top := 15;
-        text.font.size := 16;
-        text.font.style := text.font.style + [fsBold];
-        text.caption := findUser(groupUserGroups[i].getUserId())[0].getFirstName() + ' ' + findUser(groupUserGroups[i].getUserId())[0].getLastName();
-        text := TLabel.create(Form1);
-        text.parent := panel;
-        text.left := 15;
-        text.top := 37;
-        text.caption := '@' + findUser(groupUserGroups[i].getUserId())[0].getUsername();
-        if findUser(groupUserGroups[i].getUserId())[0].getId() = group.getUserId() then
-        begin
-            text := TLabel.create(Form1);
-            text.parent := panel;
-            text.left := 15;
-            text.top := 60;
-            text.caption := 'Admin';
-        end;
-     end;
+        text.top := 60;
+        text.caption := 'Admin';
+      end;
+    end;
   end;
   if self.getCurrent() = 'Chat' then
   begin
-     chat := findChat(self.getParameter())[0];
-     Form1.chatNameLabel.caption := chat.getName();
-     chatMessages := findMessageByChat(chat);
-     for i:=0 to length(chatMessages) - 1 do
-     begin
-        panel := TPanel.create(Form1);
-        panel.parent := Form1.TabSheet6;
-        panel.left := 40;
-        panel.top := 215 + (i * 100);
-        panel.height := 100;
-        panel.width := 275;
-        panel.caption := '';
+    chat := findChat(self.getParameter())[0];
+    Form1.chatNameLabel.caption := chat.getName();
+    chatMessages := findMessageByChat(chat);
+    for i:=0 to length(chatMessages) - 1 do
+    begin
+      panel := TPanel.create(Form1);
+      panel.parent := Form1.TabSheet6;
+      panel.left := 40;
+      panel.top := 215 + (i * 100);
+      panel.height := 100;
+      panel.width := 275;
+      panel.caption := '';
+      text := TLabel.create(Form1);
+      text.parent := panel;
+      text.left := 15;
+      text.top := 15;
+      text.font.size := 16;
+      text.font.style := text.font.style + [fsBold];
+      text.caption := findUser(chatMessages[i].getUserId())[0].getFirstName + ' ' + findUser(chatMessages[i].getUserId())[0].getLastName + ' (@' + findUser(chatMessages[i].getUserId())[0].getUsername + ')';
+      text := TLabel.create(Form1);
+      text.parent := panel;
+      text.left := 15;
+      text.top := 37;
+      text.caption := chatMessages[i].getContent();
+    end;
+    chatUserChats := findUserChatByChat(chat);
+    for i:=0 to length(chatUserChats) - 1 do
+    begin
+      panel := TPanel.create(Form1);
+      panel.parent := Form1.TabSheet6;
+      panel.left := 350;
+      panel.top := 215 + (i * 100);
+      panel.height := 100;
+      panel.width := 275;
+      panel.caption := '';
+      text := TLabel.create(Form1);
+      text.parent := panel;
+      text.left := 15;
+      text.top := 15;
+      text.font.size := 16;
+      text.font.style := text.font.style + [fsBold];
+      text.caption := findUser(chatUserChats[i].getUserId())[0].getFirstName() + ' ' + findUser(chatUserChats[i].getUserId())[0].getLastName();
+      text := TLabel.create(Form1);
+      text.parent := panel;
+      text.left := 15;
+      text.top := 37;
+      text.caption := '@' + findUser(chatUserChats[i].getUserId())[0].getUsername();
+      if findUser(chatUserChats[i].getUserId())[0].getId() = chat.getUserId() then
+      begin
         text := TLabel.create(Form1);
         text.parent := panel;
         text.left := 15;
-        text.top := 15;
-        text.font.size := 16;
-        text.font.style := text.font.style + [fsBold];
-        text.caption := findUser(chatMessages[i].getUserId())[0].getFirstName + ' ' + findUser(chatMessages[i].getUserId())[0].getLastName + ' (@' + findUser(chatMessages[i].getUserId())[0].getUsername + ')';
-        text := TLabel.create(Form1);
-        text.parent := panel;
-        text.left := 15;
-        text.top := 37;
-        text.caption := chatMessages[i].getContent();
-     end;
-     chatUserChats := findUserChatByChat(chat);
-     for i:=0 to length(chatUserChats) - 1 do
-     begin
-        panel := TPanel.create(Form1);
-        panel.parent := Form1.TabSheet6;
-        panel.left := 350;
-        panel.top := 215 + (i * 100);
-        panel.height := 100;
-        panel.width := 275;
-        panel.caption := '';
-        text := TLabel.create(Form1);
-        text.parent := panel;
-        text.left := 15;
-        text.top := 15;
-        text.font.size := 16;
-        text.font.style := text.font.style + [fsBold];
-        text.caption := findUser(chatUserChats[i].getUserId())[0].getFirstName() + ' ' + findUser(chatUserChats[i].getUserId())[0].getLastName();
-        text := TLabel.create(Form1);
-        text.parent := panel;
-        text.left := 15;
-        text.top := 37;
-        text.caption := '@' + findUser(chatUserChats[i].getUserId())[0].getUsername();
-        if findUser(chatUserChats[i].getUserId())[0].getId() = chat.getUserId() then
-        begin
-            text := TLabel.create(Form1);
-            text.parent := panel;
-            text.left := 15;
-            text.top := 60;
-            text.caption := 'Admin';
-        end;
-     end;
+        text.top := 60;
+        text.caption := 'Admin';
+      end;
+    end;
   end;
   if self.getCurrent() = 'Create chat' then
   begin
-     if self.getParameter() <> 0 then
-     begin
-        group := findGroup(self.getParameter)[0];
-        Form1.createChatGroupEdit.text := group.getName();
-     end;
+    if self.getParameter() <> 0 then
+    begin
+      group := findGroup(self.getParameter)[0];
+      Form1.createChatGroupEdit.text := group.getName();
+    end;
   end;
   if self.getCurrent() = 'Account' then
   begin
-     Form1.accountFirstNameEdit.Text := currentUser.getFirstName();
-     Form1.accountLastNameEdit.Text := currentUser.getLastName();
-     Form1.accountUsernameEdit.Text := currentUser.getUsername();
+    Form1.accountFirstNameEdit.Text := currentUser.getFirstName();
+    Form1.accountLastNameEdit.Text := currentUser.getLastName();
+    Form1.accountUsernameEdit.Text := currentUser.getUsername();
   end;
   Form1.PageControl1.TabIndex := getTabIndexFor(self.getCurrent());
   result := true;
@@ -659,18 +659,18 @@ end;
 
 procedure TView.openGroupButtonClick(Sender: TObject);
 begin
-  with Sender as TButton do
-  begin
-     currentView.switch('Group', HelpContext);
-  end;
+with Sender as TButton do
+begin
+  currentView.switch('Group', HelpContext);
+end;
 end;
 
 procedure TView.openChatButtonClick(Sender: TObject);
 begin
-  with Sender as TButton do
-  begin
-     currentView.switch('Chat', HelpContext);
-  end;
+with Sender as TButton do
+begin
+  currentView.switch('Chat', HelpContext);
+end;
 end;
 
 initialization
@@ -678,4 +678,3 @@ initialization
 randomize();
 
 end.
-

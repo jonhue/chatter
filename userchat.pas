@@ -47,11 +47,11 @@ function findUserChat(i: integer): TUserChatArray;
 var c: integer; a: TUserChatArray;
 begin
   for c := 0 to length(userChats) - 1 do
-      if userChats[c].getId() = i then
-         begin
-           setLength(a, length(a) + 1);
-           a[length(a) - 1] := userChats[c];
-         end;
+    if userChats[c].getId() = i then
+    begin
+      setLength(a, length(a) + 1);
+      a[length(a) - 1] := userChats[c];
+    end;
   result := a;
 end;
 
@@ -59,11 +59,11 @@ function findUserChatByUser(u: TUser): TUserChatArray;
 var i: integer; a: TUserChatArray;
 begin
   for i := 0 to length(userChats) - 1 do
-      if userChats[i].getUserId() = u.getId() then
-         begin
-           setLength(a, length(a) + 1);
-           a[length(a) - 1] := userChats[i];
-         end;
+    if userChats[i].getUserId() = u.getId() then
+    begin
+      setLength(a, length(a) + 1);
+      a[length(a) - 1] := userChats[i];
+    end;
   result := a;
 end;
 
@@ -71,11 +71,11 @@ function findUserChatByChat(c: TChat): TUserChatArray;
 var i: integer; a: TUserChatArray;
 begin
   for i := 0 to length(userChats) - 1 do
-      if userChats[i].getChatId() = c.getId() then
-         begin
-           setLength(a, length(a) + 1);
-           a[length(a) - 1] := userChats[i];
-         end;
+    if userChats[i].getChatId() = c.getId() then
+    begin
+      setLength(a, length(a) + 1);
+      a[length(a) - 1] := userChats[i];
+    end;
   result := a;
 end;
 
@@ -125,4 +125,3 @@ begin
 end;
 
 end.
-

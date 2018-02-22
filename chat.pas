@@ -51,11 +51,11 @@ function findChat(i: integer): TChatArray;
 var c: integer; a: TChatArray;
 begin
   for c := 0 to length(chats) - 1 do
-      if chats[c].getId() = i then
-         begin
-           setLength(a, length(a) + 1);
-           a[length(a) - 1] := chats[c];
-         end;
+    if chats[c].getId() = i then
+    begin
+      setLength(a, length(a) + 1);
+      a[length(a) - 1] := chats[c];
+    end;
   result := a;
 end;
 
@@ -63,11 +63,11 @@ function findChatByUser(u: TUser): TChatArray;
 var i: integer; a: TChatArray;
 begin
   for i := 0 to length(chats) - 1 do
-      if chats[i].getUserId() = u.getId() then
-         begin
-           setLength(a, length(a) + 1);
-           a[length(a) - 1] := chats[i];
-         end;
+    if chats[i].getUserId() = u.getId() then
+    begin
+      setLength(a, length(a) + 1);
+      a[length(a) - 1] := chats[i];
+    end;
   result := a;
 end;
 
@@ -75,11 +75,11 @@ function findChatByGroup(g: TGroup): TChatArray;
 var i: integer; a: TChatArray;
 begin
   for i := 0 to length(chats) - 1 do
-      if chats[i].getGroupId() = g.getId() then
-         begin
-           setLength(a, length(a) + 1);
-           a[length(a) - 1] := chats[i];
-         end;
+    if chats[i].getGroupId() = g.getId() then
+    begin
+      setLength(a, length(a) + 1);
+      a[length(a) - 1] := chats[i];
+    end;
   result := a;
 end;
 
@@ -89,7 +89,7 @@ begin
   self.setUserId(u.getId());
   self.setName(n);
   if g <> nil then
-     self.setGroupId(g.getId());
+    self.setGroupId(g.getId());
   repeat
     self.setId(random(999999) + 1);
   until length(findChat(self.getId())) = 0;
@@ -149,4 +149,3 @@ begin
 end;
 
 end.
-

@@ -54,11 +54,11 @@ function findUser(i: integer): TUserArray;
 var c: integer; a: TUserArray;
 begin
   for c := 0 to length(users) - 1 do
-      if users[c].getId() = i then
-         begin
-           setLength(a, length(a) + 1);
-           a[length(a) - 1] := users[c];
-         end;
+    if users[c].getId() = i then
+    begin
+      setLength(a, length(a) + 1);
+      a[length(a) - 1] := users[c];
+    end;
   result := a;
 end;
 
@@ -66,11 +66,11 @@ function findUserByUsername(u: string): TUserArray;
 var i: integer; a: TUserArray;
 begin
   for i := 0 to length(users) - 1 do
-      if users[i].getUsername() = u then
-         begin
-           setLength(a, length(a) + 1);
-           a[length(a) - 1] := users[i];
-         end;
+    if users[i].getUsername() = u then
+    begin
+      setLength(a, length(a) + 1);
+      a[length(a) - 1] := users[i];
+    end;
   result := a;
 end;
 
@@ -94,22 +94,22 @@ begin
   user := TUser.create(u, fn, ln, p);
   if length(findUserByUsername(user.getUsername())) = 1 then
   begin
-     result := user;
-     exit;
+    result := user;
+    exit;
   end
   else
-     user.destroy();
+    user.destroy();
   result := nil;
 end;
 
 class function TUser.login(u, p: string): TUser;
 begin
   if length(findUserByUsername(u)) > 0 then
-     if findUserByUsername(u)[0].getPassword() = p then
-     begin
-        result := findUserByUsername(u)[0];
-        exit;
-     end;
+    if findUserByUsername(u)[0].getPassword() = p then
+    begin
+      result := findUserByUsername(u)[0];
+      exit;
+    end;
   result := nil;
 end;
 
@@ -117,8 +117,8 @@ function TUser.update(p, u, fn, ln, np: string): TUser;
 begin
   if p <> self.getPassword() then
   begin
-     result := nil;
-     exit;
+    result := nil;
+    exit;
   end;
   self.setUsername(u);
   self.setFirstName(fn);
@@ -183,4 +183,3 @@ begin
 end;
 
 end.
-

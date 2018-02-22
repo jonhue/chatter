@@ -57,11 +57,11 @@ function findInvitation(i: integer): TInvitationArray;
 var c: integer; a: TInvitationArray;
 begin
   for c := 0 to length(invitations) - 1 do
-      if invitations[c].getId() = i then
-         begin
-           setLength(a, length(a) + 1);
-           a[length(a) - 1] := invitations[c];
-         end;
+    if invitations[c].getId() = i then
+    begin
+      setLength(a, length(a) + 1);
+      a[length(a) - 1] := invitations[c];
+    end;
   result := a;
 end;
 
@@ -69,11 +69,11 @@ function findInvitationByUser(u: TUser): TInvitationArray;
 var i: integer; a: TInvitationArray;
 begin
   for i := 0 to length(invitations) - 1 do
-      if invitations[i].getUserId() = u.getId() then
-         begin
-           setLength(a, length(a) + 1);
-           a[length(a) - 1] := invitations[i];
-         end;
+    if invitations[i].getUserId() = u.getId() then
+    begin
+      setLength(a, length(a) + 1);
+      a[length(a) - 1] := invitations[i];
+    end;
   result := a;
 end;
 
@@ -81,11 +81,11 @@ function findInvitationByTarget(t: TUser): TInvitationArray;
 var i: integer; a: TInvitationArray;
 begin
   for i := 0 to length(invitations) - 1 do
-      if invitations[i].getTargetId() = t.getId() then
-         begin
-           setLength(a, length(a) + 1);
-           a[length(a) - 1] := invitations[i];
-         end;
+    if invitations[i].getTargetId() = t.getId() then
+    begin
+      setLength(a, length(a) + 1);
+      a[length(a) - 1] := invitations[i];
+    end;
   result := a;
 end;
 
@@ -93,11 +93,11 @@ function findInvitationByGroup(g: TGroup): TInvitationArray;
 var i: integer; a: TInvitationArray;
 begin
   for i := 0 to length(invitations) - 1 do
-      if invitations[i].getGroupId() = g.getId() then
-         begin
-           setLength(a, length(a) + 1);
-           a[length(a) - 1] := invitations[i];
-         end;
+    if invitations[i].getGroupId() = g.getId() then
+    begin
+      setLength(a, length(a) + 1);
+      a[length(a) - 1] := invitations[i];
+    end;
   result := a;
 end;
 
@@ -105,11 +105,11 @@ function findInvitationByChat(c: TChat): TInvitationArray;
 var i: integer; a: TInvitationArray;
 begin
   for i := 0 to length(invitations) - 1 do
-      if invitations[i].getChatId() = c.getId() then
-         begin
-           setLength(a, length(a) + 1);
-           a[length(a) - 1] := invitations[i];
-         end;
+    if invitations[i].getChatId() = c.getId() then
+    begin
+      setLength(a, length(a) + 1);
+      a[length(a) - 1] := invitations[i];
+    end;
   result := a;
 end;
 
@@ -119,9 +119,9 @@ begin
   self.setUserId(u.getId());
   self.setTargetId(t.getId());
   if g <> nil then
-     self.setGroupId(g.getId());
+    self.setGroupId(g.getId());
   if c <> nil then
-     self.setChatId(c.getId());
+    self.setChatId(c.getId());
   repeat
     self.setId(random(999999) + 1);
   until length(findInvitation(self.getId())) = 0;
@@ -185,4 +185,3 @@ begin
 end;
 
 end.
-
