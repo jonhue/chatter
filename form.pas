@@ -5,7 +5,7 @@ unit Form;
 interface
 
 uses
-  User, Group, UserGroup, Notification, Chat, UserChat, Message, Invitation, Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs,
+  User, Group, UserGroup, Chat, UserChat, Message, Invitation, Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs,
   ComCtrls, StdCtrls, ExtCtrls;
 
 type
