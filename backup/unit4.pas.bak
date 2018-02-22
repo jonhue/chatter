@@ -9,7 +9,7 @@ uses
 
 type
 
-  { TGroup }
+  { TUserGroup }
 
   TUserGroup = class
   private
@@ -37,12 +37,11 @@ var
 
 implementation
 
-{ TGroup }
+{ TUserGroup }
 
 function findUserGroup(i: integer): TUserGroupArray;
 var c: integer; a: TUserGroupArray;
 begin
-  a := [];
   for c := 0 to length(userGroups) - 1 do
       if userGroups[c].getId() = i then
          begin

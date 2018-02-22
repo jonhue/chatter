@@ -5,7 +5,7 @@
     <General>
       <SessionStorage Value="InProjectDir"/>
       <MainUnit Value="0"/>
-      <Title Value="Chat app"/>
+      <Title Value="Chatter"/>
       <ResourceType Value="res"/>
       <UseXPManifest Value="True"/>
       <Icon Value="0"/>
@@ -32,24 +32,34 @@
         <PackageName Value="LCL"/>
       </Item1>
     </RequiredPackages>
-    <Units Count="3">
+    <Units Count="5">
       <Unit0>
         <Filename Value="project1.lpr"/>
         <IsPartOfProject Value="True"/>
       </Unit0>
       <Unit1>
-        <Filename Value="unit1.pas"/>
+        <Filename Value="form.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="Unit1"/>
+        <UnitName Value="Form"/>
       </Unit1>
       <Unit2>
-        <Filename Value="unit7.pas"/>
+        <Filename Value="userchat.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="Unit7"/>
+        <UnitName Value="UserChat"/>
       </Unit2>
+      <Unit3>
+        <Filename Value="message.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="Message"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="invitation.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="Invitation"/>
+      </Unit4>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

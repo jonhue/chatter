@@ -1,0 +1,124 @@
+unit UserChats;
+
+{$mode objfpc}{$H+}
+
+interface
+
+uses
+  Users, Chats, Classes, SysUtils;
+
+type
+
+  { TUserGroup }
+
+  TUserChat = class
+  private
+    id: integer;
+    userId: integer;
+    chatId: integer;
+  protected
+    function setId(i: integer): integer;
+    function setUserId(ui: integer): integer;
+    function setChatId(ci: integer): integer;
+  public
+    // class function find(i: integer): TUserChatArray;
+    // class function findByUser(u: TUser): TUserChatArray;
+    // class function findByChat(c: TChat): TUserChatArray;
+    constructor create(u: TUser; c: TChat);
+    function getId(): integer;
+    function getUserId(): integer;
+    function getChatId(): integer;
+  end;
+
+  TUserChatArray = array of TUserChat;
+
+var
+  userChats: TUserChatArray;
+
+implementation
+
+{ TUserChat }
+
+function findUserChat(i: integer): TUserChatArray;
+var c: integer; a: TUserChatArray;
+begin
+  for c := 0 to length(userChats) - 1 do
+      if userChats[c].getId() = i then
+         begin
+           setLength(a, length(a) + 1);
+           a[length(a) - 1] := userChats[c];
+         end;
+  result := a;
+end;
+
+function findUserChatByUser(u: TUser): TUserChatArray;
+var i: integer; a: TUserChatArray;
+begin
+  for i := 0 to length(userChats) - 1 do
+      if userChats[i].getUserId() = u.getId() then
+         begin
+           setLength(a, length(a) + 1);
+           a[length(a) - 1] := userChats[i];
+         end;
+  result := a;
+end;
+
+function findUserChatByChat(c: TChat): TUserChatArray;
+var i: integer; a: TUserChatArray;
+begin
+  for i := 0 to length(userChats) - 1 do
+      if userChats[i].getChatId() = c.getId() then
+         begin
+           setLength(a, length(a) + 1);
+           a[length(a) - 1] := userChats[i];
+         end;
+  result := a;
+end;
+
+constructor TUserChat.create(u: TUser; c: TChat);
+begin
+  inherited create();
+  self.setUserId(u.getId());
+  self.setChatId(c.getId());
+  repeat
+    self.setId(random(999999) + 1);
+  until length(findUserChat(self.getId())) = 0;
+  setLength(userGroups, length(userGroups) + 1);
+  userGroups[length(userGroups) - 1] := self;
+end;
+
+function TUserGroup.getId(): integer;
+begin
+  result := self.id;
+end;
+
+function TUserGroup.getUserId(): integer;
+begin
+  result := self.userId;
+end;
+
+function TUserGroup.getGroupId(): integer;
+begin
+  result := self.groupId;
+end;
+
+function TUserGroup.setId(i: integer): integer;
+begin
+  self.id := i;
+  result := self.getId();
+end;
+
+function TUserGroup.setUserId(ui: integer): integer;
+begin
+  self.userId := ui;
+  result := self.getUserId();
+end;
+
+function TUserGroup.setGroupId(gi: integer): integer;
+begin
+  self.groupId := gi;
+  result := self.getGroupId();
+end;
+
+end.
+

@@ -5,7 +5,7 @@ unit Unit1;
 interface
 
 uses
-  Unit2, Unit3, Unit4, Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs,
+  Unit2, Unit3, Unit4, Unit5, Unit6, Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs,
   ComCtrls, StdCtrls;
 
 type
@@ -116,9 +116,9 @@ end;
 
 procedure TForm1.loginLoginButtonClick(Sender: TObject);
 begin
+  currentUser := TUser.login(loginUsernameEdit.Text, loginPasswordEdit.Text);
   loginUsernameEdit.Text := '';
   loginPasswordEdit.Text := '';
-  currentUser := TUser.login(loginUsernameEdit.Text, loginPasswordEdit.Text);
   if currentUser = nil then
      showMessage('Invalid username or password')
   else
@@ -135,11 +135,11 @@ end;
 
 procedure TForm1.signupSignupButtonClick(Sender: TObject);
 begin
+  currentUser := TUser.signup(signupUsernameEdit.Text, signupFirstNameEdit.Text, signupLastNameEdit.Text, signupPasswordEdit.Text);
   signupFirstNameEdit.Text := '';
   signupLastNameEdit.Text := '';
   signupUsernameEdit.Text := '';
   signupPasswordEdit.Text := '';
-  currentUser := TUser.signup(signupUsernameEdit.Text, signupFirstNameEdit.Text, signupLastNameEdit.Text, signupPasswordEdit.Text);
   if currentUser = nil then
      showMessage('User with this username already exists')
   else
@@ -199,6 +199,10 @@ begin
   self.current := c;
   result := self.getCurrent();
 end;
+
+initialization
+
+randomize();
 
 end.
 

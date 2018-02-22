@@ -7,13 +7,13 @@ uses
   cthreads,
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, Unit1, Unit7
+  Forms, Form, UserChat, Message, Invitation
   { you can add units after this };
 
 {$R *.res}
 
 begin
-  Application.Title:='Chat app';
+  Application.Title:='Chatter';
   RequireDerivedFormResource := True;
   Application.Initialize;
   Application.CreateForm(TForm1, Form1);
