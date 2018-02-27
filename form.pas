@@ -153,8 +153,7 @@ type
     function getCurrent(): string;
     function getReferrer(): TView;
     function getParameter(): integer;
-    procedure openGroupButtonClick(Sender: TObject);
-    procedure openChatButtonClick(Sender: TObject);
+    procedure openButtonClick(Sender: TObject);
   end;
 
 var
@@ -498,6 +497,7 @@ var
   text: TLabel;
   button: TButton;
 begin
+  panelToTop := 225;
   if (currentUser = nil) and ( (self.getCurrent() = 'Home') or (self.getCurrent() = 'Account') or (self.getCurrent() = 'Group') or (self.getCurrent() = 'Chat') or (self.getCurrent() = 'Create chat') or (self.getCurrent() = 'Create group') or (self.getCurrent() = 'Edit chat') or (self.getCurrent() = 'Edit group') or (self.getCurrent() = 'Invitations') or (self.getCurrent() = 'New invitation') ) then
   begin
     currentView.switch('Login', 0);
@@ -539,8 +539,9 @@ begin
       button.left := 15;
       button.top := 60;
       button.caption := 'Open';
-      button.HelpContext := userGroups[i].getGroupId();
-      button.OnClick := @openGroupButtonClick;
+      button.helpKeyword := 'Group';
+      button.helpContext := userGroups[i].getGroupId();
+      button.OnClick := @openButtonClick;
     end;
     userChats := findUserChatByUser(currentUser);
     for i:=0 to length(userChats) - 1 do
@@ -572,8 +573,9 @@ begin
       button.left := 15;
       button.top := 60;
       button.caption := 'Open';
-      button.HelpContext := userChats[i].getChatId();
-      button.OnClick := @openChatButtonClick;
+      button.helpKeyword := 'Chat';
+      button.helpContext := userChats[i].getChatId();
+      button.OnClick := @openButtonClick;
     end;
   end;
   if self.getCurrent() = 'Group' then
@@ -608,8 +610,9 @@ begin
       button.left := 15;
       button.top := 70;
       button.caption := 'Open';
-      button.HelpContext := groupChats[i].getId();
-      button.OnClick := @openChatButtonClick;
+      button.helpKeyword := 'Chat';
+      button.helpContext := groupChats[i].getId();
+      button.OnClick := @openButtonClick;
     end;
     groupUserGroups := findUserGroupByGroup(group);
     for i:=0 to length(groupUserGroups) - 1 do
@@ -648,7 +651,6 @@ begin
     chat := findChat(self.getParameter())[0];
     Form1.chatNameLabel.caption := chat.getName();
     chatMessages := findMessageByChat(chat);
-    panelToTop := 225;
     for i:=0 to length(chatMessages) - 1 do
     begin
       panel := TPanel.create(Form1);
@@ -776,19 +778,11 @@ begin
   result := self.getParameter();
 end;
 
-procedure TView.openGroupButtonClick(Sender: TObject);
+procedure TView.openButtonClick(Sender: TObject);
 begin
   with Sender as TButton do
   begin
-    currentView.switch('Group', HelpContext);
-  end;
-end;
-
-procedure TView.openChatButtonClick(Sender: TObject);
-begin
-  with Sender as TButton do
-  begin
-    currentView.switch('Chat', HelpContext);
+    currentView.switch(helpKeyword, helpContext);
   end;
 end;
 
