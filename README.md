@@ -5,4 +5,5 @@
 ### Setup
 
 1) Install [Lazarus](https://www.lazarus-ide.org/) (Windows)
-2) Open the `chatter.exe` file
+2) Clone this repository
+3) Open the `chatter.exe` file
