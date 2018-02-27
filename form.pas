@@ -279,7 +279,7 @@ end;
 procedure TForm1.chatNewMessageButtonClick(Sender: TObject);
 var co: string;
 begin
-  InputQuery('New message', 'Write something up ...', TRUE, co);
+  InputQuery('New message', 'Write something up ...', false, co);
   TMessage.create(findChat(currentView.getParameter())[0], currentUser, co);
   currentView.switch('Chat', currentView.getParameter());
 end;
