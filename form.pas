@@ -21,7 +21,11 @@ type
     accountNewPasswordEdit: TEdit;
     accountPasswordEdit: TEdit;
     backButton: TButton;
+    groupEditButton: TButton;
+    newGroupInvitationIviteButton: TButton;
+    newGroupInvitationUsernameEdit: TEdit;
     Label26: TLabel;
+    Label27: TLabel;
     newChatInvitationInviteButton: TButton;
     chatNewMessageButton: TButton;
     chatInviteMemberButton: TButton;
@@ -86,8 +90,8 @@ type
     PageControl1: TPageControl;
     TabSheet1: TTabSheet;
     TabSheet10: TTabSheet;
-    TabSheet11: TTabSheet;
     TabSheet12: TTabSheet;
+    TabSheet11: TTabSheet;
     TabSheet2: TTabSheet;
     TabSheet3: TTabSheet;
     TabSheet4: TTabSheet;
@@ -106,10 +110,12 @@ type
     procedure editChatUpdateButtonClick(Sender: TObject);
     procedure editGroupUpdateButtonClick(Sender: TObject);
     procedure groupCreateChatButtonClick(Sender: TObject);
+    procedure groupEditButtonClick(Sender: TObject);
     procedure groupInviteMemberButtonClick(Sender: TObject);
     procedure homeCreateChatButtonClick(Sender: TObject);
     procedure homeCreateGroupButtonClick(Sender: TObject);
     procedure newChatInvitationInviteButtonClick(Sender: TObject);
+    procedure newGroupInvitationIviteButtonClick(Sender: TObject);
     procedure signoutButtonClick(Sender: TObject);
     procedure updateTitlebar();
     procedure FormCreate(Sender: TObject);
@@ -358,9 +364,14 @@ begin
   currentView.switch('Create chat', findGroupByName(groupNameLabel.caption)[0].getId());
 end;
 
+procedure TForm1.groupEditButtonClick(Sender: TObject);
+begin
+  currentView.switch('Edit group', currentView.getParameter());
+end;
+
 procedure TForm1.groupInviteMemberButtonClick(Sender: TObject);
 begin
-  currentView.switch('New invitation', findGroupByName(groupNameLabel.caption)[0].getId());
+  currentView.switch('New group invitation', currentView.getParameter());
 end;
 
 procedure TForm1.homeCreateChatButtonClick(Sender: TObject);
@@ -390,6 +401,29 @@ begin
       TUserChat.create(user, findChat(currentView.getParameter())[0]);
       newChatInvitationUsernameEdit.text := '';
       currentView.switch('Chat', currentView.getParameter());
+    end;
+  end
+  else
+    showMessage('User does not exist');
+end;
+
+procedure TForm1.newGroupInvitationIviteButtonClick(Sender: TObject);
+var user: TUser; i: integer; userIsMember: boolean;
+begin
+  userIsMember := false;
+  if length(findUserByUsername(newGroupInvitationUsernameEdit.text)) > 0 then
+  begin
+    user := findUserByUsername(newGroupInvitationUsernameEdit.text)[0];
+    for i:=0 to length(findUserGroupByGroup(findGroup(currentView.getParameter())[0])) - 1 do
+      if findUserGroupByGroup(findGroup(currentView.getParameter())[0])[i].getUserId() = user.getId() then
+        userIsMember := true;
+    if userIsMember then
+      showMessage('User is already a member')
+    else
+    begin
+      TUserGroup.create(user, findGroup(currentView.getParameter())[0]);
+      newGroupInvitationUsernameEdit.text := '';
+      currentView.switch('Group', currentView.getParameter());
     end;
   end
   else
@@ -443,6 +477,7 @@ begin
     'Edit chat': result := 8;
     'Edit group': result := 9;
     'New chat invitation': result := 10;
+    'New group invitation': result := 11;
   end;
 end;
 
@@ -687,6 +722,12 @@ begin
     Form1.accountFirstNameEdit.Text := currentUser.getFirstName();
     Form1.accountLastNameEdit.Text := currentUser.getLastName();
     Form1.accountUsernameEdit.Text := currentUser.getUsername();
+  end;
+  if self.getCurrent() = 'Edit group' then
+  begin
+    group := findGroup(currentView.getParameter())[0];
+    Form1.editGroupNameEdit.Text := group.getName();
+    Form1.editGroupDescriptionEdit.Text := group.getDescription();
   end;
   Form1.PageControl1.TabIndex := getTabIndexFor(self.getCurrent());
   result := true;

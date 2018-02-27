@@ -1,7 +1,7 @@
 object Form1: TForm1
-  Left = 1214
+  Left = 1041
   Height = 973
-  Top = 395
+  Top = 392
   Width = 674
   Caption = 'Chatter'
   ClientHeight = 973
@@ -81,8 +81,8 @@ object Form1: TForm1
     Height = 933
     Top = 40
     Width = 674
-    ActivePage = TabSheet12
-    TabIndex = 10
+    ActivePage = TabSheet5
+    TabIndex = 4
     TabOrder = 5
     object TabSheet1: TTabSheet
       Caption = 'Home'
@@ -360,13 +360,13 @@ object Form1: TForm1
     end
     object TabSheet5: TTabSheet
       Caption = 'Group'
-      ClientHeight = 902
-      ClientWidth = 670
+      ClientHeight = 846
+      ClientWidth = 650
       object Label22: TLabel
         Left = 40
         Height = 22
         Top = 128
-        Width = 61
+        Width = 54
         Caption = 'Chats'
         Font.Height = -19
         Font.Name = 'Sans'
@@ -378,7 +378,7 @@ object Form1: TForm1
         Left = 350
         Height = 22
         Top = 128
-        Width = 99
+        Width = 87
         Caption = 'Members'
         Font.Height = -19
         Font.Name = 'Sans'
@@ -421,6 +421,15 @@ object Form1: TForm1
         Top = 80
         Width = 1
         ParentColor = False
+      end
+      object groupEditButton: TButton
+        Left = 563
+        Height = 25
+        Top = 10
+        Width = 75
+        Caption = 'Edit'
+        OnClick = groupEditButtonClick
+        TabOrder = 2
       end
     end
     object TabSheet6: TTabSheet
@@ -658,7 +667,7 @@ object Form1: TForm1
         ParentColor = False
       end
     end
-    object TabSheet12: TTabSheet
+    object TabSheet11: TTabSheet
       Caption = 'New chat invitation'
       ClientHeight = 846
       ClientWidth = 650
@@ -666,7 +675,7 @@ object Form1: TForm1
         Left = 190
         Height = 56
         Top = 175
-        Width = 240
+        Width = 290
         TabOrder = 0
       end
       object newChatInvitationInviteButton: TButton
@@ -685,6 +694,35 @@ object Form1: TForm1
         Width = 160
         Caption = 'Username'
         ParentColor = False
+      end
+    end
+    object TabSheet12: TTabSheet
+      Caption = 'New group invitation'
+      ClientHeight = 846
+      ClientWidth = 650
+      object Label27: TLabel
+        Left = 190
+        Height = 48
+        Top = 152
+        Width = 160
+        Caption = 'Username'
+        ParentColor = False
+      end
+      object newGroupInvitationUsernameEdit: TEdit
+        Left = 190
+        Height = 56
+        Top = 175
+        Width = 290
+        TabOrder = 0
+      end
+      object newGroupInvitationIviteButton: TButton
+        Left = 190
+        Height = 25
+        Top = 220
+        Width = 75
+        Caption = 'Invite'
+        OnClick = newGroupInvitationIviteButtonClick
+        TabOrder = 1
       end
     end
   end
