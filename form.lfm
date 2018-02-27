@@ -1,738 +1,751 @@
 object Form1: TForm1
   Left = 1041
-  Height = 973
+  Height = 600
   Top = 392
-  Width = 674
+  Width = 695
   Caption = 'Chatter'
-  ClientHeight = 973
-  ClientWidth = 674
+  ClientHeight = 600
+  ClientWidth = 695
   DesignTimePPI = 288
   OnCreate = FormCreate
   LCLVersion = '1.8.0.6'
-  object loginButton: TButton
-    Left = 512
-    Height = 25
-    Top = 8
-    Width = 75
-    Caption = 'Login'
-    OnClick = loginButtonClick
-    TabOrder = 0
-  end
-  object userLabel: TLabel
-    Left = 96
-    Height = 48
-    Top = 12
-    Width = 306
-    Caption = 'Not signed in yet ...'
-    ParentColor = False
-  end
-  object usernameLabel: TLabel
-    Left = 170
-    Height = 1
-    Top = 13
-    Width = 1
-    Font.Height = -13
-    Font.Name = 'Sans'
-    Font.Style = [fsBold]
-    ParentColor = False
-    ParentFont = False
-  end
-  object signoutButton: TButton
-    Left = 592
-    Height = 25
-    Top = 8
-    Width = 75
-    Caption = 'Signout'
-    OnClick = signoutButtonClick
-    TabOrder = 1
-    Visible = False
-  end
-  object accountButton: TButton
-    Left = 512
-    Height = 25
-    Top = 8
-    Width = 75
-    Caption = 'Account'
-    OnClick = accountButtonClick
-    TabOrder = 2
-    Visible = False
-  end
-  object backButton: TButton
-    Left = 8
-    Height = 25
-    Top = 8
-    Width = 75
-    Caption = 'Back'
-    Enabled = False
-    OnClick = backButtonClick
-    TabOrder = 3
-  end
-  object signupButton: TButton
-    Left = 592
-    Height = 25
-    Top = 8
-    Width = 75
-    Caption = 'Signup'
-    OnClick = signupButtonClick
-    TabOrder = 4
-  end
-  object PageControl1: TPageControl
+  object ScrollBox1: TScrollBox
     Left = 0
-    Height = 933
-    Top = 40
-    Width = 674
-    ActivePage = TabSheet6
-    TabIndex = 5
-    TabOrder = 5
-    object TabSheet1: TTabSheet
-      Caption = 'Home'
-      ClientHeight = 846
-      ClientWidth = 650
-      object Label12: TLabel
-        Left = 40
-        Height = 22
-        Top = 40
-        Width = 70
-        Caption = 'Groups'
-        Font.Height = -19
-        Font.Name = 'Sans'
-        Font.Style = [fsBold]
-        ParentColor = False
-        ParentFont = False
+    Height = 600
+    Top = 0
+    Width = 695
+    HorzScrollBar.Page = 640
+    VertScrollBar.Page = 545
+    Align = alClient
+    ClientHeight = 545
+    ClientWidth = 640
+    TabOrder = 0
+    object PageControl1: TPageControl
+      Left = 0
+      Height = 560
+      Top = 40
+      Width = 674
+      ActivePage = TabSheet6
+      TabIndex = 5
+      TabOrder = 0
+      OnChange = PageControl1Change
+      object TabSheet1: TTabSheet
+        Caption = 'Home'
+        ClientHeight = 846
+        ClientWidth = 650
+        object Label12: TLabel
+          Left = 40
+          Height = 22
+          Top = 40
+          Width = 70
+          Caption = 'Groups'
+          Font.Height = -19
+          Font.Name = 'Sans'
+          Font.Style = [fsBold]
+          ParentColor = False
+          ParentFont = False
+        end
+        object Label13: TLabel
+          Left = 350
+          Height = 22
+          Top = 40
+          Width = 54
+          Caption = 'Chats'
+          Font.Height = -19
+          Font.Name = 'Sans'
+          Font.Style = [fsBold]
+          ParentColor = False
+          ParentFont = False
+        end
+        object homeCreateGroupButton: TButton
+          Left = 40
+          Height = 25
+          Top = 72
+          Width = 125
+          Caption = 'Create group'
+          OnClick = homeCreateGroupButtonClick
+          TabOrder = 0
+        end
+        object homeCreateChatButton: TButton
+          Left = 350
+          Height = 25
+          Top = 72
+          Width = 125
+          Caption = 'Create chat'
+          OnClick = homeCreateChatButtonClick
+          TabOrder = 1
+        end
       end
-      object Label13: TLabel
-        Left = 350
-        Height = 22
-        Top = 40
-        Width = 54
-        Caption = 'Chats'
-        Font.Height = -19
-        Font.Name = 'Sans'
-        Font.Style = [fsBold]
-        ParentColor = False
-        ParentFont = False
+      object TabSheet2: TTabSheet
+        Caption = 'Account'
+        ClientHeight = 902
+        ClientWidth = 670
+        object accountFirstNameEdit: TEdit
+          Left = 190
+          Height = 27
+          Top = 175
+          Width = 290
+          TabOrder = 0
+        end
+        object accountLastNameEdit: TEdit
+          Left = 190
+          Height = 27
+          Top = 240
+          Width = 290
+          TabOrder = 1
+        end
+        object accountUsernameEdit: TEdit
+          Left = 190
+          Height = 27
+          Top = 305
+          Width = 290
+          TabOrder = 2
+        end
+        object accountUpdateButton: TButton
+          Left = 190
+          Height = 25
+          Top = 480
+          Width = 75
+          Caption = 'Update'
+          OnClick = accountUpdateButtonClick
+          TabOrder = 3
+        end
+        object Label7: TLabel
+          Left = 190
+          Height = 17
+          Top = 152
+          Width = 72
+          Caption = 'FIrst name'
+          ParentColor = False
+        end
+        object Label8: TLabel
+          Left = 190
+          Height = 17
+          Top = 217
+          Width = 70
+          Caption = 'Last name'
+          ParentColor = False
+        end
+        object Label9: TLabel
+          Left = 190
+          Height = 17
+          Top = 284
+          Width = 69
+          Caption = 'Username'
+          ParentColor = False
+        end
+        object accountNewPasswordEdit: TEdit
+          Left = 190
+          Height = 28
+          Top = 370
+          Width = 290
+          EchoMode = emPassword
+          Font.Height = -15
+          Font.Name = 'Courier'
+          ParentFont = False
+          PasswordChar = '*'
+          TabOrder = 4
+        end
+        object accountPasswordEdit: TEdit
+          Left = 190
+          Height = 28
+          Top = 435
+          Width = 290
+          EchoMode = emPassword
+          Font.Height = -15
+          Font.Name = 'Courier'
+          ParentFont = False
+          PasswordChar = '*'
+          TabOrder = 5
+        end
+        object Label10: TLabel
+          Left = 190
+          Height = 17
+          Top = 413
+          Width = 123
+          Caption = 'Current password'
+          ParentColor = False
+        end
+        object Label11: TLabel
+          Left = 190
+          Height = 17
+          Top = 348
+          Width = 101
+          Caption = 'New password'
+          ParentColor = False
+        end
       end
-      object homeCreateGroupButton: TButton
-        Left = 40
-        Height = 25
-        Top = 72
-        Width = 125
-        Caption = 'Create group'
-        OnClick = homeCreateGroupButtonClick
-        TabOrder = 0
-      end
-      object homeCreateChatButton: TButton
-        Left = 350
-        Height = 25
-        Top = 72
-        Width = 125
-        Caption = 'Create chat'
-        OnClick = homeCreateChatButtonClick
-        TabOrder = 1
-      end
-    end
-    object TabSheet2: TTabSheet
-      Caption = 'Account'
-      ClientHeight = 902
-      ClientWidth = 670
-      object accountFirstNameEdit: TEdit
-        Left = 190
-        Height = 27
-        Top = 175
-        Width = 290
-        TabOrder = 0
-      end
-      object accountLastNameEdit: TEdit
-        Left = 190
-        Height = 27
-        Top = 240
-        Width = 290
-        TabOrder = 1
-      end
-      object accountUsernameEdit: TEdit
-        Left = 190
-        Height = 27
-        Top = 305
-        Width = 290
-        TabOrder = 2
-      end
-      object accountUpdateButton: TButton
-        Left = 190
-        Height = 25
-        Top = 480
-        Width = 75
-        Caption = 'Update'
-        OnClick = accountUpdateButtonClick
-        TabOrder = 3
-      end
-      object Label7: TLabel
-        Left = 190
-        Height = 17
-        Top = 152
-        Width = 72
-        Caption = 'FIrst name'
-        ParentColor = False
-      end
-      object Label8: TLabel
-        Left = 190
-        Height = 17
-        Top = 217
-        Width = 70
-        Caption = 'Last name'
-        ParentColor = False
-      end
-      object Label9: TLabel
-        Left = 190
-        Height = 17
-        Top = 284
-        Width = 69
-        Caption = 'Username'
-        ParentColor = False
-      end
-      object accountNewPasswordEdit: TEdit
-        Left = 190
-        Height = 28
-        Top = 370
-        Width = 290
-        EchoMode = emPassword
-        Font.Height = -15
-        Font.Name = 'Courier'
-        ParentFont = False
-        PasswordChar = '*'
-        TabOrder = 4
-      end
-      object accountPasswordEdit: TEdit
-        Left = 190
-        Height = 28
-        Top = 435
-        Width = 290
-        EchoMode = emPassword
-        Font.Height = -15
-        Font.Name = 'Courier'
-        ParentFont = False
-        PasswordChar = '*'
-        TabOrder = 5
-      end
-      object Label10: TLabel
-        Left = 190
-        Height = 17
-        Top = 413
-        Width = 123
-        Caption = 'Current password'
-        ParentColor = False
-      end
-      object Label11: TLabel
-        Left = 190
-        Height = 17
-        Top = 348
-        Width = 101
-        Caption = 'New password'
-        ParentColor = False
-      end
-    end
-    object TabSheet3: TTabSheet
-      Caption = 'Login'
-      ClientHeight = 902
-      ClientWidth = 670
-      object loginLoginButton: TButton
-        Left = 190
-        Height = 25
-        Top = 285
-        Width = 75
+      object TabSheet3: TTabSheet
         Caption = 'Login'
-        OnClick = loginLoginButtonClick
-        TabOrder = 0
+        ClientHeight = 902
+        ClientWidth = 670
+        object loginLoginButton: TButton
+          Left = 190
+          Height = 25
+          Top = 285
+          Width = 75
+          Caption = 'Login'
+          OnClick = loginLoginButtonClick
+          TabOrder = 0
+        end
+        object loginUsernameEdit: TEdit
+          Left = 190
+          Height = 27
+          Top = 175
+          Width = 290
+          TabOrder = 1
+        end
+        object loginPasswordEdit: TEdit
+          Left = 190
+          Height = 28
+          Top = 240
+          Width = 290
+          EchoMode = emPassword
+          Font.Height = -15
+          Font.Name = 'Courier'
+          ParentFont = False
+          PasswordChar = '*'
+          TabOrder = 2
+        end
+        object Label2: TLabel
+          Left = 190
+          Height = 17
+          Top = 216
+          Width = 67
+          Caption = 'Password'
+          ParentColor = False
+        end
+        object Label3: TLabel
+          Left = 190
+          Height = 17
+          Top = 152
+          Width = 69
+          Caption = 'Username'
+          ParentColor = False
+        end
       end
-      object loginUsernameEdit: TEdit
-        Left = 190
-        Height = 27
-        Top = 175
-        Width = 290
-        TabOrder = 1
-      end
-      object loginPasswordEdit: TEdit
-        Left = 190
-        Height = 28
-        Top = 240
-        Width = 290
-        EchoMode = emPassword
-        Font.Height = -15
-        Font.Name = 'Courier'
-        ParentFont = False
-        PasswordChar = '*'
-        TabOrder = 2
-      end
-      object Label2: TLabel
-        Left = 190
-        Height = 17
-        Top = 216
-        Width = 67
-        Caption = 'Password'
-        ParentColor = False
-      end
-      object Label3: TLabel
-        Left = 190
-        Height = 17
-        Top = 152
-        Width = 69
-        Caption = 'Username'
-        ParentColor = False
-      end
-    end
-    object TabSheet4: TTabSheet
-      Caption = 'Signup'
-      ClientHeight = 846
-      ClientWidth = 650
-      object signupFirstNameEdit: TEdit
-        Left = 190
-        Height = 56
-        Top = 175
-        Width = 290
-        TabOrder = 0
-      end
-      object signupLastNameEdit: TEdit
-        Left = 190
-        Height = 56
-        Top = 240
-        Width = 290
-        TabOrder = 1
-      end
-      object signupUsernameEdit: TEdit
-        Left = 190
-        Height = 56
-        Top = 305
-        Width = 290
-        TabOrder = 2
-      end
-      object signupPasswordEdit: TEdit
-        Left = 190
-        Height = 25
-        Top = 370
-        Width = 290
-        EchoMode = emPassword
-        Font.Height = -15
-        Font.Name = 'Courier'
-        ParentFont = False
-        PasswordChar = '*'
-        TabOrder = 3
-      end
-      object signupSignupButton: TButton
-        Left = 190
-        Height = 25
-        Top = 415
-        Width = 75
+      object TabSheet4: TTabSheet
         Caption = 'Signup'
-        OnClick = signupSignupButtonClick
-        TabOrder = 4
+        ClientHeight = 846
+        ClientWidth = 650
+        object signupFirstNameEdit: TEdit
+          Left = 190
+          Height = 56
+          Top = 175
+          Width = 290
+          TabOrder = 0
+        end
+        object signupLastNameEdit: TEdit
+          Left = 190
+          Height = 56
+          Top = 240
+          Width = 290
+          TabOrder = 1
+        end
+        object signupUsernameEdit: TEdit
+          Left = 190
+          Height = 56
+          Top = 305
+          Width = 290
+          TabOrder = 2
+        end
+        object signupPasswordEdit: TEdit
+          Left = 190
+          Height = 25
+          Top = 370
+          Width = 290
+          EchoMode = emPassword
+          Font.Height = -15
+          Font.Name = 'Courier'
+          ParentFont = False
+          PasswordChar = '*'
+          TabOrder = 3
+        end
+        object signupSignupButton: TButton
+          Left = 190
+          Height = 25
+          Top = 415
+          Width = 75
+          Caption = 'Signup'
+          OnClick = signupSignupButtonClick
+          TabOrder = 4
+        end
+        object Label1: TLabel
+          Left = 190
+          Height = 48
+          Top = 152
+          Width = 165
+          Caption = 'First name'
+          ParentColor = False
+        end
+        object Label4: TLabel
+          Left = 190
+          Height = 48
+          Top = 216
+          Width = 160
+          Caption = 'Last name'
+          ParentColor = False
+        end
+        object Label5: TLabel
+          Left = 190
+          Height = 48
+          Top = 284
+          Width = 160
+          Caption = 'Username'
+          ParentColor = False
+        end
+        object Label6: TLabel
+          Left = 190
+          Height = 48
+          Top = 349
+          Width = 148
+          Caption = 'Password'
+          ParentColor = False
+        end
       end
-      object Label1: TLabel
-        Left = 190
-        Height = 48
-        Top = 152
-        Width = 165
-        Caption = 'First name'
-        ParentColor = False
+      object TabSheet5: TTabSheet
+        Caption = 'Group'
+        ClientHeight = 846
+        ClientWidth = 650
+        object Label22: TLabel
+          Left = 40
+          Height = 22
+          Top = 128
+          Width = 54
+          Caption = 'Chats'
+          Font.Height = -19
+          Font.Name = 'Sans'
+          Font.Style = [fsBold]
+          ParentColor = False
+          ParentFont = False
+        end
+        object Label23: TLabel
+          Left = 350
+          Height = 22
+          Top = 128
+          Width = 87
+          Caption = 'Members'
+          Font.Height = -19
+          Font.Name = 'Sans'
+          Font.Style = [fsBold]
+          ParentColor = False
+          ParentFont = False
+        end
+        object groupInviteMemberButton: TButton
+          Left = 350
+          Height = 25
+          Top = 160
+          Width = 125
+          Caption = 'Invite member'
+          OnClick = groupInviteMemberButtonClick
+          TabOrder = 0
+        end
+        object groupCreateChatButton: TButton
+          Left = 40
+          Height = 25
+          Top = 160
+          Width = 125
+          Caption = 'Create chat'
+          OnClick = groupCreateChatButtonClick
+          TabOrder = 1
+        end
+        object groupNameLabel: TLabel
+          Left = 40
+          Height = 1
+          Top = 40
+          Width = 1
+          Font.Height = -24
+          Font.Name = 'Sans'
+          Font.Style = [fsBold]
+          ParentColor = False
+          ParentFont = False
+        end
+        object groupDescriptionLabel: TLabel
+          Left = 40
+          Height = 1
+          Top = 80
+          Width = 1
+          ParentColor = False
+        end
+        object groupEditButton: TButton
+          Left = 563
+          Height = 25
+          Top = 10
+          Width = 75
+          Caption = 'Edit'
+          OnClick = groupEditButtonClick
+          TabOrder = 2
+        end
       end
-      object Label4: TLabel
-        Left = 190
-        Height = 48
-        Top = 216
-        Width = 160
-        Caption = 'Last name'
-        ParentColor = False
+      object TabSheet6: TTabSheet
+        Caption = 'Chat'
+        ClientHeight = 473
+        ClientWidth = 650
+        object Label24: TLabel
+          Left = 40
+          Height = 22
+          Top = 128
+          Width = 95
+          Caption = 'Messages'
+          Font.Height = -19
+          Font.Name = 'Sans'
+          Font.Style = [fsBold]
+          ParentColor = False
+          ParentFont = False
+        end
+        object Label25: TLabel
+          Left = 350
+          Height = 22
+          Top = 128
+          Width = 87
+          Caption = 'Members'
+          Font.Height = -19
+          Font.Name = 'Sans'
+          Font.Style = [fsBold]
+          ParentColor = False
+          ParentFont = False
+        end
+        object chatNameLabel: TLabel
+          Left = 40
+          Height = 1
+          Top = 40
+          Width = 1
+          Font.Height = -24
+          Font.Name = 'Sans'
+          Font.Style = [fsBold]
+          ParentColor = False
+          ParentFont = False
+        end
+        object chatInviteMemberButton: TButton
+          Left = 350
+          Height = 25
+          Top = 160
+          Width = 125
+          Caption = 'Invite member'
+          OnClick = chatInviteMemberButtonClick
+          TabOrder = 0
+        end
+        object chatNewMessageButton: TButton
+          Left = 40
+          Height = 25
+          Top = 160
+          Width = 125
+          Caption = 'New message'
+          OnClick = chatNewMessageButtonClick
+          TabOrder = 1
+        end
+        object chatEditButton: TButton
+          Left = 563
+          Height = 25
+          Top = 10
+          Width = 75
+          Caption = 'Edit'
+          OnClick = chatEditButtonClick
+          TabOrder = 2
+        end
       end
-      object Label5: TLabel
-        Left = 190
-        Height = 48
-        Top = 284
-        Width = 160
-        Caption = 'Username'
-        ParentColor = False
-      end
-      object Label6: TLabel
-        Left = 190
-        Height = 48
-        Top = 349
-        Width = 148
-        Caption = 'Password'
-        ParentColor = False
-      end
-    end
-    object TabSheet5: TTabSheet
-      Caption = 'Group'
-      ClientHeight = 846
-      ClientWidth = 650
-      object Label22: TLabel
-        Left = 40
-        Height = 22
-        Top = 128
-        Width = 54
-        Caption = 'Chats'
-        Font.Height = -19
-        Font.Name = 'Sans'
-        Font.Style = [fsBold]
-        ParentColor = False
-        ParentFont = False
-      end
-      object Label23: TLabel
-        Left = 350
-        Height = 22
-        Top = 128
-        Width = 87
-        Caption = 'Members'
-        Font.Height = -19
-        Font.Name = 'Sans'
-        Font.Style = [fsBold]
-        ParentColor = False
-        ParentFont = False
-      end
-      object groupInviteMemberButton: TButton
-        Left = 350
-        Height = 25
-        Top = 160
-        Width = 125
-        Caption = 'Invite member'
-        OnClick = groupInviteMemberButtonClick
-        TabOrder = 0
-      end
-      object groupCreateChatButton: TButton
-        Left = 40
-        Height = 25
-        Top = 160
-        Width = 125
+      object TabSheet7: TTabSheet
         Caption = 'Create chat'
-        OnClick = groupCreateChatButtonClick
-        TabOrder = 1
+        ClientHeight = 846
+        ClientWidth = 650
+        object createChatNameEdit: TEdit
+          Left = 190
+          Height = 56
+          Top = 175
+          Width = 290
+          TabOrder = 0
+        end
+        object createChatGroupEdit: TEdit
+          Left = 190
+          Height = 56
+          Top = 240
+          Width = 290
+          TabOrder = 1
+        end
+        object createChatCreateButton: TButton
+          Left = 190
+          Height = 25
+          Top = 285
+          Width = 75
+          Caption = 'Create'
+          OnClick = createChatCreateButtonClick
+          TabOrder = 2
+        end
+        object Label14: TLabel
+          Left = 190
+          Height = 48
+          Top = 152
+          Width = 95
+          Caption = 'Name'
+          ParentColor = False
+        end
+        object Label15: TLabel
+          Left = 190
+          Height = 48
+          Top = 216
+          Width = 263
+          Caption = 'Group (optional)'
+          ParentColor = False
+        end
       end
-      object groupNameLabel: TLabel
-        Left = 40
-        Height = 1
-        Top = 40
-        Width = 1
-        Font.Height = -24
-        Font.Name = 'Sans'
-        Font.Style = [fsBold]
-        ParentColor = False
-        ParentFont = False
+      object TabSheet8: TTabSheet
+        Caption = 'Create group'
+        ClientHeight = 846
+        ClientWidth = 650
+        object createGroupNameEdit: TEdit
+          Left = 190
+          Height = 56
+          Top = 175
+          Width = 290
+          TabOrder = 0
+        end
+        object createGroupDescriptionEdit: TEdit
+          Left = 190
+          Height = 56
+          Top = 240
+          Width = 290
+          TabOrder = 1
+        end
+        object Label16: TLabel
+          Left = 190
+          Height = 48
+          Top = 152
+          Width = 95
+          Caption = 'Name'
+          ParentColor = False
+        end
+        object Label17: TLabel
+          Left = 190
+          Height = 48
+          Top = 217
+          Width = 181
+          Caption = 'Description'
+          ParentColor = False
+        end
+        object createGroupCreateButton: TButton
+          Left = 190
+          Height = 25
+          Top = 285
+          Width = 75
+          Caption = 'Create'
+          OnClick = createGroupCreateButtonClick
+          TabOrder = 2
+        end
       end
-      object groupDescriptionLabel: TLabel
-        Left = 40
-        Height = 1
-        Top = 80
-        Width = 1
-        ParentColor = False
+      object TabSheet9: TTabSheet
+        Caption = 'Edit chat'
+        ClientHeight = 846
+        ClientWidth = 650
+        object editChatNameEdit: TEdit
+          Left = 190
+          Height = 56
+          Top = 175
+          Width = 290
+          TabOrder = 0
+        end
+        object editChatGroupEdit: TEdit
+          Left = 190
+          Height = 56
+          Top = 240
+          Width = 290
+          TabOrder = 1
+        end
+        object editChatUpdateButton: TButton
+          Left = 190
+          Height = 25
+          Top = 285
+          Width = 75
+          HelpType = htKeyword
+          Caption = 'Update'
+          OnClick = editChatUpdateButtonClick
+          TabOrder = 2
+        end
+        object Label18: TLabel
+          Left = 190
+          Height = 48
+          Top = 152
+          Width = 95
+          Caption = 'Name'
+          ParentColor = False
+        end
+        object Label19: TLabel
+          Left = 190
+          Height = 48
+          Top = 216
+          Width = 263
+          Caption = 'Group (optional)'
+          ParentColor = False
+        end
       end
-      object groupEditButton: TButton
-        Left = 563
-        Height = 25
-        Top = 10
-        Width = 75
-        Caption = 'Edit'
-        OnClick = groupEditButtonClick
-        TabOrder = 2
+      object TabSheet10: TTabSheet
+        Caption = 'Edit group'
+        ClientHeight = 846
+        ClientWidth = 650
+        object editGroupNameEdit: TEdit
+          Left = 190
+          Height = 56
+          Top = 175
+          Width = 290
+          TabOrder = 0
+        end
+        object editGroupDescriptionEdit: TEdit
+          Left = 190
+          Height = 56
+          Top = 240
+          Width = 290
+          TabOrder = 1
+        end
+        object editGroupUpdateButton: TButton
+          Left = 190
+          Height = 25
+          Top = 285
+          Width = 75
+          Caption = 'Update'
+          OnClick = editGroupUpdateButtonClick
+          TabOrder = 2
+        end
+        object Label20: TLabel
+          Left = 190
+          Height = 48
+          Top = 152
+          Width = 95
+          Caption = 'Name'
+          ParentColor = False
+        end
+        object Label21: TLabel
+          Left = 190
+          Height = 48
+          Top = 216
+          Width = 181
+          Caption = 'Description'
+          ParentColor = False
+        end
       end
-    end
-    object TabSheet6: TTabSheet
-      Caption = 'Chat'
-      ClientHeight = 846
-      ClientWidth = 650
-      object Label24: TLabel
-        Left = 40
-        Height = 22
-        Top = 128
-        Width = 95
-        Caption = 'Messages'
-        Font.Height = -19
-        Font.Name = 'Sans'
-        Font.Style = [fsBold]
-        ParentColor = False
-        ParentFont = False
+      object TabSheet11: TTabSheet
+        Caption = 'New chat invitation'
+        ClientHeight = 846
+        ClientWidth = 650
+        object newChatInvitationUsernameEdit: TEdit
+          Left = 190
+          Height = 56
+          Top = 175
+          Width = 290
+          TabOrder = 0
+        end
+        object newChatInvitationInviteButton: TButton
+          Left = 190
+          Height = 25
+          Top = 220
+          Width = 75
+          Caption = 'Invite'
+          OnClick = newChatInvitationInviteButtonClick
+          TabOrder = 1
+        end
+        object Label26: TLabel
+          Left = 190
+          Height = 48
+          Top = 152
+          Width = 160
+          Caption = 'Username'
+          ParentColor = False
+        end
       end
-      object Label25: TLabel
-        Left = 350
-        Height = 22
-        Top = 128
-        Width = 87
-        Caption = 'Members'
-        Font.Height = -19
-        Font.Name = 'Sans'
-        Font.Style = [fsBold]
-        ParentColor = False
-        ParentFont = False
-      end
-      object chatNameLabel: TLabel
-        Left = 40
-        Height = 1
-        Top = 40
-        Width = 1
-        Font.Height = -24
-        Font.Name = 'Sans'
-        Font.Style = [fsBold]
-        ParentColor = False
-        ParentFont = False
-      end
-      object chatInviteMemberButton: TButton
-        Left = 350
-        Height = 25
-        Top = 160
-        Width = 125
-        Caption = 'Invite member'
-        OnClick = chatInviteMemberButtonClick
-        TabOrder = 0
-      end
-      object chatNewMessageButton: TButton
-        Left = 40
-        Height = 25
-        Top = 160
-        Width = 125
-        Caption = 'New message'
-        OnClick = chatNewMessageButtonClick
-        TabOrder = 1
-      end
-      object chatEditButton: TButton
-        Left = 563
-        Height = 25
-        Top = 10
-        Width = 75
-        Caption = 'Edit'
-        OnClick = chatEditButtonClick
-        TabOrder = 2
-      end
-    end
-    object TabSheet7: TTabSheet
-      Caption = 'Create chat'
-      ClientHeight = 846
-      ClientWidth = 650
-      object createChatNameEdit: TEdit
-        Left = 190
-        Height = 56
-        Top = 175
-        Width = 290
-        TabOrder = 0
-      end
-      object createChatGroupEdit: TEdit
-        Left = 190
-        Height = 56
-        Top = 240
-        Width = 290
-        TabOrder = 1
-      end
-      object createChatCreateButton: TButton
-        Left = 190
-        Height = 25
-        Top = 285
-        Width = 75
-        Caption = 'Create'
-        OnClick = createChatCreateButtonClick
-        TabOrder = 2
-      end
-      object Label14: TLabel
-        Left = 190
-        Height = 48
-        Top = 152
-        Width = 95
-        Caption = 'Name'
-        ParentColor = False
-      end
-      object Label15: TLabel
-        Left = 190
-        Height = 48
-        Top = 216
-        Width = 263
-        Caption = 'Group (optional)'
-        ParentColor = False
-      end
-    end
-    object TabSheet8: TTabSheet
-      Caption = 'Create group'
-      ClientHeight = 846
-      ClientWidth = 650
-      object createGroupNameEdit: TEdit
-        Left = 190
-        Height = 56
-        Top = 175
-        Width = 290
-        TabOrder = 0
-      end
-      object createGroupDescriptionEdit: TEdit
-        Left = 190
-        Height = 56
-        Top = 240
-        Width = 290
-        TabOrder = 1
-      end
-      object Label16: TLabel
-        Left = 190
-        Height = 48
-        Top = 152
-        Width = 95
-        Caption = 'Name'
-        ParentColor = False
-      end
-      object Label17: TLabel
-        Left = 190
-        Height = 48
-        Top = 217
-        Width = 181
-        Caption = 'Description'
-        ParentColor = False
-      end
-      object createGroupCreateButton: TButton
-        Left = 190
-        Height = 25
-        Top = 285
-        Width = 75
-        Caption = 'Create'
-        OnClick = createGroupCreateButtonClick
-        TabOrder = 2
-      end
-    end
-    object TabSheet9: TTabSheet
-      Caption = 'Edit chat'
-      ClientHeight = 846
-      ClientWidth = 650
-      object editChatNameEdit: TEdit
-        Left = 190
-        Height = 56
-        Top = 175
-        Width = 290
-        TabOrder = 0
-      end
-      object editChatGroupEdit: TEdit
-        Left = 190
-        Height = 56
-        Top = 240
-        Width = 290
-        TabOrder = 1
-      end
-      object editChatUpdateButton: TButton
-        Left = 190
-        Height = 25
-        Top = 285
-        Width = 75
-        HelpType = htKeyword
-        Caption = 'Update'
-        OnClick = editChatUpdateButtonClick
-        TabOrder = 2
-      end
-      object Label18: TLabel
-        Left = 190
-        Height = 48
-        Top = 152
-        Width = 95
-        Caption = 'Name'
-        ParentColor = False
-      end
-      object Label19: TLabel
-        Left = 190
-        Height = 48
-        Top = 216
-        Width = 263
-        Caption = 'Group (optional)'
-        ParentColor = False
-      end
-    end
-    object TabSheet10: TTabSheet
-      Caption = 'Edit group'
-      ClientHeight = 846
-      ClientWidth = 650
-      object editGroupNameEdit: TEdit
-        Left = 190
-        Height = 56
-        Top = 175
-        Width = 290
-        TabOrder = 0
-      end
-      object editGroupDescriptionEdit: TEdit
-        Left = 190
-        Height = 56
-        Top = 240
-        Width = 290
-        TabOrder = 1
-      end
-      object editGroupUpdateButton: TButton
-        Left = 190
-        Height = 25
-        Top = 285
-        Width = 75
-        Caption = 'Update'
-        OnClick = editGroupUpdateButtonClick
-        TabOrder = 2
-      end
-      object Label20: TLabel
-        Left = 190
-        Height = 48
-        Top = 152
-        Width = 95
-        Caption = 'Name'
-        ParentColor = False
-      end
-      object Label21: TLabel
-        Left = 190
-        Height = 48
-        Top = 216
-        Width = 181
-        Caption = 'Description'
-        ParentColor = False
+      object TabSheet12: TTabSheet
+        Caption = 'New group invitation'
+        ClientHeight = 846
+        ClientWidth = 650
+        object Label27: TLabel
+          Left = 190
+          Height = 48
+          Top = 152
+          Width = 160
+          Caption = 'Username'
+          ParentColor = False
+        end
+        object newGroupInvitationUsernameEdit: TEdit
+          Left = 190
+          Height = 56
+          Top = 175
+          Width = 290
+          TabOrder = 0
+        end
+        object newGroupInvitationIviteButton: TButton
+          Left = 190
+          Height = 25
+          Top = 220
+          Width = 75
+          Caption = 'Invite'
+          OnClick = newGroupInvitationIviteButtonClick
+          TabOrder = 1
+        end
       end
     end
-    object TabSheet11: TTabSheet
-      Caption = 'New chat invitation'
-      ClientHeight = 846
-      ClientWidth = 650
-      object newChatInvitationUsernameEdit: TEdit
-        Left = 190
-        Height = 56
-        Top = 175
-        Width = 290
-        TabOrder = 0
-      end
-      object newChatInvitationInviteButton: TButton
-        Left = 190
-        Height = 25
-        Top = 220
-        Width = 75
-        Caption = 'Invite'
-        OnClick = newChatInvitationInviteButtonClick
-        TabOrder = 1
-      end
-      object Label26: TLabel
-        Left = 190
-        Height = 48
-        Top = 152
-        Width = 160
-        Caption = 'Username'
-        ParentColor = False
-      end
+    object signupButton: TButton
+      Left = 592
+      Height = 25
+      Top = 8
+      Width = 75
+      Caption = 'Signup'
+      OnClick = signupButtonClick
+      TabOrder = 1
     end
-    object TabSheet12: TTabSheet
-      Caption = 'New group invitation'
-      ClientHeight = 846
-      ClientWidth = 650
-      object Label27: TLabel
-        Left = 190
-        Height = 48
-        Top = 152
-        Width = 160
-        Caption = 'Username'
-        ParentColor = False
-      end
-      object newGroupInvitationUsernameEdit: TEdit
-        Left = 190
-        Height = 56
-        Top = 175
-        Width = 290
-        TabOrder = 0
-      end
-      object newGroupInvitationIviteButton: TButton
-        Left = 190
-        Height = 25
-        Top = 220
-        Width = 75
-        Caption = 'Invite'
-        OnClick = newGroupInvitationIviteButtonClick
-        TabOrder = 1
-      end
+    object backButton: TButton
+      Left = 8
+      Height = 25
+      Top = 8
+      Width = 75
+      Caption = 'Back'
+      Enabled = False
+      OnClick = backButtonClick
+      TabOrder = 2
+    end
+    object accountButton: TButton
+      Left = 512
+      Height = 25
+      Top = 8
+      Width = 75
+      Caption = 'Account'
+      OnClick = accountButtonClick
+      TabOrder = 3
+      Visible = False
+    end
+    object signoutButton: TButton
+      Left = 592
+      Height = 25
+      Top = 8
+      Width = 75
+      Caption = 'Signout'
+      OnClick = signoutButtonClick
+      TabOrder = 4
+      Visible = False
+    end
+    object usernameLabel: TLabel
+      Left = 170
+      Height = 1
+      Top = 13
+      Width = 1
+      Font.Height = -13
+      Font.Name = 'Sans'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+    end
+    object userLabel: TLabel
+      Left = 96
+      Height = 48
+      Top = 12
+      Width = 306
+      Caption = 'Not signed in yet ...'
+      ParentColor = False
+    end
+    object loginButton: TButton
+      Left = 512
+      Height = 25
+      Top = 8
+      Width = 75
+      Caption = 'Login'
+      OnClick = loginButtonClick
+      TabOrder = 5
     end
   end
 end

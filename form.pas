@@ -69,6 +69,7 @@ type
     Label7: TLabel;
     Label8: TLabel;
     Label9: TLabel;
+    ScrollBox1: TScrollBox;
     signoutButton: TButton;
     Label1: TLabel;
     Label4: TLabel;
@@ -118,6 +119,7 @@ type
     procedure homeCreateGroupButtonClick(Sender: TObject);
     procedure newChatInvitationInviteButtonClick(Sender: TObject);
     procedure newGroupInvitationIviteButtonClick(Sender: TObject);
+    procedure PageControl1Change(Sender: TObject);
     procedure signoutButtonClick(Sender: TObject);
     procedure updateTitlebar();
     procedure FormCreate(Sender: TObject);
@@ -189,21 +191,8 @@ begin
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);
-var scrollbar: TScrollbar;
 begin
   PageControl1.ShowTabs := false;
-  scrollbar := TScrollbar.create(Form1.TabSheet1);
-  scrollbar.kind := sbVertical;
-  scrollbar.align := alRight;
-  Form1.TabSheet1.insertControl(scrollbar);
-  scrollbar := TScrollbar.create(Form1.TabSheet5);
-  scrollbar.kind := sbVertical;
-  scrollbar.align := alRight;
-  Form1.TabSheet5.insertControl(scrollbar);
-  scrollbar := TScrollbar.create(Form1.TabSheet6);
-  scrollbar.kind := sbVertical;
-  scrollbar.align := alRight;
-  Form1.TabSheet6.insertControl(scrollbar);
   currentView.switch('Login', 0);
 end;
 
@@ -436,6 +425,11 @@ begin
   end
   else
     showMessage('User does not exist');
+end;
+
+procedure TForm1.PageControl1Change(Sender: TObject);
+begin
+
 end;
 
 { TView }
