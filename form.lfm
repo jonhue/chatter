@@ -1,11 +1,11 @@
 object Form1: TForm1
-  Left = 1905
-  Height = 1982
-  Top = 0
-  Width = 1914
+  Left = 1004
+  Height = 973
+  Top = 24
+  Width = 674
   Caption = 'Chatter'
-  ClientHeight = 1982
-  ClientWidth = 1914
+  ClientHeight = 973
+  ClientWidth = 674
   DesignTimePPI = 288
   OnCreate = FormCreate
   LCLVersion = '1.8.0.6'
