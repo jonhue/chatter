@@ -145,7 +145,6 @@ type
 
 var
   Form1: TForm1;
-  scrollbar: TScrollbar;
   currentView: TView;
   currentUser: TUser;
 
@@ -178,8 +177,21 @@ begin
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);
+var scrollbar: TScrollbar;
 begin
   PageControl1.ShowTabs := false;
+  scrollbar := TScrollbar.create(Form1.TabSheet1);
+  scrollbar.kind := sbVertical;
+  scrollbar.align := alRight;
+  Form1.TabSheet1.insertControl(scrollbar);
+  scrollbar := TScrollbar.create(Form1.TabSheet2);
+  scrollbar.kind := sbVertical;
+  scrollbar.align := alRight;
+  Form1.TabSheet2.insertControl(scrollbar);
+  scrollbar := TScrollbar.create(Form1.TabSheet3);
+  scrollbar.kind := sbVertical;
+  scrollbar.align := alRight;
+  Form1.TabSheet3.insertControl(scrollbar);
   currentView.switch('Login', 0);
 end;
 
@@ -384,10 +396,6 @@ begin
     Form1.backButton.Enabled := true
   else
     Form1.backButton.Enabled := false;
-  scrollbar:=TScrollbar.create(Form1.TabSheet6);
-  scrollbar.kind := sbVertical;
-  scrollbar.align := alRight;
-  Form1.TabSheet6.InsertControl(scrollbar);
   result := currentView.initialize();
 end;
 
@@ -574,13 +582,13 @@ begin
     chat := findChat(self.getParameter())[0];
     Form1.chatNameLabel.caption := chat.getName();
     chatMessages := findMessageByChat(chat);
-    toTop := 0;
+    toTop := 250;
     for i:=0 to length(chatMessages) - 1 do
     begin
       panel := TPanel.create(Form1);
       panel.parent := Form1.TabSheet6;
       panel.left := 40;
-      panel.top := 215 + toTop;
+      panel.top := toTop;
       toTop := 0;
       panel.width := 275;
       panel.caption := '';
