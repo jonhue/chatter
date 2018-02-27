@@ -4,8 +4,8 @@ object Form1: TForm1
   Top = 24
   Width = 674
   Caption = 'Chatter'
-  ClientHeight = 973
-  ClientWidth = 674
+  ClientHeight = 0
+  ClientWidth = 0
   DesignTimePPI = 288
   OnCreate = FormCreate
   LCLVersion = '1.8.0.6'
@@ -27,7 +27,7 @@ object Form1: TForm1
     ParentColor = False
   end
   object usernameLabel: TLabel
-    Left = 190
+    Left = 170
     Height = 1
     Top = 13
     Width = 1

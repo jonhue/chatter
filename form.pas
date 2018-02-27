@@ -145,6 +145,7 @@ type
 
 var
   Form1: TForm1;
+  scrollbar: TScrollbar;
   currentView: TView;
   currentUser: TUser;
 
@@ -365,9 +366,14 @@ end;
 
 function TView.switch(c: string; p: integer): boolean;
 begin
-  currentView := TView.create(c, currentView, p);
+  if (currentView <> nil) and (currentView.getCurrent() = c) then
+    currentView.setParameter(p)
+  else
+    currentView := TView.create(c, currentView, p);
   if currentView.getReferrer() <> nil then
-    Form1.backButton.Enabled := true;
+    Form1.backButton.Enabled := true
+  else
+    Form1.backButton.Enabled := false;
   result := currentView.initialize();
 end;
 
@@ -378,6 +384,10 @@ begin
     Form1.backButton.Enabled := true
   else
     Form1.backButton.Enabled := false;
+  scrollbar:=TScrollbar.create(Form1.TabSheet6);
+  scrollbar.kind := sbVertical;
+  scrollbar.align := alRight;
+  Form1.TabSheet6.InsertControl(scrollbar);
   result := currentView.initialize();
 end;
 
@@ -400,7 +410,19 @@ begin
 end;
 
 function TView.initialize(): boolean;
-var userGroups: TGroupArray; userChats: TChatArray; groupChats: TChatArray; chatMessages: TMessageArray; groupUserGroups: TUserGroupArray; chatUserChats: TUserChatArray; group: TGroup; chat: TChat; i: integer; panel: TPanel; text: TLabel; button: TButton;
+var
+  userGroups: TGroupArray;
+  userChats: TChatArray;
+  groupChats: TChatArray;
+  chatMessages: TMessageArray;
+  groupUserGroups: TUserGroupArray;
+  chatUserChats: TUserChatArray;
+  group: TGroup;
+  chat: TChat;
+  i, j, toTop: integer;
+  panel: TPanel;
+  text: TLabel;
+  button: TButton;
 begin
   if (currentUser = nil) and ( (self.getCurrent() = 'Home') or (self.getCurrent() = 'Account') or (self.getCurrent() = 'Group') or (self.getCurrent() = 'Chat') or (self.getCurrent() = 'Create chat') or (self.getCurrent() = 'Create group') or (self.getCurrent() = 'Edit chat') or (self.getCurrent() = 'Edit group') or (self.getCurrent() = 'Invitations') or (self.getCurrent() = 'New invitation') ) then
   begin
@@ -430,7 +452,7 @@ begin
       text.parent := panel;
       text.left := 15;
       text.top := 15;
-      text.font.size := 16;
+      text.font.size := 14;
       text.font.style := text.font.style + [fsBold];
       text.caption := userGroups[i].getName();
       text := TLabel.create(Form1);
@@ -460,7 +482,7 @@ begin
       text.parent := panel;
       text.left := 15;
       text.top := 15;
-      text.font.size := 16;
+      text.font.size := 14;
       text.font.style := text.font.style + [fsBold];
       text.caption := userChats[i].getName();
       if ( userChats[i].getGroupId() <> 0) and ( length(findGroup(userChats[i].getGroupId())) > 0 ) then
@@ -499,18 +521,18 @@ begin
       text.parent := panel;
       text.left := 15;
       text.top := 15;
-      text.font.size := 16;
+      text.font.size := 14;
       text.font.style := text.font.style + [fsBold];
       text.caption := groupChats[i].getName();
       text := TLabel.create(Form1);
       text.parent := panel;
       text.left := 15;
-      text.top := 37;
+      text.top := 45;
       text.caption := group.getName();
       button := TButton.create(Form1);
       button.parent := panel;
       button.left := 15;
-      button.top := 60;
+      button.top := 70;
       button.caption := 'Open';
       button.HelpContext := groupChats[i].getId();
       button.OnClick := @openChatButtonClick;
@@ -529,20 +551,20 @@ begin
       text.parent := panel;
       text.left := 15;
       text.top := 15;
-      text.font.size := 16;
+      text.font.size := 14;
       text.font.style := text.font.style + [fsBold];
       text.caption := findUser(groupUserGroups[i].getUserId())[0].getFirstName() + ' ' + findUser(groupUserGroups[i].getUserId())[0].getLastName();
       text := TLabel.create(Form1);
       text.parent := panel;
       text.left := 15;
-      text.top := 37;
+      text.top := 45;
       text.caption := '@' + findUser(groupUserGroups[i].getUserId())[0].getUsername();
       if findUser(groupUserGroups[i].getUserId())[0].getId() = group.getUserId() then
       begin
         text := TLabel.create(Form1);
         text.parent := panel;
         text.left := 15;
-        text.top := 60;
+        text.top := 70;
         text.caption := 'Admin';
       end;
     end;
@@ -552,27 +574,36 @@ begin
     chat := findChat(self.getParameter())[0];
     Form1.chatNameLabel.caption := chat.getName();
     chatMessages := findMessageByChat(chat);
+    toTop := 0;
     for i:=0 to length(chatMessages) - 1 do
     begin
       panel := TPanel.create(Form1);
       panel.parent := Form1.TabSheet6;
       panel.left := 40;
-      panel.top := 215 + (i * 100);
-      panel.height := 100;
+      panel.top := 215 + toTop;
+      toTop := 0;
       panel.width := 275;
       panel.caption := '';
       text := TLabel.create(Form1);
       text.parent := panel;
       text.left := 15;
       text.top := 15;
-      text.font.size := 16;
+      text.font.size := 14;
       text.font.style := text.font.style + [fsBold];
       text.caption := findUser(chatMessages[i].getUserId())[0].getFirstName + ' ' + findUser(chatMessages[i].getUserId())[0].getLastName + ' (@' + findUser(chatMessages[i].getUserId())[0].getUsername + ')';
-      text := TLabel.create(Form1);
-      text.parent := panel;
-      text.left := 15;
-      text.top := 37;
-      text.caption := chatMessages[i].getContent();
+      j := 0;
+      toTop := 45;
+      repeat
+        text := TLabel.create(Form1);
+        text.parent := panel;
+        text.left := 15;
+        text.top := toTop;
+        text.caption := copy(chatMessages[i].getContent(), j, j + 40);
+        inc(j, 40);
+        inc(toTop, 25);
+      until (j >= length(chatMessages[i].getContent()));
+      panel.height := toTop + 30;
+      toTop := panel.top;
     end;
     chatUserChats := findUserChatByChat(chat);
     for i:=0 to length(chatUserChats) - 1 do
@@ -588,20 +619,20 @@ begin
       text.parent := panel;
       text.left := 15;
       text.top := 15;
-      text.font.size := 16;
+      text.font.size := 14;
       text.font.style := text.font.style + [fsBold];
       text.caption := findUser(chatUserChats[i].getUserId())[0].getFirstName() + ' ' + findUser(chatUserChats[i].getUserId())[0].getLastName();
       text := TLabel.create(Form1);
       text.parent := panel;
       text.left := 15;
-      text.top := 37;
+      text.top := 45;
       text.caption := '@' + findUser(chatUserChats[i].getUserId())[0].getUsername();
       if findUser(chatUserChats[i].getUserId())[0].getId() = chat.getUserId() then
       begin
         text := TLabel.create(Form1);
         text.parent := panel;
         text.left := 15;
-        text.top := 60;
+        text.top := 70;
         text.caption := 'Admin';
       end;
     end;
