@@ -119,7 +119,6 @@ type
     procedure homeCreateGroupButtonClick(Sender: TObject);
     procedure newChatInvitationInviteButtonClick(Sender: TObject);
     procedure newGroupInvitationIviteButtonClick(Sender: TObject);
-    procedure PageControl1Change(Sender: TObject);
     procedure signoutButtonClick(Sender: TObject);
     procedure updateTitlebar();
     procedure FormCreate(Sender: TObject);
@@ -132,6 +131,29 @@ type
   public
     { public declarations }
   end;
+
+  { TRender }
+
+  TRender = class
+  private
+    title: string;
+    content: string;
+    buttonId: integer;
+    buttonView: string;
+  protected
+    function setTitle(t: string): string;
+    function setContent(c: string): string;
+    function setButtonId(bi: integer): integer;
+    function setButtonView(bv: string): string;
+  public
+    constructor create(t, c: string; bi: integer; bv: string);
+    function getTitle(): string;
+    function getContent(): string;
+    function getButtonId(): integer;
+    function getButtonView(): string;
+  end;
+
+  TRenderArray = array of TRender;
 
   { TView }
 
@@ -148,8 +170,10 @@ type
     constructor create(c: string; r: TView; p: integer);
     function switch(c: string; p: integer): boolean;
     function back(): boolean;
-    function getTabIndexFor(c: string): integer;
+    function getTabIndex(): integer;
+    function getTabSheet(): TTabSheet;
     function initialize(): boolean;
+    function render(column: integer; content: TRenderArray): boolean;
     function getCurrent(): string;
     function getReferrer(): TView;
     function getParameter(): integer;
@@ -426,9 +450,59 @@ begin
     showMessage('User does not exist');
 end;
 
-procedure TForm1.PageControl1Change(Sender: TObject);
-begin
+{ TRender }
 
+constructor TRender.create(t, c: string; bi: integer; bv: string);
+begin
+  inherited create();
+  self.setTitle(t);
+  self.setContent(c);
+  self.setButtonId(bi);
+  self.setButtonView(bv);
+end;
+
+function TRender.getTitle(): string;
+begin
+  result := self.title;
+end;
+
+function TRender.getContent(): string;
+begin
+  result := self.content;
+end;
+
+function TRender.getButtonId(): integer;
+begin
+  result := self.buttonId;
+end;
+
+function TRender.getButtonView(): string;
+begin
+  result := self.buttonView;
+end;
+
+function TRender.setTitle(t: string): string;
+begin
+  self.title := t;
+  result := self.getTitle();
+end;
+
+function TRender.setContent(c: string): string;
+begin
+  self.content := c;
+  result := self.getContent();
+end;
+
+function TRender.setButtonId(bi: integer): integer;
+begin
+  self.buttonId := bi;
+  result := self.getButtonId();
+end;
+
+function TRender.setButtonView(bv: string): string;
+begin
+  self.buttonView := bv;
+  result := self.getButtonView();
 end;
 
 { TView }
@@ -464,9 +538,9 @@ begin
   result := currentView.initialize();
 end;
 
-function TView.getTabIndexFor(c: string): integer;
+function TView.getTabIndex(): integer;
 begin
-  case c of
+  case self.getCurrent() of
     'Home': result := 0;
     'Account': result := 1;
     'Login': result := 2;
@@ -482,6 +556,24 @@ begin
   end;
 end;
 
+function TView.getTabSheet(): TTabSheet;
+begin
+  case self.getCurrent() of
+    'Home': result := Form1.TabSheet1;
+    'Account': result := Form1.TabSheet2;
+    'Login': result := Form1.TabSheet3;
+    'Signup': result := Form1.TabSheet4;
+    'Group': result := Form1.TabSheet5;
+    'Chat': result := Form1.TabSheet6;
+    'Create chat': result := Form1.TabSheet7;
+    'Create group': result := Form1.TabSheet8;
+    'Edit chat': result := Form1.TabSheet9;
+    'Edit group': result := Form1.TabSheet10;
+    'New chat invitation': result := Form1.TabSheet11;
+    'New group invitation': result := Form1.TabSheet12;
+  end;
+end;
+
 function TView.initialize(): boolean;
 var
   userGroups: TUserGroupArray;
@@ -492,12 +584,9 @@ var
   chatUserChats: TUserChatArray;
   group: TGroup;
   chat: TChat;
-  i, j, toTop, panelToTop: integer;
-  panel: TPanel;
-  text: TLabel;
-  button: TButton;
+  renderArray: TRenderArray;
+  i: integer;
 begin
-  panelToTop := 225;
   if (currentUser = nil) and ( (self.getCurrent() = 'Home') or (self.getCurrent() = 'Account') or (self.getCurrent() = 'Group') or (self.getCurrent() = 'Chat') or (self.getCurrent() = 'Create chat') or (self.getCurrent() = 'Create group') or (self.getCurrent() = 'Edit chat') or (self.getCurrent() = 'Edit group') or (self.getCurrent() = 'Invitations') or (self.getCurrent() = 'New invitation') ) then
   begin
     currentView.switch('Login', 0);
@@ -513,70 +602,31 @@ begin
   if self.getCurrent() = 'Home' then
   begin
     userGroups := findUserGroupByUser(currentUser);
+    setLength(renderArray, length(userGroups));
     for i:=0 to length(userGroups) - 1 do
     begin
-      panel := TPanel.create(Form1);
-      panel.parent := Form1.TabSheet1;
-      panel.left := 40;
-      panel.top := 125 + (i * 100);
-      panel.height := 100;
-      panel.width := 275;
-      panel.caption := '';
-      text := TLabel.create(Form1);
-      text.parent := panel;
-      text.left := 15;
-      text.top := 15;
-      text.font.size := 14;
-      text.font.style := text.font.style + [fsBold];
-      text.caption := findGroup(userGroups[i].getGroupId())[0].getName();
-      text := TLabel.create(Form1);
-      text.parent := panel;
-      text.left := 15;
-      text.top := 37;
-      text.caption := findGroup(userGroups[i].getGroupId())[0].getDescription();
-      button := TButton.create(Form1);
-      button.parent := panel;
-      button.left := 15;
-      button.top := 60;
-      button.caption := 'Open';
-      button.helpKeyword := 'Group';
-      button.helpContext := userGroups[i].getGroupId();
-      button.OnClick := @openButtonClick;
+      renderArray[i] := TRender.create(
+        findGroup(userGroups[i].getGroupId())[0].getName(),
+        findGroup(userGroups[i].getGroupId())[0].getDescription(),
+        userGroups[i].getGroupId(),
+        'Group'
+      );
     end;
+    self.render(1, renderArray);
     userChats := findUserChatByUser(currentUser);
+    setLength(renderArray, length(userChats));
     for i:=0 to length(userChats) - 1 do
     begin
-      panel := TPanel.create(Form1);
-      panel.parent := Form1.TabSheet1;
-      panel.left := 350;
-      panel.top := 125 + (i * 100);
-      panel.height := 100;
-      panel.width := 275;
-      panel.caption := '';
-      text := TLabel.create(Form1);
-      text.parent := panel;
-      text.left := 15;
-      text.top := 15;
-      text.font.size := 14;
-      text.font.style := text.font.style + [fsBold];
-      text.caption := findChat(userChats[i].getChatId())[0].getName();
+      renderArray[i] := TRender.create(
+        findChat(userChats[i].getChatId())[0].getName(),
+        '',
+        userChats[i].getChatId(),
+        'Chat'
+      );
       if ( findChat(userChats[i].getChatId())[0].getGroupId() <> 0) and ( length(findGroup(findChat(userChats[i].getChatId())[0].getGroupId())) > 0 ) then
-      begin
-        text := TLabel.create(Form1);
-        text.parent := panel;
-        text.left := 15;
-        text.top := 37;
-        text.caption := findGroup(findChat(userChats[i].getChatId())[0].getGroupId())[0].getName();
-      end;
-      button := TButton.create(Form1);
-      button.parent := panel;
-      button.left := 15;
-      button.top := 60;
-      button.caption := 'Open';
-      button.helpKeyword := 'Chat';
-      button.helpContext := userChats[i].getChatId();
-      button.OnClick := @openButtonClick;
+        renderArray[i].setContent(findGroup(findChat(userChats[i].getChatId())[0].getGroupId())[0].getName());
     end;
+    self.render(2, renderArray);
   end;
   if self.getCurrent() = 'Group' then
   begin
@@ -584,135 +634,56 @@ begin
     Form1.groupNameLabel.caption := group.getName();
     Form1.groupDescriptionLabel.caption := group.getDescription();
     groupChats := findChatByGroup(group);
+    setLength(renderArray, length(groupChats));
     for i:=0 to length(groupChats) - 1 do
     begin
-      panel := TPanel.create(Form1);
-      panel.parent := Form1.TabSheet5;
-      panel.left := 40;
-      panel.top := 215 + (i * 100);
-      panel.height := 100;
-      panel.width := 275;
-      panel.caption := '';
-      text := TLabel.create(Form1);
-      text.parent := panel;
-      text.left := 15;
-      text.top := 15;
-      text.font.size := 14;
-      text.font.style := text.font.style + [fsBold];
-      text.caption := groupChats[i].getName();
-      text := TLabel.create(Form1);
-      text.parent := panel;
-      text.left := 15;
-      text.top := 45;
-      text.caption := group.getName();
-      button := TButton.create(Form1);
-      button.parent := panel;
-      button.left := 15;
-      button.top := 70;
-      button.caption := 'Open';
-      button.helpKeyword := 'Chat';
-      button.helpContext := groupChats[i].getId();
-      button.OnClick := @openButtonClick;
+      renderArray[i] := TRender.create(
+        groupChats[i].getName(),
+        group.getName(),
+        groupChats[i].getId(),
+        'Chat'
+      );
     end;
+    self.render(1, renderArray);
     groupUserGroups := findUserGroupByGroup(group);
+    setLength(renderArray, length(groupUserGroups));
     for i:=0 to length(groupUserGroups) - 1 do
     begin
-      panel := TPanel.create(Form1);
-      panel.parent := Form1.TabSheet5;
-      panel.left := 350;
-      panel.top := 215 + (i * 100);
-      panel.height := 100;
-      panel.width := 275;
-      panel.caption := '';
-      text := TLabel.create(Form1);
-      text.parent := panel;
-      text.left := 15;
-      text.top := 15;
-      text.font.size := 14;
-      text.font.style := text.font.style + [fsBold];
-      text.caption := findUser(groupUserGroups[i].getUserId())[0].getFirstName() + ' ' + findUser(groupUserGroups[i].getUserId())[0].getLastName();
-      text := TLabel.create(Form1);
-      text.parent := panel;
-      text.left := 15;
-      text.top := 45;
-      text.caption := '@' + findUser(groupUserGroups[i].getUserId())[0].getUsername();
+      renderArray[i] := TRender.create(
+        findUser(groupUserGroups[i].getUserId())[0].getFirstName() + ' ' + findUser(groupUserGroups[i].getUserId())[0].getLastName(),
+        '@' + findUser(groupUserGroups[i].getUserId())[0].getUsername(), 0, ''
+      );
       if findUser(groupUserGroups[i].getUserId())[0].getId() = group.getUserId() then
-      begin
-        text := TLabel.create(Form1);
-        text.parent := panel;
-        text.left := 15;
-        text.top := 70;
-        text.caption := 'Admin';
-      end;
+        renderArray[i].setContent(renderArray[i].getContent() + ' - Admin');
     end;
+    self.render(2, renderArray);
   end;
   if self.getCurrent() = 'Chat' then
   begin
     chat := findChat(self.getParameter())[0];
     Form1.chatNameLabel.caption := chat.getName();
     chatMessages := findMessageByChat(chat);
+    setLength(renderArray, length(chatMessages));
     for i:=0 to length(chatMessages) - 1 do
     begin
-      panel := TPanel.create(Form1);
-      panel.parent := Form1.TabSheet6;
-      panel.left := 40;
-      panel.top := panelToTop;
-      panel.width := 275;
-      panel.caption := '';
-      text := TLabel.create(Form1);
-      text.parent := panel;
-      text.left := 15;
-      text.top := 15;
-      text.font.size := 14;
-      text.font.style := text.font.style + [fsBold];
-      text.caption := findUser(chatMessages[i].getUserId())[0].getFirstName + ' ' + findUser(chatMessages[i].getUserId())[0].getLastName + ' (@' + findUser(chatMessages[i].getUserId())[0].getUsername + ')';
-      j := 0;
-      toTop := 45;
-      repeat
-        text := TLabel.create(Form1);
-        text.parent := panel;
-        text.left := 15;
-        text.top := toTop;
-        text.caption := copy(chatMessages[i].getContent(), j, j + 40);
-        inc(j, 40);
-        inc(toTop, 25);
-      until (j >= length(chatMessages[i].getContent()));
-      panel.height := toTop + 15;
-      inc(panelToTop, panel.height);
+      renderArray[i] := TRender.create(
+        findUser(chatMessages[i].getUserId())[0].getFirstName + ' ' + findUser(chatMessages[i].getUserId())[0].getLastName + ' (@' + findUser(chatMessages[i].getUserId())[0].getUsername + ')',
+        chatMessages[i].getContent(), 0, ''
+      );
     end;
-    if panelToTop + 75 < Form1.PageControl1.height then
-      Form1.PageControl1.height := panelToTop + 75;
+    self.render(1, renderArray);
     chatUserChats := findUserChatByChat(chat);
+    setLength(renderArray, length(chatUserChats));
     for i:=0 to length(chatUserChats) - 1 do
     begin
-      panel := TPanel.create(Form1);
-      panel.parent := Form1.TabSheet6;
-      panel.left := 350;
-      panel.top := 215 + (i * 100);
-      panel.height := 100;
-      panel.width := 275;
-      panel.caption := '';
-      text := TLabel.create(Form1);
-      text.parent := panel;
-      text.left := 15;
-      text.top := 15;
-      text.font.size := 14;
-      text.font.style := text.font.style + [fsBold];
-      text.caption := findUser(chatUserChats[i].getUserId())[0].getFirstName() + ' ' + findUser(chatUserChats[i].getUserId())[0].getLastName();
-      text := TLabel.create(Form1);
-      text.parent := panel;
-      text.left := 15;
-      text.top := 45;
-      text.caption := '@' + findUser(chatUserChats[i].getUserId())[0].getUsername();
+      renderArray[i] := TRender.create(
+        findUser(chatUserChats[i].getUserId())[0].getFirstName() + ' ' + findUser(chatUserChats[i].getUserId())[0].getLastName(),
+        '@' + findUser(chatUserChats[i].getUserId())[0].getUsername(), 0, ''
+      );
       if findUser(chatUserChats[i].getUserId())[0].getId() = chat.getUserId() then
-      begin
-        text := TLabel.create(Form1);
-        text.parent := panel;
-        text.left := 15;
-        text.top := 70;
-        text.caption := 'Admin';
-      end;
+        renderArray[i].setContent(renderArray[i].getContent() + ' - Admin');
     end;
+    self.render(2, renderArray);
   end;
   if self.getCurrent() = 'Create chat' then
   begin
@@ -741,7 +712,71 @@ begin
     Form1.accountLastNameEdit.Text := currentUser.getLastName();
     Form1.accountUsernameEdit.Text := currentUser.getUsername();
   end;
-  Form1.PageControl1.TabIndex := getTabIndexFor(self.getCurrent());
+  Form1.PageControl1.TabIndex := self.getTabIndex();
+  result := true;
+end;
+
+function TView.render(column: integer; content: TRenderArray): boolean;
+var
+  i, j, toTop, panelToTop: integer;
+  panel: TPanel;
+  text: TLabel;
+  button: TButton;
+begin
+  panelToTop := 225;
+  for i:=0 to length(content) - 1 do
+  begin
+    panel := TPanel.create(Form1);
+    panel.parent := self.getTabSheet();
+    if column = 1 then
+      panel.left := 40
+    else
+      panel.left := 350;
+    panel.top := panelToTop;
+    panel.width := 275;
+    panel.caption := '';
+    if content[i].getTitle() <> '' then
+    begin
+      text := TLabel.create(Form1);
+      text.parent := panel;
+      text.left := 15;
+      text.top := 15;
+      text.font.size := 14;
+      text.font.style := text.font.style + [fsBold];
+      text.caption := content[i].getTitle();
+    end;
+    if content[i].getContent() <> '' then
+    begin
+      j := 0;
+      toTop := 45;
+      repeat
+        text := TLabel.create(Form1);
+        text.parent := panel;
+        text.left := 15;
+        text.top := toTop;
+        text.caption := copy(content[i].getContent(), j, j + 40);
+        inc(j, 40);
+        inc(toTop, 25);
+      until j >= length(content[i].getContent());
+    end;
+    if (content[i].getButtonId() <> 0) and (content[i].getButtonView() <> '') then
+    begin
+      button := TButton.create(Form1);
+      button.parent := panel;
+      button.left := 15;
+      button.top := 70;
+      button.caption := 'Open';
+      button.helpKeyword := content[i].getButtonView();
+      button.helpContext := content[i].getButtonId();
+      button.OnClick := @openButtonClick;
+      panel.height := toTop + 45
+    end
+    else
+      panel.height := toTop + 15;
+    inc(panelToTop, panel.height);
+  end;
+  if panelToTop + 75 > Form1.PageControl1.height then
+    Form1.PageControl1.height := panelToTop + 75;
   result := true;
 end;
 
