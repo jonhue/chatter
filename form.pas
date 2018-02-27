@@ -21,15 +21,18 @@ type
     accountNewPasswordEdit: TEdit;
     accountPasswordEdit: TEdit;
     backButton: TButton;
+    Label26: TLabel;
+    newChatInvitationInviteButton: TButton;
     chatNewMessageButton: TButton;
     chatInviteMemberButton: TButton;
+    newChatInvitationUsernameEdit: TEdit;
     groupCreateChatButton: TButton;
     groupInviteMemberButton: TButton;
     editGroupUpdateButton: TButton;
     editGroupDescriptionEdit: TEdit;
     editGroupNameEdit: TEdit;
     editChatUpdateButton: TButton;
-    createGrupCreateButton: TButton;
+    createGroupCreateButton: TButton;
     createChatCreateButton: TButton;
     createChatNameEdit: TEdit;
     createChatGroupEdit: TEdit;
@@ -99,13 +102,14 @@ type
     procedure chatInviteMemberButtonClick(Sender: TObject);
     procedure chatNewMessageButtonClick(Sender: TObject);
     procedure createChatCreateButtonClick(Sender: TObject);
-    procedure createGrupCreateButtonClick(Sender: TObject);
+    procedure createGroupCreateButtonClick(Sender: TObject);
     procedure editChatUpdateButtonClick(Sender: TObject);
     procedure editGroupUpdateButtonClick(Sender: TObject);
     procedure groupCreateChatButtonClick(Sender: TObject);
     procedure groupInviteMemberButtonClick(Sender: TObject);
     procedure homeCreateChatButtonClick(Sender: TObject);
     procedure homeCreateGroupButtonClick(Sender: TObject);
+    procedure newChatInvitationInviteButtonClick(Sender: TObject);
     procedure signoutButtonClick(Sender: TObject);
     procedure updateTitlebar();
     procedure FormCreate(Sender: TObject);
@@ -184,18 +188,6 @@ begin
   scrollbar.kind := sbVertical;
   scrollbar.align := alRight;
   Form1.TabSheet1.insertControl(scrollbar);
-  scrollbar := TScrollbar.create(Form1.TabSheet2);
-  scrollbar.kind := sbVertical;
-  scrollbar.align := alRight;
-  Form1.TabSheet2.insertControl(scrollbar);
-  scrollbar := TScrollbar.create(Form1.TabSheet3);
-  scrollbar.kind := sbVertical;
-  scrollbar.align := alRight;
-  Form1.TabSheet3.insertControl(scrollbar);
-  scrollbar := TScrollbar.create(Form1.TabSheet4);
-  scrollbar.kind := sbVertical;
-  scrollbar.align := alRight;
-  Form1.TabSheet4.insertControl(scrollbar);
   scrollbar := TScrollbar.create(Form1.TabSheet5);
   scrollbar.kind := sbVertical;
   scrollbar.align := alRight;
@@ -204,22 +196,6 @@ begin
   scrollbar.kind := sbVertical;
   scrollbar.align := alRight;
   Form1.TabSheet6.insertControl(scrollbar);
-  scrollbar := TScrollbar.create(Form1.TabSheet7);
-  scrollbar.kind := sbVertical;
-  scrollbar.align := alRight;
-  Form1.TabSheet7.insertControl(scrollbar);
-  scrollbar := TScrollbar.create(Form1.TabSheet8);
-  scrollbar.kind := sbVertical;
-  scrollbar.align := alRight;
-  Form1.TabSheet8.insertControl(scrollbar);
-  scrollbar := TScrollbar.create(Form1.TabSheet9);
-  scrollbar.kind := sbVertical;
-  scrollbar.align := alRight;
-  Form1.TabSheet9.insertControl(scrollbar);
-  scrollbar := TScrollbar.create(Form1.TabSheet10);
-  scrollbar.kind := sbVertical;
-  scrollbar.align := alRight;
-  Form1.TabSheet10.insertControl(scrollbar);
   currentView.switch('Login', 0);
 end;
 
@@ -301,7 +277,7 @@ end;
 
 procedure TForm1.chatInviteMemberButtonClick(Sender: TObject);
 begin
-  // currentView.switch('New invitation', findChatByName(chatNameLabel.caption)[0].getId());
+  currentView.switch('New chat invitation', currentView.getParameter());
 end;
 
 procedure TForm1.chatNewMessageButtonClick(Sender: TObject);
@@ -337,7 +313,7 @@ begin
   end;
 end;
 
-procedure TForm1.createGrupCreateButtonClick(Sender: TObject);
+procedure TForm1.createGroupCreateButtonClick(Sender: TObject);
 var group: TGroup;
 begin
   group := TGroup.create(currentUser, createGroupNameEdit.Text, createGroupDescriptionEdit.Text);
@@ -397,6 +373,29 @@ begin
   currentView.switch('Create group', 0);
 end;
 
+procedure TForm1.newChatInvitationInviteButtonClick(Sender: TObject);
+var user: TUser; i: integer; userIsMember: boolean;
+begin
+  userIsMember := false;
+  if length(findUserByUsername(newChatInvitationUsernameEdit.text)) > 0 then
+  begin
+    user := findUserByUsername(newChatInvitationUsernameEdit.text)[0];
+    for i:=0 to length(findUserChatByChat(findChat(currentView.getParameter())[0])) - 1 do
+      if findUserChatByChat(findChat(currentView.getParameter())[0])[i].getUserId() = user.getId() then
+        userIsMember := true;
+    if userIsMember then
+      showMessage('User is already a member')
+    else
+    begin
+      TUserChat.create(user, findChat(currentView.getParameter())[0]);
+      newChatInvitationUsernameEdit.text := '';
+      currentView.switch('Chat', currentView.getParameter());
+    end;
+  end
+  else
+    showMessage('User does not exist');
+end;
+
 { TView }
 
 constructor TView.create(c: string; r: TView; p: integer);
@@ -443,13 +442,14 @@ begin
     'Create group': result := 7;
     'Edit chat': result := 8;
     'Edit group': result := 9;
+    'New chat invitation': result := 10;
   end;
 end;
 
 function TView.initialize(): boolean;
 var
-  userGroups: TGroupArray;
-  userChats: TChatArray;
+  userGroups: TUserGroupArray;
+  userChats: TUserChatArray;
   groupChats: TChatArray;
   chatMessages: TMessageArray;
   groupUserGroups: TUserGroupArray;
@@ -475,7 +475,7 @@ begin
   end;
   if self.getCurrent() = 'Home' then
   begin
-    userGroups := findGroupByUser(currentUser);
+    userGroups := findUserGroupByUser(currentUser);
     for i:=0 to length(userGroups) - 1 do
     begin
       panel := TPanel.create(Form1);
@@ -491,21 +491,21 @@ begin
       text.top := 15;
       text.font.size := 14;
       text.font.style := text.font.style + [fsBold];
-      text.caption := userGroups[i].getName();
+      text.caption := findGroup(userGroups[i].getGroupId())[0].getName();
       text := TLabel.create(Form1);
       text.parent := panel;
       text.left := 15;
       text.top := 37;
-      text.caption := userGroups[i].getDescription();
+      text.caption := findGroup(userGroups[i].getGroupId())[0].getDescription();
       button := TButton.create(Form1);
       button.parent := panel;
       button.left := 15;
       button.top := 60;
       button.caption := 'Open';
-      button.HelpContext := userGroups[i].getId();
+      button.HelpContext := userGroups[i].getGroupId();
       button.OnClick := @openGroupButtonClick;
     end;
-    userChats := findChatByUser(currentUser);
+    userChats := findUserChatByUser(currentUser);
     for i:=0 to length(userChats) - 1 do
     begin
       panel := TPanel.create(Form1);
@@ -521,21 +521,21 @@ begin
       text.top := 15;
       text.font.size := 14;
       text.font.style := text.font.style + [fsBold];
-      text.caption := userChats[i].getName();
-      if ( userChats[i].getGroupId() <> 0) and ( length(findGroup(userChats[i].getGroupId())) > 0 ) then
+      text.caption := findChat(userChats[i].getChatId())[0].getName();
+      if ( findChat(userChats[i].getChatId())[0].getGroupId() <> 0) and ( length(findGroup(findChat(userChats[i].getChatId())[0].getGroupId())) > 0 ) then
       begin
         text := TLabel.create(Form1);
         text.parent := panel;
         text.left := 15;
         text.top := 37;
-        text.caption := findGroup(userChats[i].getGroupId())[0].getName();
+        text.caption := findGroup(findChat(userChats[i].getChatId())[0].getGroupId())[0].getName();
       end;
       button := TButton.create(Form1);
       button.parent := panel;
       button.left := 15;
       button.top := 60;
       button.caption := 'Open';
-      button.HelpContext := userChats[i].getId();
+      button.HelpContext := userChats[i].getChatId();
       button.OnClick := @openChatButtonClick;
     end;
   end;

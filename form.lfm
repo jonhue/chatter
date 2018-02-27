@@ -1,11 +1,11 @@
 object Form1: TForm1
-  Left = 1004
+  Left = 1214
   Height = 973
-  Top = 24
+  Top = 395
   Width = 674
   Caption = 'Chatter'
-  ClientHeight = 0
-  ClientWidth = 0
+  ClientHeight = 973
+  ClientWidth = 674
   DesignTimePPI = 288
   OnCreate = FormCreate
   LCLVersion = '1.8.0.6'
@@ -81,18 +81,18 @@ object Form1: TForm1
     Height = 933
     Top = 40
     Width = 674
-    ActivePage = TabSheet6
-    TabIndex = 5
+    ActivePage = TabSheet12
+    TabIndex = 10
     TabOrder = 5
     object TabSheet1: TTabSheet
       Caption = 'Home'
-      ClientHeight = 902
-      ClientWidth = 670
+      ClientHeight = 846
+      ClientWidth = 650
       object Label12: TLabel
         Left = 40
         Height = 22
         Top = 40
-        Width = 77
+        Width = 70
         Caption = 'Groups'
         Font.Height = -19
         Font.Name = 'Sans'
@@ -104,7 +104,7 @@ object Form1: TForm1
         Left = 350
         Height = 22
         Top = 40
-        Width = 61
+        Width = 54
         Caption = 'Chats'
         Font.Height = -19
         Font.Name = 'Sans'
@@ -281,32 +281,32 @@ object Form1: TForm1
     end
     object TabSheet4: TTabSheet
       Caption = 'Signup'
-      ClientHeight = 902
-      ClientWidth = 670
+      ClientHeight = 846
+      ClientWidth = 650
       object signupFirstNameEdit: TEdit
         Left = 190
-        Height = 27
+        Height = 56
         Top = 175
         Width = 290
         TabOrder = 0
       end
       object signupLastNameEdit: TEdit
         Left = 190
-        Height = 27
+        Height = 56
         Top = 240
         Width = 290
         TabOrder = 1
       end
       object signupUsernameEdit: TEdit
         Left = 190
-        Height = 27
+        Height = 56
         Top = 305
         Width = 290
         TabOrder = 2
       end
       object signupPasswordEdit: TEdit
         Left = 190
-        Height = 28
+        Height = 25
         Top = 370
         Width = 290
         EchoMode = emPassword
@@ -327,33 +327,33 @@ object Form1: TForm1
       end
       object Label1: TLabel
         Left = 190
-        Height = 17
+        Height = 48
         Top = 152
-        Width = 72
+        Width = 165
         Caption = 'First name'
         ParentColor = False
       end
       object Label4: TLabel
         Left = 190
-        Height = 17
+        Height = 48
         Top = 216
-        Width = 70
+        Width = 160
         Caption = 'Last name'
         ParentColor = False
       end
       object Label5: TLabel
         Left = 190
-        Height = 17
+        Height = 48
         Top = 284
-        Width = 69
+        Width = 160
         Caption = 'Username'
         ParentColor = False
       end
       object Label6: TLabel
         Left = 190
-        Height = 17
+        Height = 48
         Top = 349
-        Width = 67
+        Width = 148
         Caption = 'Password'
         ParentColor = False
       end
@@ -483,18 +483,18 @@ object Form1: TForm1
     end
     object TabSheet7: TTabSheet
       Caption = 'Create chat'
-      ClientHeight = 902
-      ClientWidth = 670
+      ClientHeight = 846
+      ClientWidth = 650
       object createChatNameEdit: TEdit
         Left = 190
-        Height = 27
+        Height = 56
         Top = 175
         Width = 290
         TabOrder = 0
       end
       object createChatGroupEdit: TEdit
         Left = 190
-        Height = 27
+        Height = 56
         Top = 240
         Width = 290
         TabOrder = 1
@@ -510,79 +510,79 @@ object Form1: TForm1
       end
       object Label14: TLabel
         Left = 190
-        Height = 17
+        Height = 48
         Top = 152
-        Width = 40
+        Width = 95
         Caption = 'Name'
         ParentColor = False
       end
       object Label15: TLabel
         Left = 190
-        Height = 17
+        Height = 48
         Top = 216
-        Width = 114
+        Width = 263
         Caption = 'Group (optional)'
         ParentColor = False
       end
     end
     object TabSheet8: TTabSheet
       Caption = 'Create group'
-      ClientHeight = 902
-      ClientWidth = 670
+      ClientHeight = 846
+      ClientWidth = 650
       object createGroupNameEdit: TEdit
         Left = 190
-        Height = 27
+        Height = 56
         Top = 175
         Width = 290
         TabOrder = 0
       end
       object createGroupDescriptionEdit: TEdit
         Left = 190
-        Height = 27
+        Height = 56
         Top = 240
         Width = 290
         TabOrder = 1
       end
       object Label16: TLabel
         Left = 190
-        Height = 17
+        Height = 48
         Top = 152
-        Width = 40
+        Width = 95
         Caption = 'Name'
         ParentColor = False
       end
       object Label17: TLabel
         Left = 190
-        Height = 17
+        Height = 48
         Top = 217
-        Width = 80
+        Width = 181
         Caption = 'Description'
         ParentColor = False
       end
-      object createGrupCreateButton: TButton
+      object createGroupCreateButton: TButton
         Left = 190
         Height = 25
         Top = 285
         Width = 75
         Caption = 'Create'
-        OnClick = createGrupCreateButtonClick
+        OnClick = createGroupCreateButtonClick
         TabOrder = 2
       end
     end
     object TabSheet9: TTabSheet
       Caption = 'Edit chat'
-      ClientHeight = 902
-      ClientWidth = 670
+      ClientHeight = 846
+      ClientWidth = 650
       object editChatNameEdit: TEdit
         Left = 190
-        Height = 27
+        Height = 56
         Top = 175
         Width = 290
         TabOrder = 0
       end
       object editChatGroupEdit: TEdit
         Left = 190
-        Height = 27
+        Height = 56
         Top = 240
         Width = 290
         TabOrder = 1
@@ -599,35 +599,35 @@ object Form1: TForm1
       end
       object Label18: TLabel
         Left = 190
-        Height = 17
+        Height = 48
         Top = 152
-        Width = 40
+        Width = 95
         Caption = 'Name'
         ParentColor = False
       end
       object Label19: TLabel
         Left = 190
-        Height = 17
+        Height = 48
         Top = 216
-        Width = 114
+        Width = 263
         Caption = 'Group (optional)'
         ParentColor = False
       end
     end
     object TabSheet10: TTabSheet
       Caption = 'Edit group'
-      ClientHeight = 902
-      ClientWidth = 670
+      ClientHeight = 846
+      ClientWidth = 650
       object editGroupNameEdit: TEdit
         Left = 190
-        Height = 27
+        Height = 56
         Top = 175
         Width = 290
         TabOrder = 0
       end
       object editGroupDescriptionEdit: TEdit
         Left = 190
-        Height = 27
+        Height = 56
         Top = 240
         Width = 290
         TabOrder = 1
@@ -643,26 +643,49 @@ object Form1: TForm1
       end
       object Label20: TLabel
         Left = 190
-        Height = 17
+        Height = 48
         Top = 152
-        Width = 40
+        Width = 95
         Caption = 'Name'
         ParentColor = False
       end
       object Label21: TLabel
         Left = 190
-        Height = 17
+        Height = 48
         Top = 216
-        Width = 80
+        Width = 181
         Caption = 'Description'
         ParentColor = False
       end
     end
-    object TabSheet11: TTabSheet
-      Caption = 'Invitations'
-    end
     object TabSheet12: TTabSheet
-      Caption = 'New invitation'
+      Caption = 'New chat invitation'
+      ClientHeight = 846
+      ClientWidth = 650
+      object newChatInvitationUsernameEdit: TEdit
+        Left = 190
+        Height = 56
+        Top = 175
+        Width = 240
+        TabOrder = 0
+      end
+      object newChatInvitationInviteButton: TButton
+        Left = 190
+        Height = 25
+        Top = 220
+        Width = 75
+        Caption = 'Invite'
+        OnClick = newChatInvitationInviteButtonClick
+        TabOrder = 1
+      end
+      object Label26: TLabel
+        Left = 190
+        Height = 48
+        Top = 152
+        Width = 160
+        Caption = 'Username'
+        ParentColor = False
+      end
     end
   end
 end
