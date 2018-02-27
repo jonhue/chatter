@@ -10,7 +10,7 @@
         <EditorIndex Value="4"/>
         <TopLine Value="2"/>
         <CursorPos Y="21"/>
-        <UsageCount Value="52"/>
+        <UsageCount Value="53"/>
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
@@ -21,9 +21,9 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Form"/>
         <IsVisibleTab Value="True"/>
-        <TopLine Value="375"/>
-        <CursorPos X="28" Y="385"/>
-        <UsageCount Value="52"/>
+        <TopLine Value="728"/>
+        <CursorPos Y="737"/>
+        <UsageCount Value="53"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit1>
@@ -34,7 +34,7 @@
         <EditorIndex Value="6"/>
         <TopLine Value="91"/>
         <CursorPos Y="101"/>
-        <UsageCount Value="51"/>
+        <UsageCount Value="52"/>
         <Loaded Value="True"/>
       </Unit2>
       <Unit3>
@@ -44,7 +44,7 @@
         <EditorIndex Value="7"/>
         <TopLine Value="67"/>
         <CursorPos X="21" Y="89"/>
-        <UsageCount Value="42"/>
+        <UsageCount Value="43"/>
         <Loaded Value="True"/>
       </Unit3>
       <Unit4>
@@ -54,7 +54,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="14"/>
         <CursorPos X="24" Y="47"/>
-        <UsageCount Value="42"/>
+        <UsageCount Value="43"/>
       </Unit4>
       <Unit5>
         <Filename Value="user.pas"/>
@@ -62,15 +62,16 @@
         <EditorIndex Value="1"/>
         <TopLine Value="140"/>
         <CursorPos X="50" Y="41"/>
-        <UsageCount Value="26"/>
+        <UsageCount Value="27"/>
         <Loaded Value="True"/>
       </Unit5>
       <Unit6>
         <Filename Value="group.pas"/>
         <UnitName Value="Group"/>
         <EditorIndex Value="2"/>
-        <CursorPos X="3" Y="8"/>
-        <UsageCount Value="26"/>
+        <TopLine Value="98"/>
+        <CursorPos Y="108"/>
+        <UsageCount Value="27"/>
         <Loaded Value="True"/>
       </Unit6>
       <Unit7>
@@ -79,7 +80,7 @@
         <EditorIndex Value="3"/>
         <TopLine Value="33"/>
         <CursorPos X="37" Y="8"/>
-        <UsageCount Value="26"/>
+        <UsageCount Value="27"/>
         <Loaded Value="True"/>
       </Unit7>
       <Unit8>
@@ -93,132 +94,132 @@
         <Filename Value="chat.pas"/>
         <UnitName Value="Chat"/>
         <EditorIndex Value="5"/>
-        <TopLine Value="85"/>
+        <TopLine Value="71"/>
         <CursorPos X="16" Y="71"/>
-        <UsageCount Value="26"/>
+        <UsageCount Value="27"/>
         <Loaded Value="True"/>
       </Unit9>
     </Units>
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
         <Filename Value="form.pas"/>
-        <Caret Line="576" Column="9" TopLine="576"/>
+        <Caret Line="359" Column="23" TopLine="358"/>
       </Position1>
       <Position2>
         <Filename Value="form.pas"/>
-        <Caret Line="588" Column="70" TopLine="578"/>
+        <Caret Line="358" Column="23" TopLine="356"/>
       </Position2>
       <Position3>
         <Filename Value="form.pas"/>
-        <Caret Line="589" Column="9" TopLine="579"/>
+        <Caret Line="276" Column="40" TopLine="266"/>
       </Position3>
       <Position4>
         <Filename Value="form.pas"/>
-        <Caret Line="588" Column="73" TopLine="578"/>
+        <Caret Line="277" Column="40" TopLine="267"/>
       </Position4>
       <Position5>
         <Filename Value="form.pas"/>
-        <Caret Line="584" Column="66" TopLine="565"/>
+        <Caret Line="278" Column="40" TopLine="268"/>
       </Position5>
       <Position6>
         <Filename Value="form.pas"/>
-        <Caret Line="368" Column="32" TopLine="358"/>
+        <Caret Line="280" Column="40" TopLine="270"/>
       </Position6>
       <Position7>
         <Filename Value="form.pas"/>
-        <Caret Line="655" TopLine="639"/>
+        <Caret Line="389" Column="13" TopLine="375"/>
       </Position7>
       <Position8>
         <Filename Value="form.pas"/>
-        <Caret Line="368" Column="25" TopLine="358"/>
+        <Caret Line="390" Column="13" TopLine="376"/>
       </Position8>
       <Position9>
         <Filename Value="form.pas"/>
-        <Caret Line="369" Column="25" TopLine="359"/>
+        <Caret Line="389" Column="13" TopLine="375"/>
       </Position9>
       <Position10>
         <Filename Value="form.pas"/>
-        <Caret Line="368" Column="25" TopLine="358"/>
+        <Caret Line="386" Column="39" TopLine="375"/>
       </Position10>
       <Position11>
         <Filename Value="form.pas"/>
-        <Caret Line="374" Column="25" TopLine="364"/>
+        <Caret Line="462" Column="19" TopLine="452"/>
       </Position11>
       <Position12>
         <Filename Value="form.pas"/>
-        <Caret Line="359" Column="23" TopLine="359"/>
+        <Caret Line="509" Column="129" TopLine="499"/>
       </Position12>
       <Position13>
-        <Filename Value="chatter.pas"/>
-        <Caret Line="21"/>
+        <Filename Value="form.pas"/>
+        <Caret Line="379" Column="23" TopLine="369"/>
       </Position13>
       <Position14>
         <Filename Value="form.pas"/>
-        <Caret Line="359" Column="23" TopLine="358"/>
+        <Caret Line="382" Column="13" TopLine="372"/>
       </Position14>
       <Position15>
         <Filename Value="form.pas"/>
-        <Caret Line="358" Column="23" TopLine="356"/>
+        <Caret Line="383" Column="79" TopLine="373"/>
       </Position15>
       <Position16>
         <Filename Value="form.pas"/>
-        <Caret Line="276" Column="40" TopLine="266"/>
+        <Caret Line="384" Column="65" TopLine="374"/>
       </Position16>
       <Position17>
         <Filename Value="form.pas"/>
-        <Caret Line="277" Column="40" TopLine="267"/>
+        <Caret Line="385" Column="28" TopLine="375"/>
       </Position17>
       <Position18>
         <Filename Value="form.pas"/>
-        <Caret Line="278" Column="40" TopLine="268"/>
+        <Caret Line="364" Column="3" TopLine="364"/>
       </Position18>
       <Position19>
         <Filename Value="form.pas"/>
-        <Caret Line="280" Column="40" TopLine="270"/>
+        <Caret Line="402" Column="3" TopLine="400"/>
       </Position19>
       <Position20>
         <Filename Value="form.pas"/>
-        <Caret Line="389" Column="13" TopLine="375"/>
+        <Caret Line="403" Column="22" TopLine="400"/>
       </Position20>
       <Position21>
         <Filename Value="form.pas"/>
-        <Caret Line="390" Column="13" TopLine="376"/>
+        <Caret Line="404" Column="22" TopLine="401"/>
       </Position21>
       <Position22>
         <Filename Value="form.pas"/>
-        <Caret Line="389" Column="13" TopLine="375"/>
+        <Caret Line="405" Column="22" TopLine="402"/>
       </Position22>
       <Position23>
         <Filename Value="form.pas"/>
-        <Caret Line="386" Column="39" TopLine="375"/>
+        <Caret Line="412" Column="22" TopLine="409"/>
       </Position23>
       <Position24>
         <Filename Value="form.pas"/>
-        <Caret Line="462" Column="19" TopLine="452"/>
+        <Caret Line="407" Column="5" TopLine="404"/>
       </Position24>
       <Position25>
         <Filename Value="form.pas"/>
-        <Caret Line="509" Column="129" TopLine="499"/>
+        <Caret Line="116" Column="70" TopLine="108"/>
       </Position25>
       <Position26>
         <Filename Value="form.pas"/>
-        <Caret Line="379" Column="23" TopLine="369"/>
+        <Caret Line="118" Column="70" TopLine="109"/>
       </Position26>
       <Position27>
         <Filename Value="form.pas"/>
-        <Caret Line="382" Column="13" TopLine="372"/>
+        <Caret Line="373" Column="81" TopLine="368"/>
       </Position27>
       <Position28>
         <Filename Value="form.pas"/>
-        <Caret Line="383" Column="79" TopLine="373"/>
+        <Caret Line="380" Column="81" TopLine="375"/>
       </Position28>
       <Position29>
         <Filename Value="form.pas"/>
-        <Caret Line="384" Column="65" TopLine="374"/>
+        <Caret Line="288" Column="3" TopLine="286"/>
       </Position29>
       <Position30>
         <Filename Value="form.pas"/>
-        <Caret Line="385" Column="28" TopLine="375"/>
+        <Caret Line="737" TopLine="728"/>
       </Position30>
     </JumpHistory>
   </ProjectSession>

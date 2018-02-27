@@ -21,6 +21,7 @@ type
     accountNewPasswordEdit: TEdit;
     accountPasswordEdit: TEdit;
     backButton: TButton;
+    chatEditButton: TButton;
     groupEditButton: TButton;
     newGroupInvitationIviteButton: TButton;
     newGroupInvitationUsernameEdit: TEdit;
@@ -103,6 +104,7 @@ type
     procedure accountButtonClick(Sender: TObject);
     procedure accountUpdateButtonClick(Sender: TObject);
     procedure backButtonClick(Sender: TObject);
+    procedure chatEditButtonClick(Sender: TObject);
     procedure chatInviteMemberButtonClick(Sender: TObject);
     procedure chatNewMessageButtonClick(Sender: TObject);
     procedure createChatCreateButtonClick(Sender: TObject);
@@ -281,6 +283,11 @@ begin
   currentView.back();
 end;
 
+procedure TForm1.chatEditButtonClick(Sender: TObject);
+begin
+  currentView.switch('Edit chat', currentView.getParameter());
+end;
+
 procedure TForm1.chatInviteMemberButtonClick(Sender: TObject);
 begin
   currentView.switch('New chat invitation', currentView.getParameter());
@@ -339,11 +346,12 @@ begin
       showMessage('You do not own this group')
   else
     group := nil;
-  if ( length(editChatGroupEdit.Text) > 0 ) and ( group <> nil ) then
+  if ( length(editChatGroupEdit.Text) > 0 ) and ( group = nil ) then
     showMessage('Group does not exist')
   else
   begin
     chat := findChat(currentView.getParameter())[0].update(group, editChatNameEdit.Text);
+    TUserChat.create(currentUser, chat);
     editChatNameEdit.Text := '';
     editChatGroupEdit.Text := '';
     currentView.switch('Chat', chat.getId());
@@ -491,7 +499,7 @@ var
   chatUserChats: TUserChatArray;
   group: TGroup;
   chat: TChat;
-  i, j, toTop: integer;
+  i, j, toTop, panelToTop: integer;
   panel: TPanel;
   text: TLabel;
   button: TButton;
@@ -646,14 +654,13 @@ begin
     chat := findChat(self.getParameter())[0];
     Form1.chatNameLabel.caption := chat.getName();
     chatMessages := findMessageByChat(chat);
-    toTop := 250;
+    panelToTop := 250;
     for i:=0 to length(chatMessages) - 1 do
     begin
       panel := TPanel.create(Form1);
       panel.parent := Form1.TabSheet6;
       panel.left := 40;
-      panel.top := toTop;
-      toTop := 0;
+      panel.top := panelToTop;
       panel.width := 275;
       panel.caption := '';
       text := TLabel.create(Form1);
@@ -674,8 +681,8 @@ begin
         inc(j, 40);
         inc(toTop, 25);
       until (j >= length(chatMessages[i].getContent()));
-      panel.height := toTop + 30;
-      toTop := panel.top;
+      panel.height := toTop + 15;
+      inc(panelToTop, panel.top);
     end;
     chatUserChats := findUserChatByChat(chat);
     for i:=0 to length(chatUserChats) - 1 do
@@ -717,17 +724,24 @@ begin
       Form1.createChatGroupEdit.text := group.getName();
     end;
   end;
-  if self.getCurrent() = 'Account' then
-  begin
-    Form1.accountFirstNameEdit.Text := currentUser.getFirstName();
-    Form1.accountLastNameEdit.Text := currentUser.getLastName();
-    Form1.accountUsernameEdit.Text := currentUser.getUsername();
-  end;
   if self.getCurrent() = 'Edit group' then
   begin
     group := findGroup(currentView.getParameter())[0];
     Form1.editGroupNameEdit.Text := group.getName();
     Form1.editGroupDescriptionEdit.Text := group.getDescription();
+  end;
+  if self.getCurrent() = 'Edit chat' then
+  begin
+    chat := findChat(currentView.getParameter())[0];
+    Form1.editChatNameEdit.Text := chat.getName();
+    if length(findGroup(chat.getGroupId())) > 0 then
+    Form1.editChatGroupEdit.Text := findGroup(chat.getGroupId())[0].getName();
+  end;
+  if self.getCurrent() = 'Account' then
+  begin
+    Form1.accountFirstNameEdit.Text := currentUser.getFirstName();
+    Form1.accountLastNameEdit.Text := currentUser.getLastName();
+    Form1.accountUsernameEdit.Text := currentUser.getUsername();
   end;
   Form1.PageControl1.TabIndex := getTabIndexFor(self.getCurrent());
   result := true;

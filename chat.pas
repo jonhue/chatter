@@ -99,8 +99,9 @@ end;
 
 function TChat.update(g: TGroup; n: string): TChat;
 begin
-  self.setGroupId(g.getId());
   self.setName(n);
+  if g <> nil then
+    self.setGroupId(g.getId());
   result := self;
 end;
 

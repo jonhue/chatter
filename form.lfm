@@ -81,8 +81,8 @@ object Form1: TForm1
     Height = 933
     Top = 40
     Width = 674
-    ActivePage = TabSheet5
-    TabIndex = 4
+    ActivePage = TabSheet6
+    TabIndex = 5
     TabOrder = 5
     object TabSheet1: TTabSheet
       Caption = 'Home'
@@ -488,6 +488,15 @@ object Form1: TForm1
         Caption = 'New message'
         OnClick = chatNewMessageButtonClick
         TabOrder = 1
+      end
+      object chatEditButton: TButton
+        Left = 563
+        Height = 25
+        Top = 10
+        Width = 75
+        Caption = 'Edit'
+        OnClick = chatEditButtonClick
+        TabOrder = 2
       end
     end
     object TabSheet7: TTabSheet
