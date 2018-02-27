@@ -132,9 +132,9 @@ type
     { public declarations }
   end;
 
-  { TRender }
+  { TCard }
 
-  TRender = class
+  TCard = class
   private
     title: string;
     content: string;
@@ -153,7 +153,7 @@ type
     function getButtonView(): string;
   end;
 
-  TRenderArray = array of TRender;
+  TCardArray = array of TCard;
 
   { TView }
 
@@ -173,7 +173,7 @@ type
     function getTabIndex(): integer;
     function getTabSheet(): TTabSheet;
     function initialize(): boolean;
-    function render(column: integer; content: TRenderArray): boolean;
+    function render(column: integer; content: TCardArray): boolean;
     function getCurrent(): string;
     function getReferrer(): TView;
     function getParameter(): integer;
@@ -450,9 +450,9 @@ begin
     showMessage('User does not exist');
 end;
 
-{ TRender }
+{ TCard }
 
-constructor TRender.create(t, c: string; bi: integer; bv: string);
+constructor TCard.create(t, c: string; bi: integer; bv: string);
 begin
   inherited create();
   self.setTitle(t);
@@ -461,45 +461,45 @@ begin
   self.setButtonView(bv);
 end;
 
-function TRender.getTitle(): string;
+function TCard.getTitle(): string;
 begin
   result := self.title;
 end;
 
-function TRender.getContent(): string;
+function TCard.getContent(): string;
 begin
   result := self.content;
 end;
 
-function TRender.getButtonId(): integer;
+function TCard.getButtonId(): integer;
 begin
   result := self.buttonId;
 end;
 
-function TRender.getButtonView(): string;
+function TCard.getButtonView(): string;
 begin
   result := self.buttonView;
 end;
 
-function TRender.setTitle(t: string): string;
+function TCard.setTitle(t: string): string;
 begin
   self.title := t;
   result := self.getTitle();
 end;
 
-function TRender.setContent(c: string): string;
+function TCard.setContent(c: string): string;
 begin
   self.content := c;
   result := self.getContent();
 end;
 
-function TRender.setButtonId(bi: integer): integer;
+function TCard.setButtonId(bi: integer): integer;
 begin
   self.buttonId := bi;
   result := self.getButtonId();
 end;
 
-function TRender.setButtonView(bv: string): string;
+function TCard.setButtonView(bv: string): string;
 begin
   self.buttonView := bv;
   result := self.getButtonView();
@@ -584,7 +584,7 @@ var
   chatUserChats: TUserChatArray;
   group: TGroup;
   chat: TChat;
-  renderArray: TRenderArray;
+  cardArray: TCardArray;
   i: integer;
 begin
   if (currentUser = nil) and ( (self.getCurrent() = 'Home') or (self.getCurrent() = 'Account') or (self.getCurrent() = 'Group') or (self.getCurrent() = 'Chat') or (self.getCurrent() = 'Create chat') or (self.getCurrent() = 'Create group') or (self.getCurrent() = 'Edit chat') or (self.getCurrent() = 'Edit group') or (self.getCurrent() = 'Invitations') or (self.getCurrent() = 'New invitation') ) then
@@ -602,31 +602,31 @@ begin
   if self.getCurrent() = 'Home' then
   begin
     userGroups := findUserGroupByUser(currentUser);
-    setLength(renderArray, length(userGroups));
+    setLength(cardArray, length(userGroups));
     for i:=0 to length(userGroups) - 1 do
     begin
-      renderArray[i] := TRender.create(
+      cardArray[i] := TCard.create(
         findGroup(userGroups[i].getGroupId())[0].getName(),
         findGroup(userGroups[i].getGroupId())[0].getDescription(),
         userGroups[i].getGroupId(),
         'Group'
       );
     end;
-    self.render(1, renderArray);
+    self.render(1, cardArray);
     userChats := findUserChatByUser(currentUser);
-    setLength(renderArray, length(userChats));
+    setLength(cardArray, length(userChats));
     for i:=0 to length(userChats) - 1 do
     begin
-      renderArray[i] := TRender.create(
+      cardArray[i] := TCard.create(
         findChat(userChats[i].getChatId())[0].getName(),
         '',
         userChats[i].getChatId(),
         'Chat'
       );
       if ( findChat(userChats[i].getChatId())[0].getGroupId() <> 0) and ( length(findGroup(findChat(userChats[i].getChatId())[0].getGroupId())) > 0 ) then
-        renderArray[i].setContent(findGroup(findChat(userChats[i].getChatId())[0].getGroupId())[0].getName());
+        cardArray[i].setContent(findGroup(findChat(userChats[i].getChatId())[0].getGroupId())[0].getName());
     end;
-    self.render(2, renderArray);
+    self.render(2, cardArray);
   end;
   if self.getCurrent() = 'Group' then
   begin
@@ -634,56 +634,56 @@ begin
     Form1.groupNameLabel.caption := group.getName();
     Form1.groupDescriptionLabel.caption := group.getDescription();
     groupChats := findChatByGroup(group);
-    setLength(renderArray, length(groupChats));
+    setLength(cardArray, length(groupChats));
     for i:=0 to length(groupChats) - 1 do
     begin
-      renderArray[i] := TRender.create(
+      cardArray[i] := TCard.create(
         groupChats[i].getName(),
         group.getName(),
         groupChats[i].getId(),
         'Chat'
       );
     end;
-    self.render(1, renderArray);
+    self.render(1, cardArray);
     groupUserGroups := findUserGroupByGroup(group);
-    setLength(renderArray, length(groupUserGroups));
+    setLength(cardArray, length(groupUserGroups));
     for i:=0 to length(groupUserGroups) - 1 do
     begin
-      renderArray[i] := TRender.create(
+      cardArray[i] := TCard.create(
         findUser(groupUserGroups[i].getUserId())[0].getFirstName() + ' ' + findUser(groupUserGroups[i].getUserId())[0].getLastName(),
         '@' + findUser(groupUserGroups[i].getUserId())[0].getUsername(), 0, ''
       );
       if findUser(groupUserGroups[i].getUserId())[0].getId() = group.getUserId() then
-        renderArray[i].setContent(renderArray[i].getContent() + ' - Admin');
+        cardArray[i].setContent(cardArray[i].getContent() + ' - Admin');
     end;
-    self.render(2, renderArray);
+    self.render(2, cardArray);
   end;
   if self.getCurrent() = 'Chat' then
   begin
     chat := findChat(self.getParameter())[0];
     Form1.chatNameLabel.caption := chat.getName();
     chatMessages := findMessageByChat(chat);
-    setLength(renderArray, length(chatMessages));
+    setLength(cardArray, length(chatMessages));
     for i:=0 to length(chatMessages) - 1 do
     begin
-      renderArray[i] := TRender.create(
+      cardArray[i] := TCard.create(
         findUser(chatMessages[i].getUserId())[0].getFirstName + ' ' + findUser(chatMessages[i].getUserId())[0].getLastName + ' (@' + findUser(chatMessages[i].getUserId())[0].getUsername + ')',
         chatMessages[i].getContent(), 0, ''
       );
     end;
-    self.render(1, renderArray);
+    self.render(1, cardArray);
     chatUserChats := findUserChatByChat(chat);
-    setLength(renderArray, length(chatUserChats));
+    setLength(cardArray, length(chatUserChats));
     for i:=0 to length(chatUserChats) - 1 do
     begin
-      renderArray[i] := TRender.create(
+      cardArray[i] := TCard.create(
         findUser(chatUserChats[i].getUserId())[0].getFirstName() + ' ' + findUser(chatUserChats[i].getUserId())[0].getLastName(),
         '@' + findUser(chatUserChats[i].getUserId())[0].getUsername(), 0, ''
       );
       if findUser(chatUserChats[i].getUserId())[0].getId() = chat.getUserId() then
-        renderArray[i].setContent(renderArray[i].getContent() + ' - Admin');
+        cardArray[i].setContent(cardArray[i].getContent() + ' - Admin');
     end;
-    self.render(2, renderArray);
+    self.render(2, cardArray);
   end;
   if self.getCurrent() = 'Create chat' then
   begin
@@ -716,7 +716,7 @@ begin
   result := true;
 end;
 
-function TView.render(column: integer; content: TRenderArray): boolean;
+function TView.render(column: integer; content: TCardArray): boolean;
 var
   i, j, toTop, panelToTop: integer;
   panel: TPanel;
