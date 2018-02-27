@@ -192,6 +192,34 @@ begin
   scrollbar.kind := sbVertical;
   scrollbar.align := alRight;
   Form1.TabSheet3.insertControl(scrollbar);
+  scrollbar := TScrollbar.create(Form1.TabSheet4);
+  scrollbar.kind := sbVertical;
+  scrollbar.align := alRight;
+  Form1.TabSheet4.insertControl(scrollbar);
+  scrollbar := TScrollbar.create(Form1.TabSheet5);
+  scrollbar.kind := sbVertical;
+  scrollbar.align := alRight;
+  Form1.TabSheet5.insertControl(scrollbar);
+  scrollbar := TScrollbar.create(Form1.TabSheet6);
+  scrollbar.kind := sbVertical;
+  scrollbar.align := alRight;
+  Form1.TabSheet6.insertControl(scrollbar);
+  scrollbar := TScrollbar.create(Form1.TabSheet7);
+  scrollbar.kind := sbVertical;
+  scrollbar.align := alRight;
+  Form1.TabSheet7.insertControl(scrollbar);
+  scrollbar := TScrollbar.create(Form1.TabSheet8);
+  scrollbar.kind := sbVertical;
+  scrollbar.align := alRight;
+  Form1.TabSheet8.insertControl(scrollbar);
+  scrollbar := TScrollbar.create(Form1.TabSheet9);
+  scrollbar.kind := sbVertical;
+  scrollbar.align := alRight;
+  Form1.TabSheet9.insertControl(scrollbar);
+  scrollbar := TScrollbar.create(Form1.TabSheet10);
+  scrollbar.kind := sbVertical;
+  scrollbar.align := alRight;
+  Form1.TabSheet10.insertControl(scrollbar);
   currentView.switch('Login', 0);
 end;
 
@@ -280,8 +308,11 @@ procedure TForm1.chatNewMessageButtonClick(Sender: TObject);
 var co: string;
 begin
   InputQuery('New message', 'Write something up ...', false, co);
-  TMessage.create(findChat(currentView.getParameter())[0], currentUser, co);
-  currentView.switch('Chat', currentView.getParameter());
+  if co <> '' then
+  begin
+    TMessage.create(findChat(currentView.getParameter())[0], currentUser, co);
+    currentView.switch('Chat', currentView.getParameter());
+  end;
 end;
 
 procedure TForm1.createChatCreateButtonClick(Sender: TObject);
@@ -412,8 +443,6 @@ begin
     'Create group': result := 7;
     'Edit chat': result := 8;
     'Edit group': result := 9;
-    'Invitations': result := 10;
-    'New invitation': result := 11;
   end;
 end;
 
