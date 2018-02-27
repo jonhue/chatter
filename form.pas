@@ -648,7 +648,7 @@ begin
     chat := findChat(self.getParameter())[0];
     Form1.chatNameLabel.caption := chat.getName();
     chatMessages := findMessageByChat(chat);
-    panelToTop := 250;
+    panelToTop := 225;
     for i:=0 to length(chatMessages) - 1 do
     begin
       panel := TPanel.create(Form1);
@@ -676,8 +676,10 @@ begin
         inc(toTop, 25);
       until (j >= length(chatMessages[i].getContent()));
       panel.height := toTop + 15;
-      inc(panelToTop, panel.top);
+      inc(panelToTop, panel.height);
     end;
+    if panelToTop + 75 < Form1.PageControl1.height then
+      Form1.PageControl1.height := panelToTop + 75;
     chatUserChats := findUserChatByChat(chat);
     for i:=0 to length(chatUserChats) - 1 do
     begin
@@ -776,18 +778,18 @@ end;
 
 procedure TView.openGroupButtonClick(Sender: TObject);
 begin
-with Sender as TButton do
-begin
-  currentView.switch('Group', HelpContext);
-end;
+  with Sender as TButton do
+  begin
+    currentView.switch('Group', HelpContext);
+  end;
 end;
 
 procedure TView.openChatButtonClick(Sender: TObject);
 begin
-with Sender as TButton do
-begin
-  currentView.switch('Chat', HelpContext);
-end;
+  with Sender as TButton do
+  begin
+    currentView.switch('Chat', HelpContext);
+  end;
 end;
 
 initialization
