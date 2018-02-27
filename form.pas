@@ -173,7 +173,7 @@ type
     function getTabIndex(): integer;
     function getTabSheet(): TTabSheet;
     function initialize(): boolean;
-    function render(column: integer; content: TCardArray): boolean;
+    function renderCards(column: integer; content: TCardArray): boolean;
     function getCurrent(): string;
     function getReferrer(): TView;
     function getParameter(): integer;
@@ -612,7 +612,7 @@ begin
         'Group'
       );
     end;
-    self.render(1, cardArray);
+    self.renderCards(1, cardArray);
     userChats := findUserChatByUser(currentUser);
     setLength(cardArray, length(userChats));
     for i:=0 to length(userChats) - 1 do
@@ -626,7 +626,7 @@ begin
       if ( findChat(userChats[i].getChatId())[0].getGroupId() <> 0) and ( length(findGroup(findChat(userChats[i].getChatId())[0].getGroupId())) > 0 ) then
         cardArray[i].setContent(findGroup(findChat(userChats[i].getChatId())[0].getGroupId())[0].getName());
     end;
-    self.render(2, cardArray);
+    self.renderCards(2, cardArray);
   end;
   if self.getCurrent() = 'Group' then
   begin
@@ -644,7 +644,7 @@ begin
         'Chat'
       );
     end;
-    self.render(1, cardArray);
+    self.renderCards(1, cardArray);
     groupUserGroups := findUserGroupByGroup(group);
     setLength(cardArray, length(groupUserGroups));
     for i:=0 to length(groupUserGroups) - 1 do
@@ -656,7 +656,7 @@ begin
       if findUser(groupUserGroups[i].getUserId())[0].getId() = group.getUserId() then
         cardArray[i].setContent(cardArray[i].getContent() + ' - Admin');
     end;
-    self.render(2, cardArray);
+    self.renderCards(2, cardArray);
   end;
   if self.getCurrent() = 'Chat' then
   begin
@@ -671,7 +671,7 @@ begin
         chatMessages[i].getContent(), 0, ''
       );
     end;
-    self.render(1, cardArray);
+    self.renderCards(1, cardArray);
     chatUserChats := findUserChatByChat(chat);
     setLength(cardArray, length(chatUserChats));
     for i:=0 to length(chatUserChats) - 1 do
@@ -683,7 +683,7 @@ begin
       if findUser(chatUserChats[i].getUserId())[0].getId() = chat.getUserId() then
         cardArray[i].setContent(cardArray[i].getContent() + ' - Admin');
     end;
-    self.render(2, cardArray);
+    self.renderCards(2, cardArray);
   end;
   if self.getCurrent() = 'Create chat' then
   begin
@@ -716,7 +716,7 @@ begin
   result := true;
 end;
 
-function TView.render(column: integer; content: TCardArray): boolean;
+function TView.renderCards(column: integer; content: TCardArray): boolean;
 var
   i, j, toTop, panelToTop: integer;
   panel: TPanel;
