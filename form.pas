@@ -112,6 +112,7 @@ type
     procedure createGroupCreateButtonClick(Sender: TObject);
     procedure editChatUpdateButtonClick(Sender: TObject);
     procedure editGroupUpdateButtonClick(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
     procedure groupCreateChatButtonClick(Sender: TObject);
     procedure groupEditButtonClick(Sender: TObject);
     procedure groupInviteMemberButtonClick(Sender: TObject);
@@ -216,8 +217,15 @@ end;
 procedure TForm1.FormCreate(Sender: TObject);
 begin
   databaseConnect('root', 'password');
+  // databaseExecute('INSERT INTO users ( id, username, first_name, last_name, password ) VALUES ( 1, "jonhue", "Jonas", "Hübotter", "0402Jonas" );');
+  // databaseExecute('SELECT * FROM users');
   PageControl1.ShowTabs := false;
   currentView.switch('Login', 0);
+end;
+
+procedure TForm1.FormDestroy(Sender: TObject);
+begin
+  databaseDisconnect();
 end;
 
 procedure TForm1.loginButtonClick(Sender: TObject);
