@@ -5,7 +5,7 @@ unit Form;
 interface
 
 uses
-  User, Group, UserGroup, Chat, UserChat, Message, Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs,
+  User, Group, UserGroup, Chat, UserChat, Message, Database, Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs,
   ComCtrls, StdCtrls, ExtCtrls;
 
 type
@@ -215,6 +215,7 @@ end;
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
+  databaseConnect('root', 'password');
   PageControl1.ShowTabs := false;
   currentView.switch('Login', 0);
 end;

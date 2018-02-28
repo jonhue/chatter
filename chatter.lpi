@@ -29,7 +29,7 @@
         <PackageName Value="LCL"/>
       </Item1>
     </RequiredPackages>
-    <Units Count="5">
+    <Units Count="6">
       <Unit0>
         <Filename Value="chatter.pas"/>
         <IsPartOfProject Value="True"/>
@@ -57,6 +57,11 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="Invitation"/>
       </Unit4>
+      <Unit5>
+        <Filename Value="database.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="Database"/>
+      </Unit5>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

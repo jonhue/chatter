@@ -3,14 +3,14 @@
   <ProjectSession>
     <Version Value="10"/>
     <BuildModes Active="Default"/>
-    <Units Count="11">
+    <Units Count="12">
       <Unit0>
         <Filename Value="chatter.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="5"/>
         <TopLine Value="2"/>
         <CursorPos Y="21"/>
-        <UsageCount Value="61"/>
+        <UsageCount Value="62"/>
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
@@ -20,9 +20,9 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Form"/>
-        <TopLine Value="601"/>
+        <TopLine Value="602"/>
         <CursorPos Y="611"/>
-        <UsageCount Value="61"/>
+        <UsageCount Value="62"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit1>
@@ -33,7 +33,7 @@
         <EditorIndex Value="7"/>
         <TopLine Value="91"/>
         <CursorPos Y="101"/>
-        <UsageCount Value="60"/>
+        <UsageCount Value="61"/>
         <Loaded Value="True"/>
       </Unit2>
       <Unit3>
@@ -43,7 +43,7 @@
         <EditorIndex Value="8"/>
         <TopLine Value="67"/>
         <CursorPos X="21" Y="89"/>
-        <UsageCount Value="51"/>
+        <UsageCount Value="52"/>
         <Loaded Value="True"/>
       </Unit3>
       <Unit4>
@@ -53,7 +53,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="14"/>
         <CursorPos X="24" Y="47"/>
-        <UsageCount Value="51"/>
+        <UsageCount Value="52"/>
       </Unit4>
       <Unit5>
         <Filename Value="user.pas"/>
@@ -61,7 +61,7 @@
         <EditorIndex Value="2"/>
         <TopLine Value="140"/>
         <CursorPos X="50" Y="41"/>
-        <UsageCount Value="31"/>
+        <UsageCount Value="32"/>
         <Loaded Value="True"/>
       </Unit5>
       <Unit6>
@@ -70,7 +70,7 @@
         <EditorIndex Value="3"/>
         <TopLine Value="98"/>
         <CursorPos Y="108"/>
-        <UsageCount Value="31"/>
+        <UsageCount Value="32"/>
         <Loaded Value="True"/>
       </Unit6>
       <Unit7>
@@ -79,7 +79,7 @@
         <EditorIndex Value="4"/>
         <TopLine Value="33"/>
         <CursorPos X="37" Y="8"/>
-        <UsageCount Value="31"/>
+        <UsageCount Value="32"/>
         <Loaded Value="True"/>
       </Unit7>
       <Unit8>
@@ -95,19 +95,27 @@
         <EditorIndex Value="6"/>
         <TopLine Value="71"/>
         <CursorPos X="16" Y="71"/>
-        <UsageCount Value="31"/>
+        <UsageCount Value="32"/>
         <Loaded Value="True"/>
       </Unit9>
       <Unit10>
         <Filename Value="../../../../../../Dev/lazarus/lcl/lclproc.pas"/>
         <UnitName Value="LCLProc"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
         <TopLine Value="906"/>
         <CursorPos Y="916"/>
-        <UsageCount Value="13"/>
+        <UsageCount Value="14"/>
         <Loaded Value="True"/>
       </Unit10>
+      <Unit11>
+        <Filename Value="database.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="Database"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="9"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+      </Unit11>
     </Units>
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
