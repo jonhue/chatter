@@ -8,6 +8,10 @@
       <Title Value="Chatter"/>
       <ResourceType Value="res"/>
       <UseXPManifest Value="True"/>
+      <XPManifest>
+        <TextName Value="Chatter"/>
+        <TextDesc Value="A simple Lazarus chat app."/>
+      </XPManifest>
       <Icon Value="0"/>
     </General>
     <i18n>
@@ -24,12 +28,15 @@
         <FormatVersion Value="1"/>
       </local>
     </RunParams>
-    <RequiredPackages Count="1">
+    <RequiredPackages Count="2">
       <Item1>
-        <PackageName Value="LCL"/>
+        <PackageName Value="FCL"/>
       </Item1>
+      <Item2>
+        <PackageName Value="LCL"/>
+      </Item2>
     </RequiredPackages>
-    <Units Count="6">
+    <Units Count="8">
       <Unit0>
         <Filename Value="chatter.pas"/>
         <IsPartOfProject Value="True"/>
@@ -62,6 +69,15 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="Database"/>
       </Unit5>
+      <Unit6>
+        <Filename Value="view.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="View"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="card.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit7>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

@@ -5,8 +5,9 @@ unit Form;
 interface
 
 uses
-  User, Group, UserGroup, Chat, UserChat, Message, Database, Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs,
-  ComCtrls, StdCtrls, ExtCtrls;
+  User, Group, UserGroup, Chat, UserChat, Message, Classes, SysUtils, sqldb,
+  mysql56conn, FileUtil, Forms, Controls, Graphics, Dialogs, ComCtrls, StdCtrls,
+  ExtCtrls;
 
 type
 
@@ -23,6 +24,7 @@ type
     backButton: TButton;
     chatEditButton: TButton;
     groupEditButton: TButton;
+    MySQL56Connection1: TMySQL56Connection;
     newGroupInvitationIviteButton: TButton;
     newGroupInvitationUsernameEdit: TEdit;
     Label26: TLabel;
@@ -85,6 +87,7 @@ type
     Label2: TLabel;
     Label3: TLabel;
     loginLoginButton: TButton;
+    SQLTransaction1: TSQLTransaction;
     userLabel: TLabel;
     usernameLabel: TLabel;
     loginButton: TButton;
@@ -112,7 +115,6 @@ type
     procedure createGroupCreateButtonClick(Sender: TObject);
     procedure editChatUpdateButtonClick(Sender: TObject);
     procedure editGroupUpdateButtonClick(Sender: TObject);
-    procedure FormDestroy(Sender: TObject);
     procedure groupCreateChatButtonClick(Sender: TObject);
     procedure groupEditButtonClick(Sender: TObject);
     procedure groupInviteMemberButtonClick(Sender: TObject);
@@ -216,16 +218,9 @@ end;
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
-  databaseConnect('root', 'password');
-  // databaseExecute('INSERT INTO users ( id, username, first_name, last_name, password ) VALUES ( 1, "jonhue", "Jonas", "Hübotter", "0402Jonas" );');
-  // databaseExecute('SELECT * FROM users');
+  TUser.seed();
   PageControl1.ShowTabs := false;
   currentView.switch('Login', 0);
-end;
-
-procedure TForm1.FormDestroy(Sender: TObject);
-begin
-  databaseDisconnect();
 end;
 
 procedure TForm1.loginButtonClick(Sender: TObject);

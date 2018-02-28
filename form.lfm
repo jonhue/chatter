@@ -8,7 +8,6 @@ object Form1: TForm1
   ClientWidth = 695
   DesignTimePPI = 288
   OnCreate = FormCreate
-  OnDestroy = FormDestroy
   LCLVersion = '1.8.0.6'
   object ScrollBox1: TScrollBox
     Left = 0
@@ -747,5 +746,27 @@ object Form1: TForm1
       OnClick = loginButtonClick
       TabOrder = 5
     end
+  end
+  object SQLTransaction1: TSQLTransaction
+    Active = False
+    Database = MySQL56Connection1
+    left = 10
+    top = 10
+  end
+  object MySQL56Connection1: TMySQL56Connection
+    Connected = True
+    LoginPrompt = True
+    DatabaseName = 'chatter'
+    KeepConnection = True
+    Params.Strings = (
+      'Port=3306'
+    )
+    Password = 'password'
+    Transaction = SQLTransaction1
+    UserName = 'chatter'
+    HostName = 'localhost'
+    SkipLibraryVersionCheck = True
+    left = 39
+    top = 10
   end
 end

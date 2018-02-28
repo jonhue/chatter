@@ -5,57 +5,84 @@ unit Database;
 interface
 
 uses
-  Classes, SysUtils, db, sqldb, mysql57conn;
+  Classes, SysUtils, db, sqldb, mysql56conn;
 
-function databaseConnect(u, p: string): TSQLConnector;
-function databaseDisconnect(): boolean;
-function databaseExecute(q: string): boolean;
-
-var
-  databaseConnection: TSQLConnector;
-  databaseQuery: TSQLQuery;
+function databaseChange(q: string): boolean;
+function databaseUpdateString(f, v: string; i: integer): string;
+function databaseUpdateInteger(f: string; v, i: integer): integer;
+function databaseSelect(f: string; i: integer): TSQLQuery;
+function databaseSelectString(f: string; i: integer): string;
+function databaseSelectInteger(f: string; i: integer): integer;
 
 implementation
+uses Form;
 
-function databaseConnect(u, p: string): TSQLConnector;
+function databaseChange(q: string): boolean;
+var query: TSQLQuery;
 begin
-  databaseConnection := TSQLConnector.create(nil);
-  with databaseConnection do begin
-    connectorType := 'mysql 5.7';
-    hostName := 'localhost';
-    databaseName := 'chatter';
-    userName := u;
-    password := p;
-    transaction := TSQLTransaction.create(databaseConnection);
+  query := TSQLQuery.create(nil);
+  query.dataBase := Form1.MySQL56Connection1;
+
+  try
+    query.SQL.text := q;
+    query.execSQL();
+    Form1.MySQL56Connection1.transaction.commit();
+  finally
+    query.close;
   end;
-  // databaseConnection.free;
-  result := databaseConnection;
-end;
-
-function databaseDisconnect(): boolean;
-begin
-  databaseConnection.free;
   result := true;
 end;
 
-function databaseExecute(q: string): boolean;
-var field: TField;
+function databaseUpdateString(f, v: string; i: integer): string;
 begin
-  databaseQuery := TSQLQuery.create(nil);
-  databaseQuery.dataBase := databaseConnection;
-  databaseQuery.SQL.text := q;
-  databaseQuery.open;
-  while not databaseQuery.EOF do begin
-    for field in databaseQuery.fields do begin
-      Write(field.fieldName, ' = ');
-      if field.isNull then WriteLn('NULL') else WriteLn(field.value);
+  databaseChange('UPDATE users SET ' + f + ' = "' + v + '" WHERE id = ' + IntToStr(i) + ';');
+  result := v;
+end;
+
+function databaseUpdateInteger(f: string; v, i: integer): integer;
+begin
+  databaseChange('UPDATE users SET ' + f + ' = ' + IntToStr(v) + ' WHERE id = ' + IntToStr(i) + ';');
+  result := v;
+end;
+
+function databaseSelect(f: string; i: integer): TSQLQuery;
+var query: TSQLQuery;
+begin
+  query := TSQLQuery.create(nil);
+  query.dataBase := Form1.MySQL56Connection1;
+  query.SQL.text := 'SELECT ' + f + ' FROM users WHERE id = ' + IntToStr(i) + ';';
+  query.open();
+  result := query;
+end;
+
+function databaseSelectString(f: string; i: integer): string;
+var query: TSQLQuery;
+begin
+  try
+    query := databaseSelect(f, i);
+    while not query.Eof do
+    begin
+      result := query.fieldByName(f).asString;
+      query.next;
     end;
-    WriteLn;
-    databaseQuery.next;
+  finally
+    query.close;
   end;
-  databaseQuery.close;
-  databaseQuery.free;
-  result := true;
+end;
+
+function databaseSelectInteger(f: string; i: integer): integer;
+var query: TSQLQuery;
+begin
+  try
+    query := databaseSelect(f, i);
+    while not query.Eof do
+    begin
+      result := query.fieldByName(f).asInteger;
+      query.next;
+    end;
+  finally
+    query.close;
+  end;
 end;
 
 end.
