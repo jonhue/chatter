@@ -14,29 +14,29 @@ type
   TMessage = class
   private
     id: integer;
-    chatId: integer;
     userId: integer;
+    chatId: integer;
     content: string;
   protected
     function setId(i: integer): integer;
-    function setChatId(ci: integer): integer;
     function setUserId(ui: integer): integer;
+    function setChatId(ci: integer): integer;
     function setContent(c: string): string;
   public
     // class function find(i: integer): TMessageArray;
     // class function findByChat(c: TChat): TMessageArray;
     constructor create(c: TChat; u: TUser; co: string);
     function getId(): integer;
-    function getChatId(): integer;
     function getUserId(): integer;
+    function getChatId(): integer;
     function getContent(): string;
   end;
 
   TMessageArray = array of TMessage;
 
 function findMessage(i: integer): TMessageArray;
-function findMessageByChat(c: TChat): TMessageArray;
 function findMessageByUser(u: TUser): TMessageArray;
+function findMessageByChat(c: TChat): TMessageArray;
 
 var
   messages: TMessageArray;
@@ -57,11 +57,11 @@ begin
   result := a;
 end;
 
-function findMessageByChat(c: TChat): TMessageArray;
+function findMessageByUser(u: TUser): TMessageArray;
 var i: integer; a: TMessageArray;
 begin
   for i := 0 to length(messages) - 1 do
-    if messages[i].getChatId() = c.getId() then
+    if messages[i].getUserId() = u.getId() then
     begin
       setLength(a, length(a) + 1);
       a[length(a) - 1] := messages[i];
@@ -69,11 +69,11 @@ begin
   result := a;
 end;
 
-function findMessageByUser(u: TUser): TMessageArray;
+function findMessageByChat(c: TChat): TMessageArray;
 var i: integer; a: TMessageArray;
 begin
   for i := 0 to length(messages) - 1 do
-    if messages[i].getUserId() = u.getId() then
+    if messages[i].getChatId() = c.getId() then
     begin
       setLength(a, length(a) + 1);
       a[length(a) - 1] := messages[i];
@@ -99,14 +99,14 @@ begin
   result := self.id;
 end;
 
-function TMessage.getChatId(): integer;
-begin
-  result := self.chatId;
-end;
-
 function TMessage.getUserId(): integer;
 begin
   result := self.userId;
+end;
+
+function TMessage.getChatId(): integer;
+begin
+  result := self.chatId;
 end;
 
 function TMessage.getContent(): string;
@@ -120,16 +120,16 @@ begin
   result := self.getId();
 end;
 
-function TMessage.setChatId(ci: integer): integer;
-begin
-  self.chatId := ci;
-  result := self.getChatId();
-end;
-
 function TMessage.setUserId(ui: integer): integer;
 begin
   self.userId := ui;
   result := self.getUserId();
+end;
+
+function TMessage.setChatId(ci: integer): integer;
+begin
+  self.chatId := ci;
+  result := self.getChatId();
 end;
 
 function TMessage.setContent(c: string): string;
