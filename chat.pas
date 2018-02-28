@@ -5,7 +5,7 @@ unit Chat;
 interface
 
 uses
-  User, Group, Classes, SysUtils;
+  User, Group, Database, Classes, SysUtils, db, sqldb, mysql56conn;
 
 type
 
@@ -18,7 +18,6 @@ type
     groupId: integer;
     name: string;
   protected
-    function setId(i: integer): integer;
     function setUserId(ui: integer): integer;
     function setGroupId(gi: integer): integer;
     function setName(n: string): string;
@@ -27,6 +26,8 @@ type
     // class function findByUser(u: TUser): TChatArray;
     // class function findByGroup(g: TGroup): TChatArray;
     constructor create(u: TUser; g: TGroup; n: string);
+    constructor recreate(i, ui, gi: integer; n: string);
+    class function seed(): boolean;
     function update(g: TGroup; n: string): TChat;
     function getId(): integer;
     function getUserId(): integer;
@@ -44,6 +45,7 @@ var
   chats: TChatArray;
 
 implementation
+uses Form;
 
 { TNotification }
 
@@ -86,15 +88,46 @@ end;
 constructor TChat.create(u: TUser; g: TGroup; n: string);
 begin
   inherited create();
-  self.setUserId(u.getId());
-  self.setName(n);
+  self.userId := u.getId();
+  self.name := n;
   if g <> nil then
-    self.setGroupId(g.getId());
+    self.groupId := g.getId();
   repeat
-    self.setId(random(999999) + 1);
+    self.id := random(999999) + 1;
   until length(findChat(self.getId())) = 0;
   setLength(chats, length(chats) + 1);
   chats[length(chats) - 1] := self;
+  databaseChange('INSERT INTO chats ( id, user_id, group_id, name ) VALUES ( ' + IntToStr(self.id) + ', ' + IntToStr(self.userId) + ', ' + IntToStr(self.groupId) + ', "' + self.name + '" );');
+end;
+
+constructor TChat.recreate(i, ui, gi: integer; n: string);
+begin
+  inherited create();
+  self.id := i;
+  self.userId := ui;
+  self.groupId := gi;
+  self.name := n;
+  setLength(chats, length(chats) + 1);
+  chats[length(chats) - 1] := self;
+end;
+
+class function TChat.seed(): boolean;
+var query: TSQLQuery;
+begin
+  query := TSQLQuery.create(nil);
+  query.dataBase := Form1.MySQL56Connection1;
+  try
+    query.SQL.text := 'SELECT * FROM chats;';
+    query.open();
+    while not query.eof do
+    begin
+      TChat.recreate(query.fieldByName('id').asInteger, query.fieldByName('user_id').asInteger, query.fieldByName('group_id').asInteger, query.fieldByName('name').asString);
+      query.next();
+    end;
+  finally
+    query.close();
+  end;
+  result := true;
 end;
 
 function TChat.update(g: TGroup; n: string): TChat;
@@ -112,40 +145,37 @@ end;
 
 function TChat.getUserId(): integer;
 begin
+  self.userId := databaseSelectInteger('chats', 'user_id', self.getId());
   result := self.userId;
 end;
 
 function TChat.getGroupId(): integer;
 begin
+  self.groupId := databaseSelectInteger('chats', 'group_id', self.getId());
   result := self.groupId;
 end;
 
 function TChat.getName(): string;
 begin
+  self.name := databaseSelectString('chats', 'name', self.getId());
   result := self.name;
-end;
-
-function TChat.setId(i: integer): integer;
-begin
-  self.id := i;
-  result := self.getId();
 end;
 
 function TChat.setUserId(ui: integer): integer;
 begin
-  self.userId := ui;
+  self.userId := databaseUpdateInteger('chats', 'user_id', ui, self.getId());
   result := self.getUserId();
 end;
 
 function TChat.setGroupId(gi: integer): integer;
 begin
-  self.groupId := gi;
+  self.groupId := databaseUpdateInteger('chats', 'group_id', gi, self.getId());
   result := self.getGroupId();
 end;
 
 function TChat.setName(n: string): string;
 begin
-  self.name := n;
+  self.name := databaseUpdateString('chats', 'name', n, self.getId());
   result := self.getName();
 end;
 

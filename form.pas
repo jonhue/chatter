@@ -218,7 +218,12 @@ end;
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
+  TChat.seed();
+  // TGroup.seed();
+  // TMessage.seed();
   TUser.seed();
+  // TUserChat.seed();
+  // TUserGroup.seed();
   PageControl1.ShowTabs := false;
   currentView.switch('Login', 0);
 end;
@@ -623,7 +628,7 @@ begin
     begin
       cardArray[i] := TCard.create(
         findChat(userChats[i].getChatId())[0].getName(),
-        '',
+        '-',
         userChats[i].getChatId(),
         'Chat'
       );

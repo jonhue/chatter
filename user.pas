@@ -85,7 +85,7 @@ begin
   self.password := p;
   repeat
     self.id := random(999999) + 1;
-  until length(findUser(self.id)) = 0;
+  until length(findUser(self.getId())) = 0;
   setLength(users, length(users) + 1);
   users[length(users) - 1] := self;
   databaseChange('INSERT INTO users ( id, username, first_name, last_name, password ) VALUES ( ' + IntToStr(self.id) + ', "' + self.username + '", "' + self.firstName + '", "' + self.lastName + '", "' + self.password + '" );');
@@ -168,49 +168,49 @@ end;
 
 function TUser.getUsername(): string;
 begin
-  self.username := databaseSelectString('username', self.getId());
+  self.username := databaseSelectString('users', 'username', self.getId());
   result := self.username;
 end;
 
 function TUser.getFirstName(): string;
 begin
-  self.firstName := databaseSelectString('first_name', self.getId());
+  self.firstName := databaseSelectString('users', 'first_name', self.getId());
   result := self.firstName;
 end;
 
 function TUser.getLastName(): string;
 begin
-  self.lastName := databaseSelectString('last_name', self.getId());
+  self.lastName := databaseSelectString('users', 'last_name', self.getId());
   result := self.lastName;
 end;
 
 function TUser.getPassword(): string;
 begin
-  self.password := databaseSelectString('password', self.getId());
+  self.password := databaseSelectString('users', 'password', self.getId());
   result := self.password;
 end;
 
 function TUser.setUsername(u: string): string;
 begin
-  self.username := databaseUpdateString('username', u, self.getId());
+  self.username := databaseUpdateString('users', 'username', u, self.getId());
   result := self.getUsername();
 end;
 
 function TUser.setFirstName(fn: string): string;
 begin
-  self.firstName := databaseUpdateString('first_name', fn, self.getId());
+  self.firstName := databaseUpdateString('users', 'first_name', fn, self.getId());
   result := self.getFirstName();
 end;
 
 function TUser.setLastName(ln: string): string;
 begin
-  self.lastName := databaseUpdateString('last_name', ln, self.getId());
+  self.lastName := databaseUpdateString('users', 'last_name', ln, self.getId());
   result := self.getLastName();
 end;
 
 function TUser.setPassword(p: string): string;
 begin
-  self.password := databaseUpdateString('password', p, self.getId());
+  self.password := databaseUpdateString('users', 'password', p, self.getId());
   result := self.getPassword();
 end;
 
