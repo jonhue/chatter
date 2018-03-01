@@ -10,7 +10,7 @@
         <EditorIndex Value="5"/>
         <TopLine Value="2"/>
         <CursorPos Y="21"/>
-        <UsageCount Value="71"/>
+        <UsageCount Value="72"/>
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
@@ -20,10 +20,9 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Form"/>
-        <IsVisibleTab Value="True"/>
         <TopLine Value="542"/>
         <CursorPos X="22" Y="553"/>
-        <UsageCount Value="71"/>
+        <UsageCount Value="72"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit1>
@@ -34,17 +33,18 @@
         <EditorIndex Value="7"/>
         <TopLine Value="91"/>
         <CursorPos Y="101"/>
-        <UsageCount Value="70"/>
+        <UsageCount Value="71"/>
         <Loaded Value="True"/>
       </Unit2>
       <Unit3>
         <Filename Value="message.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="Message"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="8"/>
         <TopLine Value="67"/>
         <CursorPos X="21" Y="89"/>
-        <UsageCount Value="61"/>
+        <UsageCount Value="62"/>
         <Loaded Value="True"/>
       </Unit3>
       <Unit4>
@@ -54,7 +54,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="14"/>
         <CursorPos X="24" Y="47"/>
-        <UsageCount Value="61"/>
+        <UsageCount Value="62"/>
       </Unit4>
       <Unit5>
         <Filename Value="database.pas"/>
@@ -63,7 +63,7 @@
         <EditorIndex Value="9"/>
         <TopLine Value="27"/>
         <CursorPos X="3" Y="37"/>
-        <UsageCount Value="29"/>
+        <UsageCount Value="30"/>
         <Loaded Value="True"/>
       </Unit5>
       <Unit6>
@@ -71,14 +71,14 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="View"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="26"/>
+        <UsageCount Value="27"/>
       </Unit6>
       <Unit7>
         <Filename Value="card.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="7"/>
-        <UsageCount Value="26"/>
+        <UsageCount Value="27"/>
       </Unit7>
       <Unit8>
         <Filename Value="user.pas"/>
@@ -86,16 +86,16 @@
         <EditorIndex Value="2"/>
         <TopLine Value="104"/>
         <CursorPos Y="110"/>
-        <UsageCount Value="36"/>
+        <UsageCount Value="37"/>
         <Loaded Value="True"/>
       </Unit8>
       <Unit9>
         <Filename Value="group.pas"/>
         <UnitName Value="Group"/>
         <EditorIndex Value="3"/>
-        <TopLine Value="98"/>
-        <CursorPos Y="108"/>
-        <UsageCount Value="36"/>
+        <TopLine Value="142"/>
+        <CursorPos X="18" Y="152"/>
+        <UsageCount Value="37"/>
         <Loaded Value="True"/>
       </Unit9>
       <Unit10>
@@ -104,7 +104,7 @@
         <EditorIndex Value="4"/>
         <TopLine Value="33"/>
         <CursorPos X="37" Y="8"/>
-        <UsageCount Value="36"/>
+        <UsageCount Value="37"/>
         <Loaded Value="True"/>
       </Unit10>
       <Unit11>
@@ -120,7 +120,7 @@
         <EditorIndex Value="6"/>
         <TopLine Value="114"/>
         <CursorPos X="173" Y="124"/>
-        <UsageCount Value="36"/>
+        <UsageCount Value="37"/>
         <Loaded Value="True"/>
       </Unit12>
       <Unit13>
@@ -129,7 +129,7 @@
         <EditorIndex Value="1"/>
         <TopLine Value="906"/>
         <CursorPos Y="916"/>
-        <UsageCount Value="18"/>
+        <UsageCount Value="19"/>
         <Loaded Value="True"/>
       </Unit13>
       <Unit14>
@@ -137,11 +137,11 @@
         <EditorIndex Value="10"/>
         <TopLine Value="929"/>
         <CursorPos Y="939"/>
-        <UsageCount Value="13"/>
+        <UsageCount Value="14"/>
         <Loaded Value="True"/>
       </Unit14>
     </Units>
-    <JumpHistory Count="27" HistoryIndex="26">
+    <JumpHistory Count="29" HistoryIndex="28">
       <Position1>
         <Filename Value="form.pas"/>
         <Caret Line="390" Column="3" TopLine="389"/>
@@ -248,6 +248,14 @@
         <Filename Value="form.pas"/>
         <Caret Line="553" Column="22" TopLine="542"/>
       </Position27>
+      <Position28>
+        <Filename Value="chat.pas"/>
+        <Caret Line="124" Column="173" TopLine="114"/>
+      </Position28>
+      <Position29>
+        <Filename Value="group.pas"/>
+        <Caret Line="123" Column="7" TopLine="113"/>
+      </Position29>
     </JumpHistory>
   </ProjectSession>
 </CONFIG>

@@ -219,8 +219,8 @@ end;
 procedure TForm1.FormCreate(Sender: TObject);
 begin
   TChat.seed();
-  // TGroup.seed();
-  // TMessage.seed();
+  TGroup.seed();
+  TMessage.seed();
   TUser.seed();
   // TUserChat.seed();
   // TUserGroup.seed();

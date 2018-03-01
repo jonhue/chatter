@@ -5,7 +5,7 @@ unit Message;
 interface
 
 uses
-  Chat, User, Classes, SysUtils;
+  Chat, User, Database, Classes, SysUtils, db, sqldb, mysql56conn;
 
 type
 
@@ -18,7 +18,6 @@ type
     chatId: integer;
     content: string;
   protected
-    function setId(i: integer): integer;
     function setUserId(ui: integer): integer;
     function setChatId(ci: integer): integer;
     function setContent(c: string): string;
@@ -26,6 +25,8 @@ type
     // class function find(i: integer): TMessageArray;
     // class function findByChat(c: TChat): TMessageArray;
     constructor create(c: TChat; u: TUser; co: string);
+    constructor recreate(i, ui, ci: integer; c: string);
+    class function seed(): boolean;
     function getId(): integer;
     function getUserId(): integer;
     function getChatId(): integer;
@@ -42,6 +43,7 @@ var
   messages: TMessageArray;
 
 implementation
+uses Form;
 
 { TMessage }
 
@@ -84,14 +86,45 @@ end;
 constructor TMessage.create(c: TChat; u: TUser; co: string);
 begin
   inherited create();
-  self.setChatId(c.getId());
-  self.setUserId(u.getId());
-  self.setContent(co);
+  self.chatId := c.getId();
+  self.userId := u.getId();
+  self.content := co;
   repeat
-    self.setId(random(999999) + 1);
+    self.id := random(999999) + 1;
   until length(findMessage(self.getId())) = 0;
   setLength(messages, length(messages) + 1);
   messages[length(messages) - 1] := self;
+  databaseChange('INSERT INTO messages ( id, user_id, chat_id, content ) VALUES ( ' + IntToStr(self.id) + ', ' + IntToStr(self.userId) + ', ' + IntToStr(self.chatId) + ', "' + self.content + '" );');
+end;
+
+constructor TMessage.recreate(i, ui, ci: integer; c: string);
+begin
+  inherited create();
+  self.id := i;
+  self.userId := ui;
+  self.chatId := ci;
+  self.content := c;
+  setLength(messages, length(messages) + 1);
+  messages[length(messages) - 1] := self;
+end;
+
+class function TMessage.seed(): boolean;
+var query: TSQLQuery;
+begin
+  query := TSQLQuery.create(nil);
+  query.dataBase := Form1.MySQL56Connection1;
+  try
+    query.SQL.text := 'SELECT * FROM messages;';
+    query.open();
+    while not query.eof do
+    begin
+      TMessage.recreate(query.fieldByName('id').asInteger, query.fieldByName('user_id').asInteger, query.fieldByName('chat_id').asInteger, query.fieldByName('content').asString);
+      query.next();
+    end;
+  finally
+    query.close();
+  end;
+  result := true;
 end;
 
 function TMessage.getId(): integer;
@@ -101,40 +134,37 @@ end;
 
 function TMessage.getUserId(): integer;
 begin
+  self.userId := databaseSelectInteger('messages', 'user_id', self.getId());
   result := self.userId;
 end;
 
 function TMessage.getChatId(): integer;
 begin
+  self.chatId := databaseSelectInteger('messages', 'chat_id', self.getId());
   result := self.chatId;
 end;
 
 function TMessage.getContent(): string;
 begin
+  self.content := databaseSelectString('messages', 'content', self.getId());
   result := self.content;
-end;
-
-function TMessage.setId(i: integer): integer;
-begin
-  self.id := i;
-  result := self.getId();
 end;
 
 function TMessage.setUserId(ui: integer): integer;
 begin
-  self.userId := ui;
+  self.userId := databaseUpdateInteger('messages', 'user_id', ui, self.getId());
   result := self.getUserId();
 end;
 
 function TMessage.setChatId(ci: integer): integer;
 begin
-  self.chatId := ci;
+  self.chatId := databaseUpdateInteger('messages', 'chat_id', ci, self.getId());
   result := self.getChatId();
 end;
 
 function TMessage.setContent(c: string): string;
 begin
-  self.content := c;
+  self.content := databaseUpdateString('messages', 'content', c, self.getId());
   result := self.getContent();
 end;
 

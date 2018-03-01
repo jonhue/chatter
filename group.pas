@@ -5,7 +5,7 @@ unit Group;
 interface
 
 uses
-  User, Classes, SysUtils;
+  User, Classes, Database, SysUtils, db, sqldb, mysql56conn;
 
 type
 
@@ -18,7 +18,6 @@ type
     name: string;
     description: string;
   protected
-    function setId(i: integer): integer;
     function setUserId(ui: integer): integer;
     function setName(n: string): string;
     function setDescription(d: string): string;
@@ -27,6 +26,8 @@ type
     // class function findByUser(u: TUser): TGroupArray;
     // class function findByName(n: string): TGroupArray;
     constructor create(u: TUser; n, d: string);
+    constructor recreate(i, ui: integer; n, d: string);
+    class function seed(): boolean;
     function update(n, d: string): TGroup;
     function getId(): integer;
     function getUserId(): integer;
@@ -44,6 +45,7 @@ var
   groups: TGroupArray;
 
 implementation
+uses Form;
 
 { TGroup }
 
@@ -86,14 +88,45 @@ end;
 constructor TGroup.create(u: TUser; n, d: string);
 begin
   inherited create();
-  self.setUserId(u.getId());
-  self.setName(n);
-  self.setDescription(d);
+  self.userId := u.getId();
+  self.name := n;
+  self.description := d;
   repeat
-    self.setId(random(999999) + 1);
+    self.id := random(999999) + 1;
   until length(findGroup(self.getId())) = 0;
   setLength(groups, length(groups) + 1);
   groups[length(groups) - 1] := self;
+  databaseChange('INSERT INTO groups ( id, user_id, name, description ) VALUES ( ' + IntToStr(self.id) + ', ' + IntToStr(self.userId) + ', "' + self.name + '", "' + self.description + '" );');
+end;
+
+constructor TGroup.recreate(i, ui: integer; n, d: string);
+begin
+  inherited create();
+  self.id := i;
+  self.userId := ui;
+  self.name := n;
+  self.description := d;
+  setLength(groups, length(groups) + 1);
+  groups[length(groups) - 1] := self;
+end;
+
+class function TGroup.seed(): boolean;
+var query: TSQLQuery;
+begin
+  query := TSQLQuery.create(nil);
+  query.dataBase := Form1.MySQL56Connection1;
+  try
+    query.SQL.text := 'SELECT * FROM groups;';
+    query.open();
+    while not query.eof do
+    begin
+      TGroup.recreate(query.fieldByName('id').asInteger, query.fieldByName('user_id').asInteger, query.fieldByName('name').asString, query.fieldByName('description').asString);
+      query.next();
+    end;
+  finally
+    query.close();
+  end;
+  result := true;
 end;
 
 function TGroup.update(n, d: string): TGroup;
@@ -110,40 +143,37 @@ end;
 
 function TGroup.getUserId(): integer;
 begin
+  self.userId := databaseSelectInteger('groups', 'user_id', self.getId());
   result := self.userId;
 end;
 
 function TGroup.getName(): string;
 begin
+  self.name := databaseSelectString('groups', 'name', self.getId());
   result := self.name;
 end;
 
 function TGroup.getDescription(): string;
 begin
+  self.description := databaseSelectString('groups', 'description', self.getId());
   result := self.description;
-end;
-
-function TGroup.setId(i: integer): integer;
-begin
-  self.id := i;
-  result := self.getId();
 end;
 
 function TGroup.setUserId(ui: integer): integer;
 begin
-  self.userId := ui;
+  self.userId := databaseUpdateInteger('groups', 'user_id', ui, self.getId());
   result := self.getUserId();
 end;
 
 function TGroup.setName(n: string): string;
 begin
-  self.name := n;
+  self.name := databaseUpdateString('groups', 'name', n, self.getId());
   result := self.getName();
 end;
 
 function TGroup.setDescription(d: string): string;
 begin
-  self.description := d;
+  self.description := databaseUpdateString('groups', 'description', d, self.getId());
   result := self.getDescription();
 end;
 
