@@ -222,8 +222,8 @@ begin
   TGroup.seed();
   TMessage.seed();
   TUser.seed();
-  // TUserChat.seed();
-  // TUserGroup.seed();
+  TUserChat.seed();
+  TUserGroup.seed();
   PageControl1.ShowTabs := false;
   currentView.switch('Login', 0);
 end;
