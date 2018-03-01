@@ -372,7 +372,6 @@ begin
   else
   begin
     chat := findChat(currentView.getParameter())[0].update(group, editChatNameEdit.Text);
-    TUserChat.create(currentUser, chat);
     editChatNameEdit.Text := '';
     editChatGroupEdit.Text := '';
     currentView.switch('Chat', chat.getId());
