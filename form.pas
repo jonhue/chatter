@@ -321,7 +321,7 @@ begin
   InputQuery('New message', 'Write something up ...', false, co);
   if co <> '' then
   begin
-    TMessage.create(findChat(currentView.getParameter())[0], currentUser, co);
+    TMessage.create(TChat.find(currentView.getParameter()), currentUser, co);
     currentView.switch('Chat', currentView.getParameter());
   end;
 end;
@@ -329,9 +329,9 @@ end;
 procedure TForm1.createChatCreateButtonClick(Sender: TObject);
 var chat: TChat; group: TGroup;
 begin
-  if length(findGroupByName(createChatGroupEdit.Text)) > 0 then
-    if findGroupByName(createChatGroupEdit.Text)[0].getUserId = currentUser.getId() then
-      group := findGroupByName(createChatGroupEdit.Text)[0]
+  if length(TGroup.whereName(createChatGroupEdit.Text)) > 0 then
+    if TGroup.whereName(createChatGroupEdit.Text)[0].getUserId = currentUser.getId() then
+      group := TGroup.whereName(createChatGroupEdit.Text)[0]
     else
       showMessage('You do not own this group')
   else
@@ -361,9 +361,9 @@ end;
 procedure TForm1.editChatUpdateButtonClick(Sender: TObject);
 var chat: TChat; group: TGroup;
 begin
-  if length(findGroupByName(editChatGroupEdit.Text)) > 0 then
-    if findGroupByName(editChatGroupEdit.Text)[0].getUserId = currentUser.getId() then
-      group := findGroupByName(editChatGroupEdit.Text)[0]
+  if length(TGroup.whereName(editChatGroupEdit.Text)) > 0 then
+    if TGroup.whereName(editChatGroupEdit.Text)[0].getUserId = currentUser.getId() then
+      group := TGroup.whereName(editChatGroupEdit.Text)[0]
     else
       showMessage('You do not own this group')
   else
@@ -372,7 +372,7 @@ begin
     showMessage('Group does not exist')
   else
   begin
-    chat := findChat(currentView.getParameter())[0].update(group, editChatNameEdit.Text);
+    chat := TChat.find(currentView.getParameter()).update(group, editChatNameEdit.Text);
     editChatNameEdit.Text := '';
     editChatGroupEdit.Text := '';
     currentView.switch('Chat', chat.getId());
@@ -382,7 +382,7 @@ end;
 procedure TForm1.editGroupUpdateButtonClick(Sender: TObject);
 var group: TGroup;
 begin
-  group := findGroup(currentView.getParameter())[0].update(editGroupNameEdit.Text, editGroupDescriptionEdit.Text);
+  group := TGroup.find(currentView.getParameter()).update(editGroupNameEdit.Text, editGroupDescriptionEdit.Text);
   editGroupNameEdit.Text := '';
   editGroupDescriptionEdit.Text := '';
   currentView.switch('Group', group.getId());
@@ -390,7 +390,7 @@ end;
 
 procedure TForm1.groupCreateChatButtonClick(Sender: TObject);
 begin
-  currentView.switch('Create chat', findGroupByName(groupNameLabel.caption)[0].getId());
+  currentView.switch('Create chat', TGroup.whereName(groupNameLabel.caption)[0].getId());
 end;
 
 procedure TForm1.groupEditButtonClick(Sender: TObject);
@@ -420,14 +420,14 @@ begin
   if length(TUser.whereUsername(newChatInvitationUsernameEdit.text)) > 0 then
   begin
     user := TUser.whereUsername(newChatInvitationUsernameEdit.text)[0];
-    for i:=0 to length(findUserChatByChat(findChat(currentView.getParameter())[0])) - 1 do
-      if findUserChatByChat(findChat(currentView.getParameter())[0])[i].getUserId() = user.getId() then
+    for i:=0 to length(TUserChat.whereChat(TChat.find(currentView.getParameter()))) - 1 do
+      if TUserChat.whereChat(TChat.find(currentView.getParameter()))[i].getUserId() = user.getId() then
         userIsMember := true;
     if userIsMember then
       showMessage('User is already a member')
     else
     begin
-      TUserChat.create(user, findChat(currentView.getParameter())[0]);
+      TUserChat.create(user, TChat.find(currentView.getParameter()));
       newChatInvitationUsernameEdit.text := '';
       currentView.switch('Chat', currentView.getParameter());
     end;
@@ -443,14 +443,14 @@ begin
   if length(TUser.whereUsername(newGroupInvitationUsernameEdit.text)) > 0 then
   begin
     user := TUser.whereUsername(newGroupInvitationUsernameEdit.text)[0];
-    for i:=0 to length(findUserGroupByGroup(findGroup(currentView.getParameter())[0])) - 1 do
-      if findUserGroupByGroup(findGroup(currentView.getParameter())[0])[i].getUserId() = user.getId() then
+    for i:=0 to length(TUserGroup.whereGroup(TGroup.find(currentView.getParameter()))) - 1 do
+      if TUserGroup.whereGroup(TGroup.find(currentView.getParameter()))[i].getUserId() = user.getId() then
         userIsMember := true;
     if userIsMember then
       showMessage('User is already a member')
     else
     begin
-      TUserGroup.create(user, findGroup(currentView.getParameter())[0]);
+      TUserGroup.create(user, TGroup.find(currentView.getParameter()));
       newGroupInvitationUsernameEdit.text := '';
       currentView.switch('Group', currentView.getParameter());
     end;
@@ -611,43 +611,43 @@ begin
   end;
   if self.getCurrent() = 'Home' then
   begin
-    userGroups := findUserGroupByUser(currentUser);
+    userGroups := TUserGroup.whereUser(currentUser);
     setLength(cardArray, length(userGroups));
     for i:=0 to length(userGroups) - 1 do
     begin
       cardArray[i] := TCard.create(
-        findGroup(userGroups[i].getGroupId())[0].getName(),
-        findGroup(userGroups[i].getGroupId())[0].getDescription(),
+        TGroup.find(userGroups[i].getGroupId()).getName(),
+        TGroup.find(userGroups[i].getGroupId()).getDescription(),
         userGroups[i].getGroupId(),
         'Group'
       );
     end;
     self.renderCards(1, cardArray);
-    userChats := findUserChatByUser(currentUser);
+    userChats := TUserChat.whereUser(currentUser);
     setLength(cardArray, length(userChats));
     for i:=0 to length(userChats) - 1 do
     begin
       cardArray[i] := TCard.create(
-        findChat(userChats[i].getChatId())[0].getName(),
+        TChat.find(userChats[i].getChatId()).getName(),
         '-',
         userChats[i].getChatId(),
         'Chat'
       );
-      if ( findChat(userChats[i].getChatId())[0].getGroupId() <> 0) and ( length(findGroup(findChat(userChats[i].getChatId())[0].getGroupId())) > 0 ) then
-        cardArray[i].setContent(findGroup(findChat(userChats[i].getChatId())[0].getGroupId())[0].getName());
+      if ( TChat.find(userChats[i].getChatId()).getGroupId() <> 0 ) and ( TGroup.find(TChat.find(userChats[i].getChatId()).getGroupId()) <> nil ) then
+        cardArray[i].setContent(TGroup.find(TChat.find(userChats[i].getChatId()).getGroupId()).getName());
     end;
     self.renderCards(2, cardArray);
   end;
   if self.getCurrent() = 'Group' then
   begin
-    group := findGroup(self.getParameter())[0];
+    group := TGroup.find(self.getParameter());
     Form1.groupNameLabel.caption := group.getName();
     Form1.groupDescriptionLabel.caption := group.getDescription();
     if currentUser.getId() = group.getUserId() then
       Form1.groupEditButton.visible := true
     else
       Form1.groupEditButton.visible := false;
-    groupChats := findChatByGroup(group);
+    groupChats := TChat.whereGroup(group);
     setLength(cardArray, length(groupChats));
     for i:=0 to length(groupChats) - 1 do
     begin
@@ -659,7 +659,7 @@ begin
       );
     end;
     self.renderCards(1, cardArray);
-    groupUserGroups := findUserGroupByGroup(group);
+    groupUserGroups := TUserGroup.whereGroup(group);
     setLength(cardArray, length(groupUserGroups));
     for i:=0 to length(groupUserGroups) - 1 do
     begin
@@ -674,13 +674,13 @@ begin
   end;
   if self.getCurrent() = 'Chat' then
   begin
-    chat := findChat(self.getParameter())[0];
+    chat := TChat.find(self.getParameter());
     Form1.chatNameLabel.caption := chat.getName();
     if currentUser.getId() = chat.getUserId() then
       Form1.chatEditButton.visible := true
     else
       Form1.chatEditButton.visible := false;
-    chatMessages := findMessageByChat(chat);
+    chatMessages := TMessage.whereChat(chat);
     setLength(cardArray, length(chatMessages));
     for i:=0 to length(chatMessages) - 1 do
     begin
@@ -690,7 +690,7 @@ begin
       );
     end;
     self.renderCards(1, cardArray);
-    chatUserChats := findUserChatByChat(chat);
+    chatUserChats := TUserChat.whereChat(chat);
     setLength(cardArray, length(chatUserChats));
     for i:=0 to length(chatUserChats) - 1 do
     begin
@@ -707,22 +707,22 @@ begin
   begin
     if self.getParameter() <> 0 then
     begin
-      group := findGroup(self.getParameter)[0];
+      group := TGroup.find(self.getParameter);
       Form1.createChatGroupEdit.text := group.getName();
     end;
   end;
   if self.getCurrent() = 'Edit group' then
   begin
-    group := findGroup(currentView.getParameter())[0];
+    group := TGroup.find(currentView.getParameter());
     Form1.editGroupNameEdit.Text := group.getName();
     Form1.editGroupDescriptionEdit.Text := group.getDescription();
   end;
   if self.getCurrent() = 'Edit chat' then
   begin
-    chat := findChat(currentView.getParameter())[0];
+    chat := TChat.find(currentView.getParameter());
     Form1.editChatNameEdit.Text := chat.getName();
-    if length(findGroup(chat.getGroupId())) > 0 then
-    Form1.editChatGroupEdit.Text := findGroup(chat.getGroupId())[0].getName();
+    if TGroup.find(chat.getGroupId()) <> nil then
+      Form1.editChatGroupEdit.Text := TGroup.find(chat.getGroupId()).getName();
   end;
   if self.getCurrent() = 'Account' then
   begin

@@ -50,26 +50,6 @@ uses Form;
 
 { TUser }
 
-class function TUser.find(i: integer): TUser;
-var j: integer;
-begin
-  for j := 0 to length(users) - 1 do
-    if users[j].getId() = i then
-      result := users[j];
-end;
-
-class function TUser.whereUsername(u: string): TUserArray;
-var i: integer; a: TUserArray;
-begin
-  for i := 0 to length(users) - 1 do
-    if users[i].getUsername() = u then
-    begin
-      setLength(a, length(a) + 1);
-      a[length(a) - 1] := users[i];
-    end;
-  result := a;
-end;
-
 constructor TUser.create(u, fn, ln, p: string);
 begin
   inherited create();
@@ -114,6 +94,26 @@ begin
     query.close();
   end;
   result := true;
+end;
+
+class function TUser.find(i: integer): TUser;
+var j: integer;
+begin
+  for j := 0 to length(users) - 1 do
+    if users[j].getId() = i then
+      result := users[j];
+end;
+
+class function TUser.whereUsername(u: string): TUserArray;
+var i: integer; a: TUserArray;
+begin
+  for i := 0 to length(users) - 1 do
+    if users[i].getUsername() = u then
+    begin
+      setLength(a, length(a) + 1);
+      a[length(a) - 1] := users[i];
+    end;
+  result := a;
 end;
 
 class function TUser.signup(u, fn, ln, p: string): TUser;

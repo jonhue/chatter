@@ -11,6 +11,9 @@ type
 
   { TUserGroup }
 
+  TUserGroup = class;
+  TUserGroupArray = array of TUserGroup;
+
   TUserGroup = class
   private
     id: integer;
@@ -20,22 +23,16 @@ type
     function setUserId(ui: integer): integer;
     function setGroupId(gi: integer): integer;
   public
-    // class function find(i: integer): TUserGroupArray;
-    // class function findByUser(u: TUser): TUserGroupArray;
-    // class function findByGroup(g: TGroup): TUserGroupArray;
     constructor create(u: TUser; g: TGroup);
     constructor recreate(i, ui, gi: integer);
     class function seed(): boolean;
+    class function find(i: integer): TUserGroup;
+    class function whereUser(u: TUser): TUserGroupArray;
+    class function whereGroup(g: TGroup): TUserGroupArray;
     function getId(): integer;
     function getUserId(): integer;
     function getGroupId(): integer;
   end;
-
-  TUserGroupArray = array of TUserGroup;
-
-function findUserGroup(i: integer): TUserGroupArray;
-function findUserGroupByUser(u: TUser): TUserGroupArray;
-function findUserGroupByGroup(g: TGroup): TUserGroupArray;
 
 var
   userGroups: TUserGroupArray;
@@ -45,42 +42,6 @@ uses Form;
 
 { TUserGroup }
 
-function findUserGroup(i: integer): TUserGroupArray;
-var c: integer; a: TUserGroupArray;
-begin
-  for c := 0 to length(userGroups) - 1 do
-    if userGroups[c].getId() = i then
-    begin
-      setLength(a, length(a) + 1);
-      a[length(a) - 1] := userGroups[c];
-    end;
-  result := a;
-end;
-
-function findUserGroupByUser(u: TUser): TUserGroupArray;
-var i: integer; a: TUserGroupArray;
-begin
-  for i := 0 to length(userGroups) - 1 do
-    if userGroups[i].getUserId() = u.getId() then
-    begin
-      setLength(a, length(a) + 1);
-      a[length(a) - 1] := userGroups[i];
-    end;
-  result := a;
-end;
-
-function findUserGroupByGroup(g: TGroup): TUserGroupArray;
-var i: integer; a: TUserGroupArray;
-begin
-  for i := 0 to length(userGroups) - 1 do
-  if userGroups[i].getGroupId() = g.getId() then
-  begin
-    setLength(a, length(a) + 1);
-    a[length(a) - 1] := userGroups[i];
-  end;
-  result := a;
-end;
-
 constructor TUserGroup.create(u: TUser; g: TGroup);
 begin
   inherited create();
@@ -88,7 +49,7 @@ begin
   self.groupId := g.getId();
   repeat
     self.id := random(999999) + 1;
-  until length(findUserGroup(self.getId())) = 0;
+  until TUserGroup.find(self.getId()) = nil;
   setLength(userGroups, length(userGroups) + 1);
   userGroups[length(userGroups) - 1] := self;
   databaseChange('INSERT INTO user_groups ( id, user_id, group_id ) VALUES ( ' + IntToStr(self.id) + ', ' + IntToStr(self.userId) + ', ' + IntToStr(self.groupId) + ' );');
@@ -121,6 +82,38 @@ begin
     query.close();
   end;
   result := true;
+end;
+
+class function TUserGroup.find(i: integer): TUserGroup;
+var j: integer;
+begin
+  for j := 0 to length(userGroups) - 1 do
+    if userGroups[j].getId() = i then
+      result := userGroups[j];
+end;
+
+class function TUserGroup.whereUser(u: TUser): TUserGroupArray;
+var i: integer; a: TUserGroupArray;
+begin
+  for i := 0 to length(userGroups) - 1 do
+    if userGroups[i].getUserId() = u.getId() then
+    begin
+      setLength(a, length(a) + 1);
+      a[length(a) - 1] := userGroups[i];
+    end;
+  result := a;
+end;
+
+class function TUserGroup.whereGroup(g: TGroup): TUserGroupArray;
+var i: integer; a: TUserGroupArray;
+begin
+  for i := 0 to length(userGroups) - 1 do
+    if userGroups[i].getGroupId() = g.getId() then
+    begin
+      setLength(a, length(a) + 1);
+      a[length(a) - 1] := userGroups[i];
+    end;
+  result := a;
 end;
 
 function TUserGroup.getId(): integer;

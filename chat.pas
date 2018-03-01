@@ -11,6 +11,9 @@ type
 
   { TChat }
 
+  TChat = class;
+  TChatArray = array of TChat;
+
   TChat = class
   private
     id: integer;
@@ -22,12 +25,12 @@ type
     function setGroupId(gi: integer): integer;
     function setName(n: string): string;
   public
-    // class function find(i: integer): TChatArray;
-    // class function findByUser(u: TUser): TChatArray;
-    // class function findByGroup(g: TGroup): TChatArray;
     constructor create(u: TUser; g: TGroup; n: string);
     constructor recreate(i, ui, gi: integer; n: string);
     class function seed(): boolean;
+    class function find(i: integer): TChat;
+    class function whereUser(u: TUser): TChatArray;
+    class function whereGroup(g: TGroup): TChatArray;
     function update(g: TGroup; n: string): TChat;
     function getId(): integer;
     function getUserId(): integer;
@@ -35,55 +38,13 @@ type
     function getName(): string;
   end;
 
-  TChatArray = array of TChat;
-
-function findChat(i: integer): TChatArray;
-function findChatByUser(u: TUser): TChatArray;
-function findChatByGroup(g: TGroup): TChatArray;
-
 var
   chats: TChatArray;
 
 implementation
 uses Form;
 
-{ TNotification }
-
-function findChat(i: integer): TChatArray;
-var c: integer; a: TChatArray;
-begin
-  for c := 0 to length(chats) - 1 do
-    if chats[c].getId() = i then
-    begin
-      setLength(a, length(a) + 1);
-      a[length(a) - 1] := chats[c];
-    end;
-  result := a;
-end;
-
-function findChatByUser(u: TUser): TChatArray;
-var i: integer; a: TChatArray;
-begin
-  for i := 0 to length(chats) - 1 do
-    if chats[i].getUserId() = u.getId() then
-    begin
-      setLength(a, length(a) + 1);
-      a[length(a) - 1] := chats[i];
-    end;
-  result := a;
-end;
-
-function findChatByGroup(g: TGroup): TChatArray;
-var i: integer; a: TChatArray;
-begin
-  for i := 0 to length(chats) - 1 do
-    if chats[i].getGroupId() = g.getId() then
-    begin
-      setLength(a, length(a) + 1);
-      a[length(a) - 1] := chats[i];
-    end;
-  result := a;
-end;
+{ TChat }
 
 constructor TChat.create(u: TUser; g: TGroup; n: string);
 begin
@@ -94,7 +55,7 @@ begin
     self.groupId := g.getId();
   repeat
     self.id := random(999999) + 1;
-  until length(findChat(self.getId())) = 0;
+  until TChat.find(self.getId()) = nil;
   setLength(chats, length(chats) + 1);
   chats[length(chats) - 1] := self;
   databaseChange('INSERT INTO chats ( id, user_id, group_id, name ) VALUES ( ' + IntToStr(self.id) + ', ' + IntToStr(self.userId) + ', ' + IntToStr(self.groupId) + ', "' + self.name + '" );');
@@ -128,6 +89,38 @@ begin
     query.close();
   end;
   result := true;
+end;
+
+class function TChat.find(i: integer): TChat;
+var j: integer;
+begin
+  for j := 0 to length(chats) - 1 do
+    if chats[j].getId() = i then
+      result := chats[j];
+end;
+
+class function TChat.whereUser(u: TUser): TChatArray;
+var i: integer; a: TChatArray;
+begin
+  for i := 0 to length(chats) - 1 do
+    if chats[i].getUserId() = u.getId() then
+    begin
+      setLength(a, length(a) + 1);
+      a[length(a) - 1] := chats[i];
+    end;
+  result := a;
+end;
+
+class function TChat.whereGroup(g: TGroup): TChatArray;
+var i: integer; a: TChatArray;
+begin
+  for i := 0 to length(chats) - 1 do
+    if chats[i].getGroupId() = g.getId() then
+    begin
+      setLength(a, length(a) + 1);
+      a[length(a) - 1] := chats[i];
+    end;
+  result := a;
 end;
 
 function TChat.update(g: TGroup; n: string): TChat;

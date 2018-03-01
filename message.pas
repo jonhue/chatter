@@ -11,6 +11,9 @@ type
 
   { TMessage }
 
+  TMessage = class;
+  TMessageArray = array of TMessage;
+
   TMessage = class
   private
     id: integer;
@@ -22,22 +25,17 @@ type
     function setChatId(ci: integer): integer;
     function setContent(c: string): string;
   public
-    // class function find(i: integer): TMessageArray;
-    // class function findByChat(c: TChat): TMessageArray;
     constructor create(c: TChat; u: TUser; co: string);
     constructor recreate(i, ui, ci: integer; c: string);
     class function seed(): boolean;
+    class function find(i: integer): TMessage;
+    class function whereUser(u: TUser): TMessageArray;
+    class function whereChat(c: TChat): TMessageArray;
     function getId(): integer;
     function getUserId(): integer;
     function getChatId(): integer;
     function getContent(): string;
   end;
-
-  TMessageArray = array of TMessage;
-
-function findMessage(i: integer): TMessageArray;
-function findMessageByUser(u: TUser): TMessageArray;
-function findMessageByChat(c: TChat): TMessageArray;
 
 var
   messages: TMessageArray;
@@ -47,42 +45,6 @@ uses Form;
 
 { TMessage }
 
-function findMessage(i: integer): TMessageArray;
-var c: integer; a: TMessageArray;
-begin
-  for c := 0 to length(messages) - 1 do
-    if messages[c].getId() = i then
-    begin
-      setLength(a, length(a) + 1);
-      a[length(a) - 1] := messages[c];
-    end;
-  result := a;
-end;
-
-function findMessageByUser(u: TUser): TMessageArray;
-var i: integer; a: TMessageArray;
-begin
-  for i := 0 to length(messages) - 1 do
-    if messages[i].getUserId() = u.getId() then
-    begin
-      setLength(a, length(a) + 1);
-      a[length(a) - 1] := messages[i];
-    end;
-  result := a;
-end;
-
-function findMessageByChat(c: TChat): TMessageArray;
-var i: integer; a: TMessageArray;
-begin
-  for i := 0 to length(messages) - 1 do
-    if messages[i].getChatId() = c.getId() then
-    begin
-      setLength(a, length(a) + 1);
-      a[length(a) - 1] := messages[i];
-    end;
-  result := a;
-end;
-
 constructor TMessage.create(c: TChat; u: TUser; co: string);
 begin
   inherited create();
@@ -91,7 +53,7 @@ begin
   self.content := co;
   repeat
     self.id := random(999999) + 1;
-  until length(findMessage(self.getId())) = 0;
+  until TMessage.find(self.getId()) = nil;
   setLength(messages, length(messages) + 1);
   messages[length(messages) - 1] := self;
   databaseChange('INSERT INTO messages ( id, user_id, chat_id, content ) VALUES ( ' + IntToStr(self.id) + ', ' + IntToStr(self.userId) + ', ' + IntToStr(self.chatId) + ', "' + self.content + '" );');
@@ -125,6 +87,38 @@ begin
     query.close();
   end;
   result := true;
+end;
+
+class function TMessage.find(i: integer): TMessage;
+var j: integer;
+begin
+  for j := 0 to length(messages) - 1 do
+    if messages[j].getId() = i then
+      result := messages[j];
+end;
+
+class function TMessage.whereUser(u: TUser): TMessageArray;
+var i: integer; a: TMessageArray;
+begin
+  for i := 0 to length(messages) - 1 do
+    if messages[i].getUserId() = u.getId() then
+    begin
+      setLength(a, length(a) + 1);
+      a[length(a) - 1] := messages[i];
+    end;
+  result := a;
+end;
+
+class function TMessage.whereChat(c: TChat): TMessageArray;
+var i: integer; a: TMessageArray;
+begin
+  for i := 0 to length(messages) - 1 do
+    if messages[i].getChatId() = c.getId() then
+    begin
+      setLength(a, length(a) + 1);
+      a[length(a) - 1] := messages[i];
+    end;
+  result := a;
 end;
 
 function TMessage.getId(): integer;

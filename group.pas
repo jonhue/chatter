@@ -11,6 +11,9 @@ type
 
   { TGroup }
 
+  TGroup = class;
+  TGroupArray = array of TGroup;
+
   TGroup = class
   private
     id: integer;
@@ -22,24 +25,18 @@ type
     function setName(n: string): string;
     function setDescription(d: string): string;
   public
-    // class function find(i: integer): TGroupArray;
-    // class function findByUser(u: TUser): TGroupArray;
-    // class function findByName(n: string): TGroupArray;
     constructor create(u: TUser; n, d: string);
     constructor recreate(i, ui: integer; n, d: string);
     class function seed(): boolean;
+    class function find(i: integer): TGroup;
+    class function whereUser(u: TUser): TGroupArray;
+    class function whereName(n: string): TGroupArray;
     function update(n, d: string): TGroup;
     function getId(): integer;
     function getUserId(): integer;
     function getName(): string;
     function getDescription(): string;
   end;
-
-  TGroupArray = array of TGroup;
-
-function findGroup(i: integer): TGroupArray;
-function findGroupByUser(u: TUser): TGroupArray;
-function findGroupByName(n: string): TGroupArray;
 
 var
   groups: TGroupArray;
@@ -49,42 +46,6 @@ uses Form;
 
 { TGroup }
 
-function findGroup(i: integer): TGroupArray;
-var c: integer; a: TGroupArray;
-begin
-  for c := 0 to length(groups) - 1 do
-    if groups[c].getId() = i then
-    begin
-      setLength(a, length(a) + 1);
-      a[length(a) - 1] := groups[c];
-    end;
-  result := a;
-end;
-
-function findGroupByUser(u: TUser): TGroupArray;
-var i: integer; a: TGroupArray;
-begin
-  for i := 0 to length(groups) - 1 do
-    if groups[i].getUserId() = u.getId() then
-    begin
-      setLength(a, length(a) + 1);
-      a[length(a) - 1] := groups[i];
-    end;
-  result := a;
-end;
-
-function findGroupByName(n: string): TGroupArray;
-var i: integer; a: TGroupArray;
-begin
-  for i := 0 to length(groups) - 1 do
-    if groups[i].getName() = n then
-    begin
-      setLength(a, length(a) + 1);
-      a[length(a) - 1] := groups[i];
-    end;
-  result := a;
-end;
-
 constructor TGroup.create(u: TUser; n, d: string);
 begin
   inherited create();
@@ -93,7 +54,7 @@ begin
   self.description := d;
   repeat
     self.id := random(999999) + 1;
-  until length(findGroup(self.getId())) = 0;
+  until TGroup.find(self.getId()) = nil;
   setLength(groups, length(groups) + 1);
   groups[length(groups) - 1] := self;
   databaseChange('INSERT INTO groups ( id, user_id, name, description ) VALUES ( ' + IntToStr(self.id) + ', ' + IntToStr(self.userId) + ', "' + self.name + '", "' + self.description + '" );');
@@ -127,6 +88,38 @@ begin
     query.close();
   end;
   result := true;
+end;
+
+class function TGroup.find(i: integer): TGroup;
+var j: integer;
+begin
+  for j := 0 to length(groups) - 1 do
+    if groups[j].getId() = i then
+      result := groups[j];
+end;
+
+class function TGroup.whereUser(u: TUser): TGroupArray;
+var i: integer; a: TGroupArray;
+begin
+  for i := 0 to length(groups) - 1 do
+    if groups[i].getUserId() = u.getId() then
+    begin
+      setLength(a, length(a) + 1);
+      a[length(a) - 1] := groups[i];
+    end;
+  result := a;
+end;
+
+class function TGroup.whereName(n: string): TGroupArray;
+var i: integer; a: TGroupArray;
+begin
+  for i := 0 to length(groups) - 1 do
+    if groups[i].getName() = n then
+    begin
+      setLength(a, length(a) + 1);
+      a[length(a) - 1] := groups[i];
+    end;
+  result := a;
 end;
 
 function TGroup.update(n, d: string): TGroup;
