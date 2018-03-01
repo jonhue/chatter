@@ -641,6 +641,10 @@ begin
     group := findGroup(self.getParameter())[0];
     Form1.groupNameLabel.caption := group.getName();
     Form1.groupDescriptionLabel.caption := group.getDescription();
+    if currentUser.getId() = group.getUserId() then
+      Form1.groupEditButton.visible := true
+    else
+      Form1.groupEditButton.visible := false;
     groupChats := findChatByGroup(group);
     setLength(cardArray, length(groupChats));
     for i:=0 to length(groupChats) - 1 do
@@ -662,7 +666,7 @@ begin
         '@' + findUser(groupUserGroups[i].getUserId())[0].getUsername(), 0, ''
       );
       if findUser(groupUserGroups[i].getUserId())[0].getId() = group.getUserId() then
-        cardArray[i].setContent(cardArray[i].getContent() + ' - Admin');
+        cardArray[i].setContent(cardArray[i].getContent() + ' - Admin')
     end;
     self.renderCards(2, cardArray);
   end;
@@ -670,6 +674,10 @@ begin
   begin
     chat := findChat(self.getParameter())[0];
     Form1.chatNameLabel.caption := chat.getName();
+    if currentUser.getId() = chat.getUserId() then
+      Form1.chatEditButton.visible := true
+    else
+      Form1.chatEditButton.visible := false;
     chatMessages := findMessageByChat(chat);
     setLength(cardArray, length(chatMessages));
     for i:=0 to length(chatMessages) - 1 do
