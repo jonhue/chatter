@@ -176,6 +176,7 @@ type
     function getTabIndex(): integer;
     function getTabSheet(): TTabSheet;
     function initialize(): boolean;
+    function cleanup(): boolean;
     function renderCards(column: integer; content: TCardArray): boolean;
     function getCurrent(): string;
     function getReferrer(): TView;
@@ -595,6 +596,7 @@ var
   cardArray: TCardArray;
   i: integer;
 begin
+  self.cleanup();
   if (currentUser = nil) and ( (self.getCurrent() = 'Home') or (self.getCurrent() = 'Account') or (self.getCurrent() = 'Group') or (self.getCurrent() = 'Chat') or (self.getCurrent() = 'Create chat') or (self.getCurrent() = 'Create group') or (self.getCurrent() = 'Edit chat') or (self.getCurrent() = 'Edit group') or (self.getCurrent() = 'Invitations') or (self.getCurrent() = 'New invitation') ) then
   begin
     currentView.switch('Login', 0);
@@ -732,6 +734,15 @@ begin
   result := true;
 end;
 
+function TView.cleanup(): boolean;
+var i: integer;
+begin
+  for i := (self.getTabSheet().controlCount - 1) downto 0 do
+    if self.getTabSheet().controls[i].helpKeyword = 'temp' then
+      self.getTabSheet().controls[i].free();
+  result := true;
+end;
+
 function TView.renderCards(column: integer; content: TCardArray): boolean;
 var
   i, j, toTop, panelToTop: integer;
@@ -751,6 +762,7 @@ begin
     panel.top := panelToTop;
     panel.width := 275;
     panel.caption := '';
+    panel.helpKeyword := 'temp';
     if content[i].getTitle() <> '' then
     begin
       text := TLabel.create(Form1);
