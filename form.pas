@@ -417,9 +417,9 @@ procedure TForm1.newChatInvitationInviteButtonClick(Sender: TObject);
 var user: TUser; i: integer; userIsMember: boolean;
 begin
   userIsMember := false;
-  if length(findUserByUsername(newChatInvitationUsernameEdit.text)) > 0 then
+  if length(TUser.whereUsername(newChatInvitationUsernameEdit.text)) > 0 then
   begin
-    user := findUserByUsername(newChatInvitationUsernameEdit.text)[0];
+    user := TUser.whereUsername(newChatInvitationUsernameEdit.text)[0];
     for i:=0 to length(findUserChatByChat(findChat(currentView.getParameter())[0])) - 1 do
       if findUserChatByChat(findChat(currentView.getParameter())[0])[i].getUserId() = user.getId() then
         userIsMember := true;
@@ -440,9 +440,9 @@ procedure TForm1.newGroupInvitationIviteButtonClick(Sender: TObject);
 var user: TUser; i: integer; userIsMember: boolean;
 begin
   userIsMember := false;
-  if length(findUserByUsername(newGroupInvitationUsernameEdit.text)) > 0 then
+  if length(TUser.whereUsername(newGroupInvitationUsernameEdit.text)) > 0 then
   begin
-    user := findUserByUsername(newGroupInvitationUsernameEdit.text)[0];
+    user := TUser.whereUsername(newGroupInvitationUsernameEdit.text)[0];
     for i:=0 to length(findUserGroupByGroup(findGroup(currentView.getParameter())[0])) - 1 do
       if findUserGroupByGroup(findGroup(currentView.getParameter())[0])[i].getUserId() = user.getId() then
         userIsMember := true;
@@ -664,10 +664,10 @@ begin
     for i:=0 to length(groupUserGroups) - 1 do
     begin
       cardArray[i] := TCard.create(
-        findUser(groupUserGroups[i].getUserId())[0].getFirstName() + ' ' + findUser(groupUserGroups[i].getUserId())[0].getLastName(),
-        '@' + findUser(groupUserGroups[i].getUserId())[0].getUsername(), 0, ''
+        TUser.find(groupUserGroups[i].getUserId()).getFirstName() + ' ' + TUser.find(groupUserGroups[i].getUserId()).getLastName(),
+        '@' + TUser.find(groupUserGroups[i].getUserId()).getUsername(), 0, ''
       );
-      if findUser(groupUserGroups[i].getUserId())[0].getId() = group.getUserId() then
+      if TUser.find(groupUserGroups[i].getUserId()).getId() = group.getUserId() then
         cardArray[i].setContent(cardArray[i].getContent() + ' - Admin')
     end;
     self.renderCards(2, cardArray);
@@ -685,7 +685,7 @@ begin
     for i:=0 to length(chatMessages) - 1 do
     begin
       cardArray[i] := TCard.create(
-        findUser(chatMessages[i].getUserId())[0].getFirstName + ' ' + findUser(chatMessages[i].getUserId())[0].getLastName + ' (@' + findUser(chatMessages[i].getUserId())[0].getUsername + ')',
+        TUser.find(chatMessages[i].getUserId()).getFirstName + ' ' + TUser.find(chatMessages[i].getUserId()).getLastName + ' (@' + TUser.find(chatMessages[i].getUserId()).getUsername + ')',
         chatMessages[i].getContent(), 0, ''
       );
     end;
@@ -695,10 +695,10 @@ begin
     for i:=0 to length(chatUserChats) - 1 do
     begin
       cardArray[i] := TCard.create(
-        findUser(chatUserChats[i].getUserId())[0].getFirstName() + ' ' + findUser(chatUserChats[i].getUserId())[0].getLastName(),
-        '@' + findUser(chatUserChats[i].getUserId())[0].getUsername(), 0, ''
+        TUser.find(chatUserChats[i].getUserId()).getFirstName() + ' ' + TUser.find(chatUserChats[i].getUserId()).getLastName(),
+        '@' + TUser.find(chatUserChats[i].getUserId()).getUsername(), 0, ''
       );
-      if findUser(chatUserChats[i].getUserId())[0].getId() = chat.getUserId() then
+      if TUser.find(chatUserChats[i].getUserId()).getId() = chat.getUserId() then
         cardArray[i].setContent(cardArray[i].getContent() + ' - Admin');
     end;
     self.renderCards(2, cardArray);

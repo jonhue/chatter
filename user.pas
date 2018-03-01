@@ -11,6 +11,9 @@ type
 
   { TUser }
 
+  TUser = class;
+  TUserArray = array of TUser;
+
   TUser = class
   private
     id: integer;
@@ -24,11 +27,11 @@ type
     function setLastName(ln: string): string;
     function setPassword(p: string): string;
   public
-    // class function find(i: integer): TUserArray;
-    // class function findByUsername(u: string): TUserArray;
     constructor create(u, fn, ln, p: string);
     constructor recreate(i: integer; u, fn, ln, p: string);
     class function seed(): boolean;
+    class function find(i: integer): TUser;
+    class function whereUsername(u: string): TUserArray;
     class function signup(u, fn, ln, p: string): TUser;
     class function login(u, p: string): TUser;
     function update(p, u, fn, ln, np: string): TUser;
@@ -39,11 +42,6 @@ type
     function getPassword(): string;
   end;
 
-  TUserArray = array of TUser;
-
-function findUser(i: integer): TUserArray;
-function findUserByUsername(u: string): TUserArray;
-
 var
   users: TUserArray;
 
@@ -52,19 +50,15 @@ uses Form;
 
 { TUser }
 
-function findUser(i: integer): TUserArray;
-var c: integer; a: TUserArray;
+class function TUser.find(i: integer): TUser;
+var j: integer;
 begin
-  for c := 0 to length(users) - 1 do
-    if users[c].getId() = i then
-    begin
-      setLength(a, length(a) + 1);
-      a[length(a) - 1] := users[c];
-    end;
-  result := a;
+  for j := 0 to length(users) - 1 do
+    if users[j].getId() = i then
+      result := users[j];
 end;
 
-function findUserByUsername(u: string): TUserArray;
+class function TUser.whereUsername(u: string): TUserArray;
 var i: integer; a: TUserArray;
 begin
   for i := 0 to length(users) - 1 do
@@ -85,7 +79,7 @@ begin
   self.password := p;
   repeat
     self.id := random(999999) + 1;
-  until length(findUser(self.getId())) = 0;
+  until TUser.find(self.getId()) = nil;
   setLength(users, length(users) + 1);
   users[length(users) - 1] := self;
   databaseChange('INSERT INTO users ( id, username, first_name, last_name, password ) VALUES ( ' + IntToStr(self.id) + ', "' + self.username + '", "' + self.firstName + '", "' + self.lastName + '", "' + self.password + '" );');
@@ -126,7 +120,7 @@ class function TUser.signup(u, fn, ln, p: string): TUser;
 var user: TUser;
 begin
   user := TUser.create(u, fn, ln, p);
-  if length(findUserByUsername(user.getUsername())) = 1 then
+  if length(TUser.whereUsername(user.getUsername())) = 1 then
   begin
     result := user;
     exit;
@@ -138,10 +132,10 @@ end;
 
 class function TUser.login(u, p: string): TUser;
 begin
-  if length(findUserByUsername(u)) > 0 then
-    if findUserByUsername(u)[0].getPassword() = p then
+  if length(TUser.whereUsername(u)) > 0 then
+    if TUser.whereUsername(u)[0].getPassword() = p then
     begin
-      result := findUserByUsername(u)[0];
+      result := TUser.whereUsername(u)[0];
       exit;
     end;
   result := nil;
