@@ -22,6 +22,7 @@ type
     accountNewPasswordEdit: TEdit;
     accountPasswordEdit: TEdit;
     backButton: TButton;
+    homeButton: TButton;
     chatEditButton: TButton;
     groupEditButton: TButton;
     MySQL56Connection1: TMySQL56Connection;
@@ -118,6 +119,7 @@ type
     procedure groupCreateChatButtonClick(Sender: TObject);
     procedure groupEditButtonClick(Sender: TObject);
     procedure groupInviteMemberButtonClick(Sender: TObject);
+    procedure homeButtonClick(Sender: TObject);
     procedure homeCreateChatButtonClick(Sender: TObject);
     procedure homeCreateGroupButtonClick(Sender: TObject);
     procedure newChatInvitationInviteButtonClick(Sender: TObject);
@@ -203,6 +205,7 @@ begin
     usernameLabel.Caption := '';
     loginButton.Visible := true;
     signupButton.Visible := true;
+    homeButton.Visible := false;
     accountButton.Visible := false;
     signoutButton.Visible := false;
   end
@@ -212,6 +215,7 @@ begin
     usernameLabel.Caption := '@' + currentUser.getUsername();
     loginButton.Visible := false;
     signupButton.Visible := false;
+    homeButton.Visible := true;
     accountButton.Visible := true;
     signoutButton.Visible := true;
   end;
@@ -401,6 +405,11 @@ end;
 procedure TForm1.groupInviteMemberButtonClick(Sender: TObject);
 begin
   currentView.switch('New group invitation', currentView.getParameter());
+end;
+
+procedure TForm1.homeButtonClick(Sender: TObject);
+begin
+  currentView.switch('Home', 0);
 end;
 
 procedure TForm1.homeCreateChatButtonClick(Sender: TObject);
