@@ -101,7 +101,11 @@ var j: integer;
 begin
   for j := 0 to length(users) - 1 do
     if users[j].getId() = i then
+    begin
       result := users[j];
+      exit;
+    end;
+  result := nil;
 end;
 
 class function TUser.whereUsername(u: string): TUserArray;

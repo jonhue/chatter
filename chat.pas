@@ -96,7 +96,11 @@ var j: integer;
 begin
   for j := 0 to length(chats) - 1 do
     if chats[j].getId() = i then
+    begin
       result := chats[j];
+      exit;
+    end;
+  result := nil;
 end;
 
 class function TChat.whereUser(u: TUser): TChatArray;

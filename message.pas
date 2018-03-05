@@ -94,7 +94,11 @@ var j: integer;
 begin
   for j := 0 to length(messages) - 1 do
     if messages[j].getId() = i then
+    begin
       result := messages[j];
+      exit;
+    end;
+  result := nil;
 end;
 
 class function TMessage.whereUser(u: TUser): TMessageArray;

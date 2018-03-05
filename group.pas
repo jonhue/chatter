@@ -95,7 +95,11 @@ var j: integer;
 begin
   for j := 0 to length(groups) - 1 do
     if groups[j].getId() = i then
+    begin
       result := groups[j];
+      exit;
+    end;
+  result := nil;
 end;
 
 class function TGroup.whereUser(u: TUser): TGroupArray;

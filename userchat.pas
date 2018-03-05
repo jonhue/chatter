@@ -89,7 +89,11 @@ var j: integer;
 begin
   for j := 0 to length(userChats) - 1 do
     if userChats[j].getId() = i then
+    begin
       result := userChats[j];
+      exit;
+    end;
+  result := nil;
 end;
 
 class function TUserChat.whereUser(u: TUser): TUserChatArray;

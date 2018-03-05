@@ -89,7 +89,11 @@ var j: integer;
 begin
   for j := 0 to length(userGroups) - 1 do
     if userGroups[j].getId() = i then
+    begin
       result := userGroups[j];
+      exit;
+    end;
+  result := nil;
 end;
 
 class function TUserGroup.whereUser(u: TUser): TUserGroupArray;
